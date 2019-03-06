@@ -9,9 +9,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Android.Runtime.ResourceDesignerAttribute("fish_it.Resource", IsApplication=true)]
+[assembly: global::Android.Runtime.ResourceDesignerAttribute("Fishit.Resource", IsApplication=true)]
 
-namespace fish_it
+namespace Fishit
 {
 	
 	

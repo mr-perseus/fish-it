@@ -10,8 +10,8 @@
     <TemplateGuid>{e0dc9abc-7303-488b-8af1-61e341bd2a32}</TemplateGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>fish_it</RootNamespace>
-    <AssemblyName>fish-it</AssemblyName>
+    <RootNamespace>Fishit</RootNamespace>
+    <AssemblyName>Fishit</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
@@ -68,7 +68,7 @@
     <None Include="Assets\AboutAssets.txt" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\activity_main.axml">
+      <AndroidResource Include="Resources\layout\activity_main.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\values\colors.xml" />

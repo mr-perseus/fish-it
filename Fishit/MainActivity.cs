@@ -6,7 +6,7 @@ using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 
-namespace fish_it
+namespace Fishit
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
     public class MainActivity : AppCompatActivity, BottomNavigationView.IOnNavigationItemSelectedListener
