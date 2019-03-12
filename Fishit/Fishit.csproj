@@ -68,7 +68,7 @@
     <None Include="Assets\AboutAssets.txt" />
   </ItemGroup>
   <ItemGroup>
-      <AndroidResource Include="Resources\layout\activity_main.axml">
+    <AndroidResource Include="Resources\layout\activity_main.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\values\colors.xml" />
@@ -100,6 +100,11 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Android.Support.Design" Version="27.0.2.1" />
+    <PackageReference Include="xunit.runner.console">
+      <Version>2.4.1</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
