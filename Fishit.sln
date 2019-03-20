@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fishit.Testing", "Fishit.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fishit.Dal", "Fishit.Dal\Fishit.Dal.csproj", "{ABAB9DE7-5206-4BB1-8368-8114B8DF42E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fishit.Common", "Fishit.Common\Fishit.Common.csproj", "{887C3CB7-0D16-4562-9406-855B10F6F3AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fishit.BusinessLayer", "Fishit.BusinessLayer\Fishit.BusinessLayer.csproj", "{FD62AA6B-B9C0-469D-8350-76A3AA46E61A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +33,14 @@ Global
 		{ABAB9DE7-5206-4BB1-8368-8114B8DF42E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABAB9DE7-5206-4BB1-8368-8114B8DF42E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABAB9DE7-5206-4BB1-8368-8114B8DF42E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{887C3CB7-0D16-4562-9406-855B10F6F3AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{887C3CB7-0D16-4562-9406-855B10F6F3AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{887C3CB7-0D16-4562-9406-855B10F6F3AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{887C3CB7-0D16-4562-9406-855B10F6F3AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD62AA6B-B9C0-469D-8350-76A3AA46E61A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD62AA6B-B9C0-469D-8350-76A3AA46E61A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD62AA6B-B9C0-469D-8350-76A3AA46E61A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD62AA6B-B9C0-469D-8350-76A3AA46E61A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
