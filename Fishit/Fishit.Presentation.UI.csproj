@@ -107,9 +107,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fishit.BusinessLayer\Fishit.BusinessLayer.csproj">
-      <Project>{fd62aa6b-b9c0-469d-8350-76a3aa46e61a}</Project>
-      <Name>Fishit.BusinessLayer</Name>
+    <ProjectReference Include="..\Fishit.Presentation.ViewModels\Fishit.Presentation.ViewModels.csproj">
+      <Project>{ba7c000f-58ee-4f7b-a392-3ce60c05aff8}</Project>
+      <Name>Fishit.Presentation.ViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
