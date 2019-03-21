@@ -19,6 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fishit.Presentation.Testing
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{A570CB8C-42E6-444C-9BD6-8D96743C2314}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fishit.Dal.Testing", "Fishit.Dal.Testing\Fishit.Dal.Testing.csproj", "{B963440F-B5F0-47C9-9BDF-57F4764B3C07}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ABAB9DE7-5206-4BB1-8368-8114B8DF42E9} = {ABAB9DE7-5206-4BB1-8368-8114B8DF42E9}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +60,10 @@ Global
 		{E34878C3-5EDB-41E5-BC57-C793341B837D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E34878C3-5EDB-41E5-BC57-C793341B837D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E34878C3-5EDB-41E5-BC57-C793341B837D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B963440F-B5F0-47C9-9BDF-57F4764B3C07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B963440F-B5F0-47C9-9BDF-57F4764B3C07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B963440F-B5F0-47C9-9BDF-57F4764B3C07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B963440F-B5F0-47C9-9BDF-57F4764B3C07}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -62,6 +71,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{469416F6-58D9-4962-977A-627135C220D5} = {A570CB8C-42E6-444C-9BD6-8D96743C2314}
 		{E34878C3-5EDB-41E5-BC57-C793341B837D} = {A570CB8C-42E6-444C-9BD6-8D96743C2314}
+		{B963440F-B5F0-47C9-9BDF-57F4764B3C07} = {A570CB8C-42E6-444C-9BD6-8D96743C2314}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1DFAA693-5910-4E8F-949F-8A1C7811B825}
