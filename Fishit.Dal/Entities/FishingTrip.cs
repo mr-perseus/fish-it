@@ -4,7 +4,9 @@ using System.Text;
 
 namespace Fishit.Dal.Entities
 {
-    class FishingTrip
+    public class FishingTrip
     {
+        public int Id { get; set; }
+        public String Name { get; set; }
     }
 }
