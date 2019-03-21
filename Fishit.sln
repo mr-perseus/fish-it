@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fishit.Presentation.ViewMod
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fishit.Presentation.UI", "Fishit.Presentation.UI\Fishit.Presentation.UI.csproj", "{52381C0D-EAAA-42D6-BAE9-66657B9E0A21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fishit.BusinessLayer.Testing", "Fishit.BusinessLayer.Testing\Fishit.BusinessLayer.Testing.csproj", "{469416F6-58D9-4962-977A-627135C220D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fishit.BusinessLayer.Testing", "Fishit.BusinessLayer.Testing\Fishit.BusinessLayer.Testing.csproj", "{469416F6-58D9-4962-977A-627135C220D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fishit.Presentation.Testing", "Fishit.Presentation.Testing\Fishit.Presentation.Testing.csproj", "{E34878C3-5EDB-41E5-BC57-C793341B837D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fishit.Presentation.Testing", "Fishit.Presentation.Testing\Fishit.Presentation.Testing.csproj", "{E34878C3-5EDB-41E5-BC57-C793341B837D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{A570CB8C-42E6-444C-9BD6-8D96743C2314}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +58,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{469416F6-58D9-4962-977A-627135C220D5} = {A570CB8C-42E6-444C-9BD6-8D96743C2314}
+		{E34878C3-5EDB-41E5-BC57-C793341B837D} = {A570CB8C-42E6-444C-9BD6-8D96743C2314}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1DFAA693-5910-4E8F-949F-8A1C7811B825}
