@@ -4,6 +4,7 @@ using Xamarin.Forms.Xaml;
 
 namespace Fishit.Presentation.UI.MarkupExtensions
 {
+    // See Splashscreen for an example on how to use
     [ContentProperty("ResourceId")]
     class EmbeddedImage : IMarkupExtension
     {

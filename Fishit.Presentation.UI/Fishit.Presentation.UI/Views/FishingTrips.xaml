@@ -2,11 +2,29 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Fishit.Presentation.UI.Views.FishingTrips">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+    <ListView x:Name="tripsListView" 
+              HasUnevenRows="True"
+              ItemTapped="TripsListView_ItemTapped"
+              ItemSelected="TripsListView_ItemSelected"
+              IsPullToRefreshEnabled="True"
+              Refreshing="Handle_Refreshing">
+        
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <StackLayout Padding="5">
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding Name}" HorizontalOptions="StartAndExpand"/>
+                            <Label Text="{Binding Location}" TextColor="Gray"/>
+                        </StackLayout>
+                        <Label Text="{Binding Info}" />
+                    </StackLayout>
+                    <ViewCell.ContextActions>
+                        <MenuItem Text="Edit" Clicked="Edit_Clicked" CommandParameter="{Binding .}"/>
+                        <MenuItem Text="Delete" Clicked="Delete_Clicked" CommandParameter="{Binding .}" IsDestructive="True"/>
+                    </ViewCell.ContextActions>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
 </ContentPage>
