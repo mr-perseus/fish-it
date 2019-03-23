@@ -13,7 +13,7 @@ namespace Fishit.Presentation.UI.Views
 	{
         private ObservableCollection<FishingTrip> _fishingTrips;
 
-        ObservableCollection<FishingTrip> getFishingTrips()
+        ObservableCollection<FishingTrip> GetFishingTrips()
         {
             return new ObservableCollection<FishingTrip>
             {
@@ -31,7 +31,7 @@ namespace Fishit.Presentation.UI.Views
 		{
 			InitializeComponent ();
 
-            _fishingTrips = getFishingTrips();
+            _fishingTrips = GetFishingTrips();
 
             tripsListView.ItemsSource = _fishingTrips;
 		}
@@ -62,7 +62,7 @@ namespace Fishit.Presentation.UI.Views
 
         private void Handle_Refreshing(object sender, System.EventArgs e)
         {
-            _fishingTrips = getFishingTrips();
+            _fishingTrips = GetFishingTrips();
             tripsListView.ItemsSource = _fishingTrips;
             tripsListView.EndRefresh();
         }
