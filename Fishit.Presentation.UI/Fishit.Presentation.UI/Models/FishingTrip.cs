@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Fishit.Presentation.UI.Models
+﻿namespace Fishit.Presentation.UI.Models
 {
-    class FishingTrip
+    internal class FishingTrip
     {
         public string Name { get; set; }
         public string Info { get; set; }

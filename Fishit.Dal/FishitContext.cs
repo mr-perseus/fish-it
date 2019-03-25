@@ -1,5 +1,4 @@
-﻿using System;
-using Fishit.Dal.Entities;
+﻿using Fishit.Dal.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fishit.Dal
@@ -11,15 +10,13 @@ namespace Fishit.Dal
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
-            {
                 optionsBuilder
                     .UseSqlite("Data Source=fishit.db");
-            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Entities.FishingTrip>()
+            modelBuilder.Entity<FishingTrip>()
                 .Property(e => e.Name)
                 .HasMaxLength(50);
         }

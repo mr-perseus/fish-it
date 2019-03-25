@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 
 namespace Fishit.Presentation.Testing
@@ -8,7 +7,6 @@ namespace Fishit.Presentation.Testing
         [Fact]
         public void Test1Todo()
         {
-
         }
     }
 }

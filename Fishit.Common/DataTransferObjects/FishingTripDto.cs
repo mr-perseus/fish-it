@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Fishit.Common.DataTransferObjects
+﻿namespace Fishit.Common.DataTransferObjects
 {
-    class FishingTripDto
+    internal class FishingTripDto
     {
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 
 namespace Fishit.BusinessLayer.Testing
@@ -8,7 +7,6 @@ namespace Fishit.BusinessLayer.Testing
         [Fact]
         public void TestCreateFishingTripTodo()
         {
-
         }
     }
 }

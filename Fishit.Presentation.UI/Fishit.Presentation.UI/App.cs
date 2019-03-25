@@ -1,13 +1,13 @@
-﻿using Xamarin.Forms;
+﻿using Fishit.Presentation.UI.Views;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-using Fishit.Presentation.UI.Views;
-
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
+
 namespace Fishit.Presentation.UI
 {
-	public class App : Application
-	{
+    public class App : Application
+    {
         public App()
         {
             MainPage = new SplashScreen();

@@ -6,7 +6,7 @@ namespace Fishit.Presentation.UI.MarkupExtensions
 {
     // See Splashscreen for an example on how to use
     [ContentProperty("ResourceId")]
-    class EmbeddedImage : IMarkupExtension
+    internal class EmbeddedImage : IMarkupExtension
     {
         public string ResourceId { get; set; }
 

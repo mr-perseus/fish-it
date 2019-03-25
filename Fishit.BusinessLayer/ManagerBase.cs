@@ -6,7 +6,6 @@ namespace Fishit.BusinessLayer
 {
     public abstract class ManagerBase
     {
-
         protected void HandleDbUpdateException<T>(DbUpdateException exception, FishitContext context, T entity)
             where T : class
         {
@@ -20,7 +19,7 @@ namespace Fishit.BusinessLayer
             FishitContext context, T entity)
             where T : class
         {
-            T dbEntity = (T)context.Entry(entity)
+            T dbEntity = (T) context.Entry(entity)
                 .GetDatabaseValues()
                 .ToObject();
 

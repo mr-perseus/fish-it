@@ -1,10 +1,7 @@
-﻿using System;
-using System.Linq;
-using Xunit;
-using Fishit.Dal;
+﻿using System.Linq;
 using Fishit.Dal.Entities;
 using Microsoft.EntityFrameworkCore;
-using Xunit.Abstractions;
+using Xunit;
 
 namespace Fishit.Dal.Testing
 {
@@ -19,7 +16,7 @@ namespace Fishit.Dal.Testing
                 context.Database.EnsureCreated();
             }
 
-            String name = "Meier";
+            string name = "Meier";
             FishingTrip fishingTrip = new FishingTrip
             {
                 Name = name
