@@ -6,6 +6,10 @@ namespace Fishit.BusinessLayer.Exceptions
     public class OptimisticConcurrencyException<T>
         : Exception
     {
+        public OptimisticConcurrencyException()
+        {
+        }
+
         public OptimisticConcurrencyException(string message) : base(message)
         {
         }
