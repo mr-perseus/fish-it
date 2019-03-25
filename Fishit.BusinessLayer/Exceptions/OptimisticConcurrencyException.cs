@@ -2,6 +2,7 @@
 
 namespace Fishit.BusinessLayer.Exceptions
 {
+    [Serializable]
     public class OptimisticConcurrencyException<T>
         : Exception
     {

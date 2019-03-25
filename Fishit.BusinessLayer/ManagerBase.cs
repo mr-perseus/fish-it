@@ -23,7 +23,7 @@ namespace Fishit.BusinessLayer
                 .GetDatabaseValues()
                 .ToObject();
 
-            return new OptimisticConcurrencyException<T>($"Update {typeof(T).Name}: Concurrency-Fehler", dbEntity);
+            return new OptimisticConcurrencyException<T>($"Update {typeof(T).Name}: Concurrency-Error", dbEntity);
         }
     }
 }

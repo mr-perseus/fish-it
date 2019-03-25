@@ -8,17 +8,6 @@ namespace Fishit.BusinessLayer
 {
     public class FishingTripManager : ManagerBase
     {
-        public IList<FishingTrip> List
-        {
-            get
-            {
-                using (FishitContext context = new FishitContext())
-                {
-                    return context.FishingTrips.ToList();
-                }
-            }
-        }
-
         public void Add(FishingTrip fishingTrip)
         {
             using (FishitContext context = new FishitContext())
@@ -37,7 +26,15 @@ namespace Fishit.BusinessLayer
 
         public FishingTrip GetById(int id)
         {
-            return List.FirstOrDefault(entry => entry.Id == id);
+            return GetList().FirstOrDefault(entry => entry.Id == id);
+        }
+
+        private static IEnumerable<FishingTrip> GetList()
+        {
+            using (FishitContext context = new FishitContext())
+            {
+                return context.FishingTrips.ToList();
+            }
         }
     }
 }
