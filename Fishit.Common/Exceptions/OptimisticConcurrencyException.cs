@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Fishit.BusinessLayer.Exceptions
+namespace Fishit.Common.Exceptions
 {
     [Serializable]
     public class OptimisticConcurrencyException<T>

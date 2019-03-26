@@ -1,10 +1,13 @@
-﻿using Fishit.BusinessLayer.Exceptions;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Fishit.Common.Exceptions;
 using Fishit.Dal;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fishit.BusinessLayer
+namespace Fishit.Common
 {
-    public abstract class ManagerBase
+    public class DaoBase
     {
         protected void HandleDbUpdateException<T>(DbUpdateException exception, FishitContext context, T entity)
             where T : class
@@ -19,7 +22,7 @@ namespace Fishit.BusinessLayer
             FishitContext context, T entity)
             where T : class
         {
-            T dbEntity = (T) context.Entry(entity)
+            T dbEntity = (T)context.Entry(entity)
                 .GetDatabaseValues()
                 .ToObject();
 

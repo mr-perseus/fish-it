@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Fishit.Dal;
 using Fishit.Dal.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fishit.BusinessLayer
+namespace Fishit.Common
 {
-    public class FishingTripManager : ManagerBase
+    public class FishingTripDao: DaoBase
     {
         public void Add(FishingTrip fishingTrip)
         {
