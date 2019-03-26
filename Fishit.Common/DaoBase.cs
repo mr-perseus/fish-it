@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Fishit.Common.Exceptions;
+﻿using Fishit.Common.Exceptions;
 using Fishit.Dal;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +19,7 @@ namespace Fishit.Common
             FishitContext context, T entity)
             where T : class
         {
-            T dbEntity = (T)context.Entry(entity)
+            T dbEntity = (T) context.Entry(entity)
                 .GetDatabaseValues()
                 .ToObject();
 
