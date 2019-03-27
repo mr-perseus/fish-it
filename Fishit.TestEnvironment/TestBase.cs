@@ -21,6 +21,7 @@ namespace Fishit.TestEnvironment
                     {
                         context.Database.EnsureDeleted();
                         context.Database.EnsureCreated();
+                        context.InitializeTestData();
                         _firstTestInExecution = false;
                         return;
                     }
@@ -29,6 +30,7 @@ namespace Fishit.TestEnvironment
             using (FishitContext context = new FishitContext())
             {
                 context.Database.EnsureCreated();
+                context.InitializeTestData();
             }
         }
     }
