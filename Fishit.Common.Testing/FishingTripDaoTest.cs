@@ -16,13 +16,13 @@ namespace Fishit.Common.Testing
         {
             FishingTrip fishingTrip = new FishingTrip
             {
-                Id = 1,
+                Id = 5,
                 Name = "Test"
             };
 
             FishingTripDao.Add(fishingTrip);
 
-            FishingTrip returnedFishingTrip = FishingTripDao.GetById(1);
+            FishingTrip returnedFishingTrip = FishingTripDao.GetById(5);
             Assert.Equal(fishingTrip.Name, returnedFishingTrip.Name);
         }
     }
