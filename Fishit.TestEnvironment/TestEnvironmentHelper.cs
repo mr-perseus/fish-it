@@ -67,7 +67,7 @@ namespace Fishit.TestEnvironment
             var table = entityTypeAnnotations.TableName;
 
             return string.IsNullOrWhiteSpace(schema)
-                ? $"[{table}"
+                ? $"[{table}]"
                 : $"[{schema}].[{table}]";
         }
 
