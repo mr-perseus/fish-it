@@ -23,7 +23,7 @@ namespace Fishit.Dal.Testing
                 context.SaveChanges();
             }
 
-            const int id = 1;
+            const int id = 5;
             FishingTrip fishingTripFromDb;
             using (FishitContext context = new FishitContext())
             {
