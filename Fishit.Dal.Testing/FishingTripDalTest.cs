@@ -11,27 +11,6 @@ namespace Fishit.Dal.Testing
         [Fact]
         public void TestAddFishingTrip()
         {
-            const string name = "Meier";
-            FishingTrip fishingTrip = new FishingTrip
-            {
-                Name = name
-            };
-
-            using (FishitContext context = new FishitContext())
-            {
-                context.Entry(fishingTrip).State = EntityState.Added;
-                context.SaveChanges();
-            }
-
-            const int id = 5;
-            FishingTrip fishingTripFromDb;
-            using (FishitContext context = new FishitContext())
-            {
-                fishingTripFromDb = context.FishingTrips.FirstOrDefault(k => k.Id == id);
-            }
-
-            Assert.NotNull(fishingTripFromDb);
-            Assert.Equal(name, fishingTripFromDb.Name);
         }
     }
 }
