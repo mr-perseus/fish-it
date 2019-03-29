@@ -1,6 +1,6 @@
 ﻿namespace Fishit.Presentation.UI.Models
 {
-    internal class FishingTrip
+    public class FishingTrip
     {
         public string Name { get; set; }
         public string Info { get; set; }
