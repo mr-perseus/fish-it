@@ -12,7 +12,9 @@ namespace Fishit.Dal.Entities
             Snowing,
             Hailing
         };
+
         public int Id { get; set; }
+
         /*public byte[] RowVersion { get; set; }*/
         public string Name { get; set; }
 /*        public DateTime DateTime { get; set; }

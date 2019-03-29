@@ -1,4 +1,5 @@
 ﻿using Fishit.Presentation.UI.Views;
+using Fishit.Presentation.UI.Views.FishingTrips;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,7 +11,7 @@ namespace Fishit.Presentation.UI
     {
         public App()
         {
-            MainPage = new SplashScreen();
+            MainPage = new NavigationPage(new SplashScreenPage());
         }
 
         protected override void OnStart()
