@@ -1,14 +1,13 @@
-using System;
+using Fishit.TestEnvironment;
 using Xunit;
 
 namespace Fishit.BusinessLayer.Testing
 {
-    public class FishingTripManagerTest
+    public class FishingTripManagerTest : TestBase
     {
         [Fact]
-        public void TestCreateFishingTripTodo()
+        public void TodoTestBusiness()
         {
-
         }
     }
 }

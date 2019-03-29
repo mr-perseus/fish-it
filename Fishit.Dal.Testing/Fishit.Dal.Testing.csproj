@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fishit.Dal\Fishit.Dal.csproj" />
+    <ProjectReference Include="..\Fishit.TestEnvironment\Fishit.TestEnvironment.csproj" />
   </ItemGroup>
 
 </Project>
