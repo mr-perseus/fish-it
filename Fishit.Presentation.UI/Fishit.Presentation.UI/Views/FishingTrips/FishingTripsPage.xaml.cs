@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
+using Android.Text.Style;
 using Fishit.Presentation.UI.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,18 +12,24 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
     public partial class FishingTripsPage : ContentPage
     {
         private ObservableCollection<FishingTrip> _fishingTrips;
-
         public FishingTripsPage()
         {
+            InitializeFishingTrips();
             InitializeComponent();
-
-            _fishingTrips = GetFishingTrips();
+            
             FishingTripsListView.ItemsSource = _fishingTrips;
         }
-
-        private ObservableCollection<FishingTrip> GetFishingTrips()
+        public FishingTripsPage(Location location)
         {
-            return new ObservableCollection<FishingTrip>
+            InitializeFishingTrips();
+            InitializeComponent();
+
+            FishingTripsListView.ItemsSource = GetFishingTripsByLocation(location);
+        }
+
+        private void InitializeFishingTrips()
+        {
+            _fishingTrips = new ObservableCollection<FishingTrip>
             {
                 new FishingTrip
                     {Name = "Fishing Trip #1", Info = "This was an amazing Fishing Trip", Location = "Zurichsee"},
@@ -37,6 +45,11 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             };
         }
 
+        private ObservableCollection<FishingTrip> GetFishingTripsByLocation(Location location)
+        {
+            return new ObservableCollection<FishingTrip>(_fishingTrips.Where(trips => trips.Location == location.Name));
+        }
+
         private async void TripsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null)
@@ -46,11 +59,10 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             await Navigation.PushAsync(new FishingTripDetailsPage(fishingTrip));
             FishingTripsListView.SelectedItem = null;
         }
-
-        private void TripsListView_ItemTapped(object sender, ItemTappedEventArgs e)
+        
+        private async void AddTrip_OnClicked(object sender, EventArgs e)
         {
-            // how to get the element
-            // FishingTrip fishingTrip = e.Item as FishingTrip;
+            await Navigation.PushAsync(new FishingTripsFormPage());
         }
 
         private void Edit_Clicked(object sender, EventArgs e)
@@ -68,7 +80,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
         private void Handle_Refreshing(object sender, EventArgs e)
         {
-            _fishingTrips = GetFishingTrips();
             FishingTripsListView.ItemsSource = _fishingTrips;
             FishingTripsListView.EndRefresh();
         }

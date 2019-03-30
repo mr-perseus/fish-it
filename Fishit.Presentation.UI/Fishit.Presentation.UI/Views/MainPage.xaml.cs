@@ -12,9 +12,6 @@ namespace Fishit.Presentation.UI.Views
         public MainPage()
         {
             InitializeComponent();
-            Children.Add(new MapPage());
-            Children.Add(new FishingTripsPage());
-            Children.Add(new AccountPage());
         }
 
         protected override bool OnBackButtonPressed()

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,6 +11,22 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         public FishingTripsFormPage()
         {
             InitializeComponent();
+        }
+
+        private async Task CreateFishingTrip()
+        {
+            await DisplayAlert("Fishing Trip", "Created Successfully", "Oki");
+        }
+
+        private async void CancelForm_OnClicked(object sender, EventArgs e)
+        {
+            await Navigation.PopAsync();
+        }
+
+        private async void CreateFishingTrip_OnClicked(object sender, EventArgs e)
+        {
+            await CreateFishingTrip();
+            await Navigation.PopAsync();
         }
     }
 }

@@ -4,30 +4,32 @@
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Fishit.Presentation.UI.Views.FishingTrips.FishingTripsPage">
-    <ListView x:Name="FishingTripsListView"
+    <StackLayout x:Name="Root">
+        <ListView x:Name="FishingTripsListView"
               HasUnevenRows="True"
-              ItemTapped="TripsListView_ItemTapped"
               ItemSelected="TripsListView_ItemSelected"
               IsPullToRefreshEnabled="True"
               Refreshing="Handle_Refreshing">
-
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
-                    <StackLayout Padding="5">
-                        <StackLayout Orientation="Horizontal">
-                            <Label Text="{Binding Name}" HorizontalOptions="StartAndExpand" />
-                            <Label Text="{Binding Location}" TextColor="Gray" />
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="5">
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding Name}" HorizontalOptions="StartAndExpand" />
+                                <Label Text="{Binding Location}" TextColor="Gray" />
+                            </StackLayout>
+                            <Label Text="{Binding Info}" />
                         </StackLayout>
-                        <Label Text="{Binding Info}" />
-                    </StackLayout>
-                    <ViewCell.ContextActions>
-                        <MenuItem Text="Edit" Clicked="Edit_Clicked" CommandParameter="{Binding .}" />
-                        <MenuItem Text="Delete" Clicked="Delete_Clicked" CommandParameter="{Binding .}"
-                                  IsDestructive="True" />
-                    </ViewCell.ContextActions>
-                </ViewCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+                        <ViewCell.ContextActions>
+                            <MenuItem Text="Edit" Clicked="Edit_Clicked" CommandParameter="{Binding .}" />
+                            <MenuItem Text="Delete" Clicked="Delete_Clicked" CommandParameter="{Binding .}"
+                                      IsDestructive="True" />
+                        </ViewCell.ContextActions>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button Text="add trip" Clicked="AddTrip_OnClicked"></Button>
+    </StackLayout>
 </ContentPage>
