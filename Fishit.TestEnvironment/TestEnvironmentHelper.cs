@@ -74,7 +74,7 @@ namespace Fishit.TestEnvironment
         private static void DeleteAllRecords(this DbContext context, string table)
         {
             var statement = $"DELETE FROM {table}";
-            context.Database.ExecuteSqlCommand(statement);
+            context?.Database?.ExecuteSqlCommand(statement);
         }
 
         private static void ResetEntitySeed(this DbContext context, string table)
@@ -82,7 +82,7 @@ namespace Fishit.TestEnvironment
             if (context.TableHasIdentityColumn(table))
             {
                 var statement = $"DBCC CHECKIDENT('{table}', RESEED, 0)"; // Must be a separate variable
-                context.Database.ExecuteSqlCommand(statement);
+                context?.Database?.ExecuteSqlCommand(statement);
             }
         }
 
@@ -95,7 +95,7 @@ namespace Fishit.TestEnvironment
             {
                 var statement =
                     $"SET IDENTITY_INSERT {table} {(isAutoIncrementOn ? "ON" : "OFF")}"; // Must be a separate variable
-                context.Database.ExecuteSqlCommand(statement);
+                context?.Database?.ExecuteSqlCommand(statement);
             }
         }
 

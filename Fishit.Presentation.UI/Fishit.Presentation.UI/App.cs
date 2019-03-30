@@ -1,5 +1,4 @@
 ﻿using Fishit.Presentation.UI.Views;
-using Fishit.Presentation.UI.Views.FishingTrips;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

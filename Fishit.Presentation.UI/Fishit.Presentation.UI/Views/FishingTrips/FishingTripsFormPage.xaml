@@ -5,9 +5,13 @@
              x:Class="Fishit.Presentation.UI.Views.FishingTrips.FishingTripsFormPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
+            <Label Text="Fishing Trip Form!"
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="CenterAndExpand" />
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Cancel" Clicked="CancelForm_OnClicked"></Button>
+                <Button Text="Create" Clicked="CreateFishingTrip_OnClicked"></Button>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
