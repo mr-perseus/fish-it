@@ -32,9 +32,9 @@ namespace Fishit.TestEnvironment
 
                 SeedFishingTrip(context, fishingTripTableName);
             }
-            catch (Exception excpetion)
+            catch (Exception exception)
             {
-                throw new ApplicationException(InitializationError, excpetion);
+                throw new ApplicationException(InitializationError, exception);
             }
         }
 

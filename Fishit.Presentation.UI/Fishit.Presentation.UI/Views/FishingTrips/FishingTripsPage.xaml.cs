@@ -28,13 +28,8 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             InitializeComponent();
 
             manager = new FishingTripManager();
-            _fishingTrips = new ObservableCollection<FishingTrip>(manager.GetAllFishingTrips());
+            _fishingTrips = new ObservableCollection<FishingTrip>(manager.GetFishingTripsByLocation(location));
             FishingTripsListView.ItemsSource = _fishingTrips;
-        }
-
-        private ObservableCollection<FishingTrip> GetFishingTripsByLocation(string location)
-        {
-            return new ObservableCollection<FishingTrip>(_fishingTrips.Where(trips => trips.Location == location));
         }
 
         private async void TripsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -54,14 +49,14 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
         private void Edit_Clicked(object sender, EventArgs e)
         {
-            FishingTrip fishingTrip = (sender as MenuItem).CommandParameter as FishingTrip;
+            FishingTrip fishingTrip = (sender as MenuItem)?.CommandParameter as FishingTrip;
 
-            DisplayAlert("Edit", fishingTrip.Name, "OK");
+            DisplayAlert("Edit", fishingTrip?.Name, "OK");
         }
 
         private void Delete_Clicked(object sender, EventArgs e)
         {
-            FishingTrip fishingTrip = (sender as MenuItem).CommandParameter as FishingTrip;
+            FishingTrip fishingTrip = (sender as MenuItem)?.CommandParameter as FishingTrip;
             _fishingTrips.Remove(fishingTrip);
         }
 
