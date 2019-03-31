@@ -33,16 +33,48 @@
     <Folder Include="Controls\" />
     <Folder Include="Helpers\" />
     <Folder Include="ViewModels\" />
+    <Folder Include="Views\Common\" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Views\FishingTrips.xaml">
+    <ProjectReference Include="..\..\Fishit.Dal\Fishit.Dal.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\SplashScreenPage.xaml.cs">
+      <DependentUpon>SplashScreenPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\Account\AccountPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\LoginPage.xaml">
+    <EmbeddedResource Update="Views\AuthPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\SplashScreen.xaml">
+    <EmbeddedResource Update="Views\FishingTrips\Catches\CatchForm.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\FishingTrips\FishingTripDetailsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\FishingTrips\FishingTripsFormPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\FishingTrips\FishingTripsItemPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\FishingTrips\FishingTripsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\MainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Map\MapPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SplashScreenPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

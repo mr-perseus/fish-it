@@ -10,7 +10,7 @@ namespace Fishit.Presentation.UI
     {
         public App()
         {
-            MainPage = new SplashScreen();
+            MainPage = new NavigationPage(new SplashScreenPage());
         }
 
         protected override void OnStart()

@@ -6,7 +6,7 @@ using Xamarin.Forms.Platform.Android;
 
 namespace Fishit.Presentation.UI.Droid
 {
-    [Activity(Label = "Fishit.Presentation.UI", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true,
+    [Activity(Label = "Fish IT", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : FormsAppCompatActivity
     {
