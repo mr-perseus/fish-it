@@ -15,10 +15,11 @@ namespace Fishit.BusinessLayer.Testing
         [Fact]
         public void GetAllLocationsTest()
         {
-            IList<string> actualList = FishingTripManager.GetAllLocations();
+            IList<string> actualList = FishingTripManager.GetAllLocations().ToArray();
         
-
-
+            string[] expectedList = new string[3] {"Zurich", "Wil", "Geneva"};
+        
+            Assert.Equal(expectedList, actualList);
         }
     }
 }
