@@ -30,6 +30,11 @@ namespace Fishit.Common
             return GetList().FirstOrDefault(entry => entry.Id == id);
         }
 
+        public IEnumerable<FishingTrip> GetListByLocation(string location)
+        {
+            return GetList().Where(trip => trip.Location == location);
+        }
+
         public IEnumerable<FishingTrip> GetList()
         {
             using (FishitContext context = new FishitContext())

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Fishit.Dal.Entities;
 using Fishit.TestEnvironment;
 using Xunit;
@@ -24,6 +26,18 @@ namespace Fishit.Common.Testing
 
             FishingTrip returnedFishingTrip = FishingTripDao.GetById(5);
             Assert.Equal(fishingTrip.Name, returnedFishingTrip.Name);
+        }
+
+        [Fact]
+        public void GetListByLocationTest()
+        {
+            IEnumerable<FishingTrip> actualList = FishingTripDao.GetListByLocation("Wil").ToList();
+
+            Assert.Single(actualList);
+
+            Assert.Equal(2, actualList.First().Id);
+            Assert.Equal("FishingTrip Number 2", actualList.First().Name);
+            Assert.Equal("Wil", actualList.First().Location);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Fishit.Common;
 using Fishit.Dal.Entities;
 
@@ -9,7 +8,7 @@ namespace Fishit.BusinessLayer
     {
         public IEnumerable<FishingTrip> GetListByLocation(string location)
         {
-            return GetList().Where(trip => trip.Location == location);
+            return new FishingTripDao().GetListByLocation(location);
         }
 
         public IEnumerable<FishingTrip> GetList()
