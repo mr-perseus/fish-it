@@ -10,7 +10,6 @@ namespace Fishit.BusinessLayer
         public IEnumerable<FishingTrip> GetListByLocation(string location)
         {
             return GetList().Where(trip => trip.Location == location);
-
         }
 
         public IEnumerable<FishingTrip> GetList()

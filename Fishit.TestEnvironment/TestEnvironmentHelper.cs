@@ -14,10 +14,10 @@ namespace Fishit.TestEnvironment
         private static List<FishingTrip> FishingTrips =>
             new List<FishingTrip>
             {
-                new FishingTrip {Id = 1, Name = "FishingTrip Number 1"},
-                new FishingTrip {Id = 2, Name = "FishingTrip Number 2"},
-                new FishingTrip {Id = 3, Name = "FishingTrip Number 3"},
-                new FishingTrip {Id = 4, Name = "FishingTrip Number 4"}
+                new FishingTrip {Id = 1, Name = "FishingTrip Number 1", Location = "Zurich"},
+                new FishingTrip {Id = 2, Name = "FishingTrip Number 2", Location = "Wil"},
+                new FishingTrip {Id = 3, Name = "FishingTrip Number 3", Location = "Zurich"},
+                new FishingTrip {Id = 4, Name = "FishingTrip Number 4", Location = "Geneva"}
             };
 
         public static void InitializeTestData(this FishitContext context)
