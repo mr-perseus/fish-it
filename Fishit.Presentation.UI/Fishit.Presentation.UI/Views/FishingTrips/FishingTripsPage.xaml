@@ -6,10 +6,10 @@
              x:Class="Fishit.Presentation.UI.Views.FishingTrips.FishingTripsPage">
     <StackLayout x:Name="Root">
         <ListView x:Name="FishingTripsListView"
-              HasUnevenRows="True"
-              ItemSelected="TripsListView_ItemSelected"
-              IsPullToRefreshEnabled="True"
-              Refreshing="Handle_Refreshing">
+                  HasUnevenRows="True"
+                  ItemSelected="TripsListView_ItemSelected"
+                  IsPullToRefreshEnabled="True"
+                  Refreshing="Handle_Refreshing">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -29,6 +29,6 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Button Text="add trip" Clicked="AddTrip_OnClicked"></Button>
+        <Button Text="add trip" Clicked="AddTrip_OnClicked" />
     </StackLayout>
 </ContentPage>

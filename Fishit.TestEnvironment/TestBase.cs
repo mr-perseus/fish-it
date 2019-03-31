@@ -17,7 +17,6 @@ namespace Fishit.TestEnvironment
             lock (LockObject)
             {
                 if (_firstTestInExecution)
-                {
                     using (FishitContext context = new FishitContext())
                     {
                         context.Database.EnsureDeleted();
@@ -26,7 +25,6 @@ namespace Fishit.TestEnvironment
                         _firstTestInExecution = false;
                         return;
                     }
-                }
             }
 
             using (FishitContext context = new FishitContext())

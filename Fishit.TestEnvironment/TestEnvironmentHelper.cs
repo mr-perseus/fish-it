@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using Fishit.Dal;
 using Fishit.Dal.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Fishit.TestEnvironment
 {
@@ -22,7 +24,7 @@ namespace Fishit.TestEnvironment
 
         public static void InitializeTestData(this FishitContext context)
         {
-            var fishingTripTableName = context.GetTableName<FishingTrip>();
+            string fishingTripTableName = context.GetTableName<FishingTrip>();
 
             try
             {
@@ -59,12 +61,12 @@ namespace Fishit.TestEnvironment
 
         public static string GetTableName<T>(this DbContext context)
         {
-            var entityTypeAnnotations = context.Model
+            IRelationalEntityTypeAnnotations entityTypeAnnotations = context.Model
                 .FindEntityType(typeof(T))
                 .Relational();
 
-            var schema = entityTypeAnnotations.Schema;
-            var table = entityTypeAnnotations.TableName;
+            string schema = entityTypeAnnotations.Schema;
+            string table = entityTypeAnnotations.TableName;
 
             return string.IsNullOrWhiteSpace(schema)
                 ? $"[{table}]"
@@ -73,7 +75,7 @@ namespace Fishit.TestEnvironment
 
         private static void DeleteAllRecords(this DbContext context, string table)
         {
-            var statement = $"DELETE FROM {table}";
+            string statement = $"DELETE FROM {table}";
             context?.Database?.ExecuteSqlCommand(statement);
         }
 
@@ -81,7 +83,7 @@ namespace Fishit.TestEnvironment
         {
             if (context.TableHasIdentityColumn(table))
             {
-                var statement = $"DBCC CHECKIDENT('{table}', RESEED, 0)"; // Must be a separate variable
+                string statement = $"DBCC CHECKIDENT('{table}', RESEED, 0)"; // Must be a separate variable
                 context?.Database?.ExecuteSqlCommand(statement);
             }
         }
@@ -93,7 +95,7 @@ namespace Fishit.TestEnvironment
         {
             if (context.TableHasIdentityColumn(table))
             {
-                var statement =
+                string statement =
                     $"SET IDENTITY_INSERT {table} {(isAutoIncrementOn ? "ON" : "OFF")}"; // Must be a separate variable
                 context?.Database?.ExecuteSqlCommand(statement);
             }
@@ -103,8 +105,8 @@ namespace Fishit.TestEnvironment
             this DbContext context,
             string table)
         {
-            var hasIdentityColumn = false;
-            var command = context.Database.GetDbConnection().CreateCommand();
+            bool hasIdentityColumn = false;
+            DbCommand command = context.Database.GetDbConnection().CreateCommand();
             try
             {
                 command.CommandText = $"SELECT OBJECTPROPERTY(OBJECT_ID('{table}'), 'TableHasIdentity')";
@@ -112,7 +114,7 @@ namespace Fishit.TestEnvironment
 
                 if (command.Connection.State != ConnectionState.Open) command.Connection.Open();
 
-                using (var reader = command.ExecuteReader())
+                using (DbDataReader reader = command.ExecuteReader())
                 {
                     if (reader.HasRows)
                     {

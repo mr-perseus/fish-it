@@ -8,7 +8,6 @@ namespace Fishit.Common
 {
     public class FishingTripDao : DaoBase
     {
-
         public void AddFishingTrip(FishingTrip fishingTrip)
         {
             using (FishitContext context = new FishitContext())

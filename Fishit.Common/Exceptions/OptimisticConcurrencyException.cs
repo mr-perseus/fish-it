@@ -22,7 +22,6 @@ namespace Fishit.Common.Exceptions
 
         protected OptimisticConcurrencyException(SerializationInfo serializationInfo, StreamingContext streamingContext)
         {
-
         }
 
         public T MergedEntity { get; set; }

@@ -11,7 +11,7 @@ namespace Fishit.Dal.Entities
             Raining,
             Snowing,
             Hailing
-        };
+        }
 
         public int Id { get; set; }
         public byte[] RowVersion { get; set; }

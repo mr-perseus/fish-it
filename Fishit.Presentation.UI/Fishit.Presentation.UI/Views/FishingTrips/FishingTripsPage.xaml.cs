@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,8 +10,9 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FishingTripsPage : ContentPage
     {
-        private ObservableCollection<FishingTrip> _fishingTrips;
-        private FishingTripManager manager;
+        private readonly ObservableCollection<FishingTrip> _fishingTrips;
+        private readonly FishingTripManager manager;
+
         public FishingTripsPage()
         {
             InitializeComponent();
@@ -21,6 +21,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             _fishingTrips = new ObservableCollection<FishingTrip>(manager.GetList());
             FishingTripsListView.ItemsSource = _fishingTrips;
         }
+
         public FishingTripsPage(string location)
         {
             InitializeComponent();
@@ -29,7 +30,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             _fishingTrips = new ObservableCollection<FishingTrip>(manager.GetList());
             FishingTripsListView.ItemsSource = _fishingTrips;
         }
-        
+
         private ObservableCollection<FishingTrip> GetFishingTripsByLocation(string location)
         {
             return new ObservableCollection<FishingTrip>(_fishingTrips.Where(trips => trips.Location == location));
@@ -44,7 +45,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             await Navigation.PushAsync(new FishingTripDetailsPage(fishingTrip));
             FishingTripsListView.SelectedItem = null;
         }
-        
+
         private async void AddTrip_OnClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new FishingTripsFormPage());

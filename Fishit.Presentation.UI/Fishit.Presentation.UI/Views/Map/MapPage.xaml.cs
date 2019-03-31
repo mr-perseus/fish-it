@@ -9,7 +9,8 @@ namespace Fishit.Presentation.UI.Views.Map
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MapPage : ContentPage
     {
-        private ObservableCollection<Location> _locations;
+        private readonly ObservableCollection<Location> _locations;
+
         public MapPage()
         {
             InitializeComponent();
@@ -22,7 +23,7 @@ namespace Fishit.Presentation.UI.Views.Map
         {
             return new ObservableCollection<Location>
             {
-                new Location {Name =  "Zurichsee"},
+                new Location {Name = "Zurichsee"},
                 new Location {Name = "Bodensee"},
                 new Location {Name = "Genfersee"}
             };

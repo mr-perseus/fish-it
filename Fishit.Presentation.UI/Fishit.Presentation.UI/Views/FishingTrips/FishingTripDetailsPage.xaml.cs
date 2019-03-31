@@ -11,6 +11,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         {
             InitializeComponent();
         }
+
         public FishingTripDetailsPage(FishingTrip fishingTrip)
         {
             BindingContext = fishingTrip;

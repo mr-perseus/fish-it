@@ -9,8 +9,8 @@
                    VerticalOptions="CenterAndExpand"
                    HorizontalOptions="CenterAndExpand" />
             <StackLayout Orientation="Horizontal">
-                <Button Text="Cancel" Clicked="CancelForm_OnClicked"></Button>
-                <Button Text="Create" Clicked="CreateFishingTrip_OnClicked"></Button>
+                <Button Text="Cancel" Clicked="CancelForm_OnClicked" />
+                <Button Text="Create" Clicked="CreateFishingTrip_OnClicked" />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
