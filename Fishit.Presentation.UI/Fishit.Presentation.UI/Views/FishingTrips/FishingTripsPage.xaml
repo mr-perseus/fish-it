@@ -18,7 +18,6 @@
                                 <Label Text="{Binding Name}" HorizontalOptions="StartAndExpand" />
                                 <Label Text="{Binding Location}" TextColor="Gray" />
                             </StackLayout>
-                            <Label Text="{Binding Info}" />
                         </StackLayout>
                         <ViewCell.ContextActions>
                             <MenuItem Text="Edit" Clicked="Edit_Clicked" CommandParameter="{Binding .}" />

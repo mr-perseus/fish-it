@@ -1,5 +1,4 @@
-﻿using System;
-using Fishit.Presentation.UI.Models;
+﻿using Fishit.Dal.Entities;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

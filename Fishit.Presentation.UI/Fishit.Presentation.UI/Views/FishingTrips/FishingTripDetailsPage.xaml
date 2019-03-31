@@ -7,6 +7,5 @@
     <StackLayout HorizontalOptions="StartAndExpand"
                  VerticalOptions="StartAndExpand">
         <Label Text="{Binding Location}" />
-        <Label Text="{Binding Info}" />
     </StackLayout>
 </ContentPage>

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Android.Text.Style;
-using Fishit.Presentation.UI.Models;
+using Fishit.BusinessLayer;
+using Fishit.Dal.Entities;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,42 +12,27 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
     public partial class FishingTripsPage : ContentPage
     {
         private ObservableCollection<FishingTrip> _fishingTrips;
+        private FishingTripManager manager;
         public FishingTripsPage()
         {
-            InitializeFishingTrips();
             InitializeComponent();
-            
+
+            manager = new FishingTripManager();
+            _fishingTrips = new ObservableCollection<FishingTrip>(manager.GetList());
             FishingTripsListView.ItemsSource = _fishingTrips;
         }
-        public FishingTripsPage(Location location)
+        public FishingTripsPage(string location)
         {
-            InitializeFishingTrips();
             InitializeComponent();
 
-            FishingTripsListView.ItemsSource = GetFishingTripsByLocation(location);
+            manager = new FishingTripManager();
+            _fishingTrips = new ObservableCollection<FishingTrip>(manager.GetList());
+            FishingTripsListView.ItemsSource = _fishingTrips;
         }
-
-        private void InitializeFishingTrips()
+        
+        private ObservableCollection<FishingTrip> GetFishingTripsByLocation(string location)
         {
-            _fishingTrips = new ObservableCollection<FishingTrip>
-            {
-                new FishingTrip
-                    {Name = "Fishing Trip #1", Info = "This was an amazing Fishing Trip", Location = "Zurichsee"},
-                new FishingTrip {Name = "Fishing Trip #2", Info = "The worst Trip ever.", Location = "Bodensee"},
-                new FishingTrip
-                    {Name = "Fishing Trip #3", Info = "Maybe next Time, who knows.", Location = "Zurichsee"},
-                new FishingTrip {Name = "Fishing Trip #4", Info = "Great Location", Location = "Bodensee"},
-                new FishingTrip
-                    {Name = "Fishing Trip #5", Info = "Uhh the french fishes are crazy small.", Location = "Genfersee"},
-                new FishingTrip {Name = "Fishing Trip #6", Info = "Wasn't too bad here.", Location = "Bodensee"},
-                new FishingTrip
-                    {Name = "Fishing Trip #7", Info = "Really shouldn't go here anymore.", Location = "Genfersee"}
-            };
-        }
-
-        private ObservableCollection<FishingTrip> GetFishingTripsByLocation(Location location)
-        {
-            return new ObservableCollection<FishingTrip>(_fishingTrips.Where(trips => trips.Location == location.Name));
+            return new ObservableCollection<FishingTrip>(_fishingTrips.Where(trips => trips.Location == location));
         }
 
         private async void TripsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
