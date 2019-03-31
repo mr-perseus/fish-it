@@ -14,14 +14,12 @@ namespace Fishit.Dal.Entities
         };
 
         public int Id { get; set; }
-
-        /*public byte[] RowVersion { get; set; }*/
+        public byte[] RowVersion { get; set; }
         public string Name { get; set; }
         public string Location { get; set; }
-/*        public DateTime DateTime { get; set; }
+        public DateTime DateTime { get; set; }
         public string Description { get; set; }
-        public int[] Coordinates { get; set; }
         public Weather PredominantWeather { get; set; }
-        public double TemperatureCelcius { get; set; }*/
+        public double TemperatureCelcius { get; set; }
     }
 }
