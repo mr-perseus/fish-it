@@ -22,7 +22,7 @@ namespace Fishit.Common.Testing
 
             FishingTripDao.AddFishingTrip(fishingTrip);
 
-            FishingTrip returnedFishingTrip = FishingTripDao.GetFishingTripById(5);
+            FishingTrip returnedFishingTrip = FishingTripDao.GetById(5);
             Assert.Equal(fishingTrip.Name, returnedFishingTrip.Name);
         }
     }
