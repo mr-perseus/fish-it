@@ -20,7 +20,7 @@ namespace Fishit.Common.Testing
                 Name = "Test"
             };
 
-            FishingTripDao.Add(fishingTrip);
+            FishingTripDao.AddFishingTrip(fishingTrip);
 
             FishingTrip returnedFishingTrip = FishingTripDao.GetById(5);
             Assert.Equal(fishingTrip.Name, returnedFishingTrip.Name);

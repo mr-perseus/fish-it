@@ -8,18 +8,23 @@ namespace Fishit.Common
 {
     public class FishingTripDao : DaoBase
     {
-        public void Add(FishingTrip fishingTrip)
+
+        public void AddFishingTrip(string name)
         {
             using (FishitContext context = new FishitContext())
             {
                 try
                 {
+                    FishingTrip fishingTrip = new FishingTrip
+                    {
+                        Name = name
+                    };
                     context.Entry(fishingTrip).State = EntityState.Added;
                     context.SaveChanges();
                 }
                 catch (DbUpdateException exception)
                 {
-                    HandleDbUpdateException(exception, context, fishingTrip);
+                    HandleDbUpdateException(exception, context, name);
                 }
             }
         }
