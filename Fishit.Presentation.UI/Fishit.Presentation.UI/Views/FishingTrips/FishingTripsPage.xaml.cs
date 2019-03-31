@@ -19,7 +19,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             InitializeComponent();
 
             manager = new FishingTripManager();
-            _fishingTrips = new ObservableCollection<FishingTrip>(manager.GetList());
+            _fishingTrips = new ObservableCollection<FishingTrip>(manager.GetAllFishingTrips());
             FishingTripsListView.ItemsSource = _fishingTrips;
         }
 
@@ -28,7 +28,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             InitializeComponent();
 
             manager = new FishingTripManager();
-            _fishingTrips = new ObservableCollection<FishingTrip>(manager.GetList());
+            _fishingTrips = new ObservableCollection<FishingTrip>(manager.GetAllFishingTrips());
             FishingTripsListView.ItemsSource = _fishingTrips;
         }
 
