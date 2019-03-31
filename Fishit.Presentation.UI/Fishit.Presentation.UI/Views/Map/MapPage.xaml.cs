@@ -35,7 +35,7 @@ namespace Fishit.Presentation.UI.Views.Map
                 return;
 
             Location location = e.SelectedItem as Location;
-            await Navigation.PushAsync(new FishingTripsPage(location));
+            if (location != null) await Navigation.PushAsync(new FishingTripsPage(location.Name));
             MapListView.SelectedItem = null;
         }
     }

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Fishit.Common;
 using Fishit.TestEnvironment;
 using Xunit;
 
@@ -16,9 +15,9 @@ namespace Fishit.BusinessLayer.Testing
         public void GetAllLocationsTest()
         {
             IList<string> actualList = FishingTripManager.GetAllLocations().ToArray();
-        
+
             string[] expectedList = new string[3] {"Zurich", "Wil", "Geneva"};
-        
+
             Assert.Equal(expectedList, actualList);
         }
     }

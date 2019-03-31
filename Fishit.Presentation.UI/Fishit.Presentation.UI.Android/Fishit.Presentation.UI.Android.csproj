@@ -96,7 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fishit.Presentation.UI\Fishit.Presentation.UI.csproj">
-      <Project>{8C858D63-D72A-4C34-B2AA-6A368BBF79C1}</Project>
+      <Project>{46b6c043-489a-48c9-a546-3b77d9b7b5f5}</Project>
       <Name>Fishit.Presentation.UI</Name>
     </ProjectReference>
   </ItemGroup>
