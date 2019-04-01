@@ -7,13 +7,21 @@ namespace Fishit.Common.Exceptions
     public class OptimisticConcurrencyException<T>
         : Exception
     {
-        private OptimisticConcurrencyException(SerializationInfo info, StreamingContext context) : base(info, context)
+        public OptimisticConcurrencyException()
+        {
+        }
+
+        public OptimisticConcurrencyException(string message) : base(message)
         {
         }
 
         public OptimisticConcurrencyException(string message, T mergedEntity) : base(message)
         {
             MergedEntity = mergedEntity;
+        }
+
+        protected OptimisticConcurrencyException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
         }
 
         public T MergedEntity { get; set; }
