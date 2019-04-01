@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
-using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -34,7 +32,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
         public void InitializeData()
         {
-            _fishingTrips = new ObservableCollection<FishingTrip>()
+            _fishingTrips = new ObservableCollection<FishingTrip>
             {
                 new FishingTrip {Name = "Fishing Trip #1", Location = "Zurichsee"},
                 new FishingTrip {Name = "Fishing Trip #2", Location = "Bodensee"},

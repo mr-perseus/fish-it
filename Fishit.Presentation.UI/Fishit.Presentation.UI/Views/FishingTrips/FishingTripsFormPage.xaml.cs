@@ -12,7 +12,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         public FishingTripsFormPage()
         {
             InitializeComponent();
-            FishingTrip fishingTrip = new FishingTrip() {Name = "new name...", Location = "new location..."};
+            FishingTrip fishingTrip = new FishingTrip {Name = "new name...", Location = "new location..."};
             BindingContext = fishingTrip;
         }
 
