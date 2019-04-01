@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Xamarin.Forms;

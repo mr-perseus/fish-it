@@ -19,7 +19,7 @@ namespace Fishit.Presentation.UI.Views.Map
             _locations = new ObservableCollection<string>(manager.GetAllLocations());
             MapListView.ItemsSource = _locations;
         }
-        
+
         private async void MapListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null)
