@@ -12,7 +12,7 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Padding="5">
-                            <Label Text="{Binding Name}" />
+                            <Label Text="{Binding}" />
                         </StackLayout>
                     </ViewCell>
                 </DataTemplate>

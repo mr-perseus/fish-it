@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,25 +12,43 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FishingTripsPage : ContentPage
     {
-        private readonly ObservableCollection<FishingTrip> _fishingTrips;
-        private readonly FishingTripManager manager;
+        private ObservableCollection<FishingTrip> _fishingTrips;
+        //private readonly FishingTripManager manager;
 
         public FishingTripsPage()
         {
+            InitializeData();
             InitializeComponent();
 
-            manager = new FishingTripManager();
-            _fishingTrips = new ObservableCollection<FishingTrip>(manager.GetAllFishingTrips());
+            //manager = new FishingTripManager();
+            //_fishingTrips = new ObservableCollection<FishingTrip>(manager.GetAllFishingTrips());
             FishingTripsListView.ItemsSource = _fishingTrips;
         }
 
         public FishingTripsPage(string location)
         {
+            InitializeData();
             InitializeComponent();
+            _fishingTrips =
+                new ObservableCollection<FishingTrip>(_fishingTrips.Where(trip => trip.Location == location));
 
-            manager = new FishingTripManager();
-            _fishingTrips = new ObservableCollection<FishingTrip>(manager.GetFishingTripsByLocation(location));
+            //manager = new FishingTripManager();
+            //_fishingTrips = new ObservableCollection<FishingTrip>(manager.GetFishingTripsByLocation(location));
             FishingTripsListView.ItemsSource = _fishingTrips;
+        }
+
+        public void InitializeData()
+        {
+            _fishingTrips = new ObservableCollection<FishingTrip>()
+            {
+                new FishingTrip {Name = "Fishing Trip #1", Location = "Zurichsee"},
+                new FishingTrip {Name = "Fishing Trip #2", Location = "Bodensee"},
+                new FishingTrip {Name = "Fishing Trip #3", Location = "Zurichsee"},
+                new FishingTrip {Name = "Fishing Trip #4", Location = "Bodensee"},
+                new FishingTrip {Name = "Fishing Trip #5", Location = "Genfersee"},
+                new FishingTrip {Name = "Fishing Trip #6", Location = "Bodensee"},
+                new FishingTrip {Name = "Fishing Trip #7", Location = "Genfersee"}
+            };
         }
 
         private async void TripsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

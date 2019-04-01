@@ -9,15 +9,21 @@ namespace Fishit.Presentation.UI.Views.Map
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MapPage : ContentPage
     {
-        private readonly ObservableCollection<string> _locations;
+        private ObservableCollection<string> _locations;
 
         public MapPage()
         {
+            InitializeData();
             InitializeComponent();
 
-            FishingTripManager manager = new FishingTripManager();
-            _locations = new ObservableCollection<string>(manager.GetAllLocations());
+            //FishingTripManager manager = new FishingTripManager();
+            //_locations = new ObservableCollection<string>(manager.GetAllLocations());
             MapListView.ItemsSource = _locations;
+        }
+
+        public void InitializeData()
+        {
+            _locations = new ObservableCollection<string>() {"Zurichsee", "Bodensee", "Genfersee"};
         }
 
         private async void MapListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
