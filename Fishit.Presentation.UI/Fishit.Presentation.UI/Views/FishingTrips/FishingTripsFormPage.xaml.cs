@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Fishit.Dal.Entities;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,6 +12,13 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         public FishingTripsFormPage()
         {
             InitializeComponent();
+            FishingTrip fishingTrip = new FishingTrip() {Name = "new name...", Location = "new location..."};
+            BindingContext = fishingTrip;
+        }
+
+        public FishingTripsFormPage(FishingTrip fishingTrip)
+        {
+            BindingContext = fishingTrip;
         }
 
         private async Task CreateFishingTrip()

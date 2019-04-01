@@ -13,15 +13,12 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
     public partial class FishingTripsPage : ContentPage
     {
         private ObservableCollection<FishingTrip> _fishingTrips;
-        //private readonly FishingTripManager manager;
 
         public FishingTripsPage()
         {
             InitializeData();
             InitializeComponent();
 
-            //manager = new FishingTripManager();
-            //_fishingTrips = new ObservableCollection<FishingTrip>(manager.GetAllFishingTrips());
             FishingTripsListView.ItemsSource = _fishingTrips;
         }
 
@@ -32,8 +29,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             _fishingTrips =
                 new ObservableCollection<FishingTrip>(_fishingTrips.Where(trip => trip.Location == location));
 
-            //manager = new FishingTripManager();
-            //_fishingTrips = new ObservableCollection<FishingTrip>(manager.GetFishingTripsByLocation(location));
             FishingTripsListView.ItemsSource = _fishingTrips;
         }
 
@@ -66,11 +61,11 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             await Navigation.PushAsync(new FishingTripsFormPage());
         }
 
-        private void Edit_Clicked(object sender, EventArgs e)
+        private async void Edit_Clicked(object sender, EventArgs e)
         {
             FishingTrip fishingTrip = (sender as MenuItem)?.CommandParameter as FishingTrip;
-
-            DisplayAlert("Edit", fishingTrip?.Name, "OK");
+            Console.Write(fishingTrip);
+            await Navigation.PushAsync(new FishingTripsFormPage(fishingTrip));
         }
 
         private void Delete_Clicked(object sender, EventArgs e)

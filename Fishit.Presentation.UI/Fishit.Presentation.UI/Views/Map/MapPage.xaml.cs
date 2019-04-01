@@ -15,9 +15,7 @@ namespace Fishit.Presentation.UI.Views.Map
         {
             InitializeData();
             InitializeComponent();
-
-            //FishingTripManager manager = new FishingTripManager();
-            //_locations = new ObservableCollection<string>(manager.GetAllLocations());
+            
             MapListView.ItemsSource = _locations;
         }
 
