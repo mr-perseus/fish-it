@@ -1,4 +1,4 @@
-const { Company } = require("../services/companyService")
+const { Company } = require("../services/fishingTripService")
 const mongoose = require("mongoose")
 const config = require("config")
 const csv = require("csv-parser")

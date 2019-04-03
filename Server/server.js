@@ -1,13 +1,12 @@
 ﻿const bodyParser = require("body-parser")
 const express = require("express")
 const server = express()
-const path = require("path")
 const config = require("config")
 const mongoose = require("mongoose")
 
 const auth = require("./routes/authRoutes")
 const users = require("./routes/usersRoutes")
-const companies = require("./routes/companiesRoutes")
+const fishingTrips = require("./routes/fishingTripsRoutes")
 
 // IMPORTANT: set your json web token private key as an environmental variable.
 if (!config.get("jwtPrivateKey")) {
@@ -28,24 +27,9 @@ server.disable("x-powered-by")
 server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({ extended: true }))
 
-if (process.env.NODE_ENV != "production") {
-	server.use((req, res, next) => {
-		res.setHeader("Access-Control-Allow-Origin", config.corsEndpoint)
-		res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
-		res.setHeader("Access-Control-Allow-Headers", "x-auth-token, content-type")
-		next()
-	})
-}
-
 server.use("/api/auth", auth)
-server.use("/api/companies", companies)
+server.use("/api/fishingtrips", fishingTrips)
 server.use("/api/users", users)
-
-server.use(express.static(path.join(__dirname, "..", "client", "build")))
-
-server.use("/*", (req, res) => {
-	res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"))
-})
 
 const port = process.env.PORT || config.port
 server.listen(port, (error) => {

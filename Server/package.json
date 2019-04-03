@@ -1,14 +1,14 @@
 {
-	"name": "career-fair",
-	"version": "0.3.0",
-	"description": "Career Fair Server",
+	"name": "fish-it",
+	"version": "0.1.0",
+	"description": "FishIT Server",
 	"author": {
 		"name": "Maroben"
 	},
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git://github.com/Maroben/Career-Fair.git"
+		"url": "git://github.com/mr-perseus/fish-it"
 	},
 	"dependencies": {
 		"bcryptjs": "^2.4.3",
