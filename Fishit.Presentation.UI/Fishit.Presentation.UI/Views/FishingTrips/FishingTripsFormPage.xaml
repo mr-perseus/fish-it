@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Fishit.Presentation.UI.Views.FishingTrips.FishingTripsFormPage">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand">
+            <Label Text="{Binding Name}" />
+            <Label Text="{Binding Location}" />
+
+            <StackLayout VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                <Button Text="Cancel" Clicked="CancelForm_OnClicked" />
+                <Button Text="Create" Clicked="CreateFishingTrip_OnClicked" />
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
