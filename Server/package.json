@@ -1,0 +1,31 @@
+{
+	"name": "career-fair",
+	"version": "0.3.0",
+	"description": "Career Fair Server",
+	"author": {
+		"name": "Maroben"
+	},
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/Maroben/Career-Fair.git"
+	},
+	"dependencies": {
+		"bcryptjs": "^2.4.3",
+		"body-parser": "^1.18.3",
+		"config": "^3.0.1",
+		"csv-parser": "^2.2.0",
+		"express": "^4.16.4",
+		"fs": "0.0.1-security",
+		"joi": "^14.3.1",
+		"jsonwebtoken": "^8.5.0",
+		"lodash": "^4.17.11",
+		"mongoose": "^5.4.19",
+		"path": "^0.12.7"
+	},
+	"scripts": {
+		"start": "node server.js",
+		"build": "node handleWindowsService.js install",
+		"clean": "node handleWindowsService.js remove"
+	}
+}

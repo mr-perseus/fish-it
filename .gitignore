@@ -1,6 +1,7 @@
 # manually added
 # ignore Xamarin.Android Resource.Designer.cs files
 **/[Rr]esource.[Dd]esigner.cs
+Server/node_modules/
 
 # Created by https://www.gitignore.io/api/linux,macos,csharp,android,windows,visualstudio,androidstudio,xamarinstudio
 # Edit at https://www.gitignore.io/?templates=linux,macos,csharp,android,windows,visualstudio,androidstudio,xamarinstudio
