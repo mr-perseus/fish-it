@@ -20,8 +20,8 @@ mongoose
 		useCreateIndex: true,
 		useFindAndModify: false
 	})
-	.then(() => console.info("Connected to MongoDB ..."))
-	.catch((error) => console.error("Could not connect to MongoDB ..."))
+	.then(() => console.info("Connected to MongoDB..."))
+	.catch((error) => console.error("Could not connect to MongoDB..."))
 
 server.disable("x-powered-by")
 server.use(bodyParser.json())

@@ -19,6 +19,10 @@ const fishingTripSchema = new mongoose.Schema({
 	description: {
 		type: String,
 		maxlength: 1024
+	},
+	temperature: {
+		type: String,
+		maxlength: 8
 	}
 })
 
@@ -26,18 +30,21 @@ const FishingTrip = mongoose.model("FishingTrips", fishingTripSchema)
 
 function validateFishingTrip(fishingTrip) {
 	const schema = {
-		weather: Joi.string().max(64).required,
+		weather: Joi.string()
+			.max(64)
+			.required(),
 		location: Joi.string()
 			.max(64)
 			.required(),
 		date: Joi.string().required(),
-		description: Joi.string().max(1024)
+		description: Joi.string().max(1024),
+		temperature: Joi.string().max(8)
 	}
 
 	return Joi.validate(fishingTrip, schema)
 }
 
-const fishingTripAttr = ["weather", "location", "date", "description"]
+const fishingTripAttr = ["weather", "location", "date", "description", "temperature"]
 
 module.exports = {
 	FishingTrip,
