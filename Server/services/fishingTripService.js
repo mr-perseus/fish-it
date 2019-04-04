@@ -1,7 +1,7 @@
 const _ = require("lodash")
 const { FishingTrip, fishingTripAttr, validateFishingTrip } = require("../models/FishingTrip")
 
-module.exports.getFishingTrips = async function(req, res) {
+module.exports.getFishingTrips = async (req, res) => {
 	await FishingTrip.find()
 		.then((fishingTrips) => {
 			res.send(fishingTrips)
@@ -11,7 +11,7 @@ module.exports.getFishingTrips = async function(req, res) {
 		})
 }
 
-module.exports.getFishingTrip = async function(req, res) {
+module.exports.getFishingTrip = async (req, res) => {
 	const _id = req.params.id
 
 	await FishingTrip.findOne({ _id })
@@ -23,7 +23,7 @@ module.exports.getFishingTrip = async function(req, res) {
 		})
 }
 
-module.exports.createFishingTrip = async function(req, res) {
+module.exports.createFishingTrip = async (req, res) => {
 	const fishingTrip = _.pick(req.body, fishingTripAttr)
 	const { error } = validateFishingTrip(fishingTrip)
 	if (error) return res.status(400).send(error.details[0].message)
@@ -38,7 +38,7 @@ module.exports.createFishingTrip = async function(req, res) {
 		})
 }
 
-module.exports.updateFishingTrip = async function(req, res) {
+module.exports.updateFishingTrip = async (req, res) => {
 	const _id = req.params.id
 	const fishingTrip = _.pick(req.body, fishingTripAttr)
 
@@ -54,7 +54,7 @@ module.exports.updateFishingTrip = async function(req, res) {
 		})
 }
 
-module.exports.deleteFishingTrip = async function(req, res) {
+module.exports.deleteFishingTrip = async (req, res) => {
 	const _id = req.params.id
 
 	await FishingTrip.findOneAndDelete({ _id })

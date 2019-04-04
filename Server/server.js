@@ -6,6 +6,7 @@ const mongoose = require("mongoose")
 
 const auth = require("./routes/authRoutes")
 const users = require("./routes/usersRoutes")
+const friends = require("./routes/friendsRoutes")
 const fishingTrips = require("./routes/fishingTripsRoutes")
 
 // IMPORTANT: set your json web token private key as an environmental variable.
@@ -28,8 +29,9 @@ server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({ extended: true }))
 
 server.use("/api/auth", auth)
-server.use("/api/fishingtrips", fishingTrips)
 server.use("/api/users", users)
+server.use("/api/friends", friends)
+server.use("/api/fishingtrips", fishingTrips)
 
 const port = process.env.PORT || config.port
 server.listen(port, (error) => {
