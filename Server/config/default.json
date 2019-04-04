@@ -1,4 +1,6 @@
 {
 	"jwtPrivateKey": "",
+	"adminPw": "",
+	"userPw": "",
 	"db": "mongodb://localhost:27017/fishit"
 }

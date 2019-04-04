@@ -1,3 +1,5 @@
 {
-	"jwtPrivateKey": "fishit_jwtPrivateKey"
+	"jwtPrivateKey": "fishit_jwtPrivateKey",
+	"adminPw": "fishit_adminPw",
+	"userPw": "fishit_userPw"
 }
