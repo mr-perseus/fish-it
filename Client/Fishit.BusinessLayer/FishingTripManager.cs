@@ -2,14 +2,26 @@
 using System.Linq;
 using Fishit.Common;
 using Fishit.Dal.Entities;
+using Fishit.Logging;
 
 namespace Fishit.BusinessLayer
 {
     public class FishingTripManager
     {
-        public List<string> GetAllLocations()
+        private readonly ILogger _logger;
+
+        public FishingTripManager()
         {
-            return GetAllFishingTrips().GroupBy(trip => trip.Location).Select(l => l.Key).ToList();
+            _logger = LogManager.GetLogger(nameof(FishingTripManager));
+        }
+        
+        public IList<string> GetAllLocations()
+        {
+            IList<string> locations = GetAllFishingTrips().GroupBy(trip => trip.Location).Select(l => l.Key).ToList();
+            
+            _logger.Info(nameof(GetAllLocations) + "; locations; "+ locations);
+
+            return locations;
         }
 
         public IEnumerable<FishingTrip> GetFishingTripsByLocation(string location)

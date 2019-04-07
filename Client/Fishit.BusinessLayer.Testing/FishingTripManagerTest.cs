@@ -14,9 +14,9 @@ namespace Fishit.BusinessLayer.Testing
         [Fact]
         public void GetAllLocationsTest()
         {
-            IList<string> actualList = FishingTripManager.GetAllLocations().ToArray();
+            IList<string> actualList = FishingTripManager.GetAllLocations();
 
-            string[] expectedList = new string[3] {"Zurich", "Wil", "Geneva"};
+            string[] expectedList = {"Zurich", "Wil", "Geneva"};
 
             Assert.Equal(expectedList, actualList);
         }
