@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Fishit.Dal.Entities
 {
@@ -20,6 +21,7 @@ namespace Fishit.Dal.Entities
         public DateTime DateTime { get; set; }
         public string Description { get; set; }
         public Weather PredominantWeather { get; set; }
-        public double TemperatureCelcius { get; set; }
+        public double TemperatureCelsius { get; set; }
+        public List<Catch> Catches { get; set; }
     }
 }
