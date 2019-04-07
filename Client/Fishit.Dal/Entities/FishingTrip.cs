@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace Fishit.Dal.Entities
 {
@@ -21,5 +22,18 @@ namespace Fishit.Dal.Entities
         public string Description { get; set; }
         public Weather PredominantWeather { get; set; }
         public double TemperatureCelcius { get; set; }
+
+
+        public override string ToString()
+        {
+            return base.ToString() + "; " +
+                   nameof(Id) + "; " + Id + "; " +
+                   nameof(RowVersion) + "; " + RowVersion + "; " +
+                   nameof(Name) + "; " + Name + "; " +
+                   nameof(Location) + "; " + Location + "; " +
+                   nameof(DateTime) + "; " + DateTime.ToString(CultureInfo.CurrentCulture) + "; " +
+                   nameof(PredominantWeather) + "; " + PredominantWeather + "; " +
+                   nameof(TemperatureCelcius) + "; " + TemperatureCelcius;
+        }
     }
 }
