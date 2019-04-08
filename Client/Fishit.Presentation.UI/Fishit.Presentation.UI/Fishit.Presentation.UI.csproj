@@ -42,6 +42,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\FishingTrips\FishingTripsFormPage.xaml.cs">
+      <DependentUpon>FishingTripsFormPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\SplashScreenPage.xaml.cs">
       <DependentUpon>SplashScreenPage.xaml</DependentUpon>
     </Compile>

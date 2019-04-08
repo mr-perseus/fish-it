@@ -15,7 +15,7 @@
                     <ViewCell>
                         <StackLayout Padding="5">
                             <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding Name}" HorizontalOptions="StartAndExpand" />
+                                <Label Text="{Binding DateTime}" HorizontalOptions="StartAndExpand" />
                                 <Label Text="{Binding Location}" TextColor="Gray" />
                             </StackLayout>
                         </StackLayout>

@@ -6,6 +6,10 @@
              x:Class="Fishit.Presentation.UI.Views.FishingTrips.FishingTripDetailsPage">
     <StackLayout HorizontalOptions="StartAndExpand"
                  VerticalOptions="StartAndExpand">
+        <Label Text="{Binding DateTime}" />
         <Label Text="{Binding Location}" />
+        <Label Text="{Binding Description}" />
+        <Label Text="{Binding PredominantWeather}" />
+        <Label Text="{Binding TemperatureCelsius, StringFormat='{0:N}°C'}" />
     </StackLayout>
 </ContentPage>
