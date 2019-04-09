@@ -7,6 +7,7 @@ namespace Fishit.Dal.Entities
         public int Id { get; set; }
         public Fishtype Fishtype { get; set; }
         public DateTime DateTime { get; set; }
-        public double SizeInMeters { get; set; }
+        public double Length { get; set; }
+        public double Weight { get; set; }
     }
 }
