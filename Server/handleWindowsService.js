@@ -9,8 +9,8 @@ const filePath = `${dir}\\${file}`
 const action = process.argv[2]
 
 const svc = new Service({
-	name: "NodeJs HSR Career",
-	description: "HSR Stellenboerse",
+	name: "NodeJs Fish IT",
+	description: "Fish IT",
 	script: filePath,
 	nodeOptions: ["--harmony", "--max_old_space_size=4096"]
 })

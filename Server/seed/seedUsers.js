@@ -1,23 +1,19 @@
-const { User } = require("../services/userService")
+const { User } = require("../models/User")
+
 const mongoose = require("mongoose")
 const bcrypt = require("bcryptjs")
 const config = require("config")
 
 const users = [
 	{
-		name: "Maroben",
-		email: "maroben@daishen.ch",
-		password: config.marobenPw
-	},
-	{
-		name: "Admin",
-		email: "admin@hsrstellenboerse.ch",
-		password: config.adminPw
-	},
-	{
-		name: "Userino",
-		email: "user@hsrstellenboerse.ch",
+		username: "Userino",
+		email: "userino@fishit.ch",
 		password: config.userPw
+	},
+	{
+		username: "Admin",
+		email: "admin@hfishit.ch",
+		password: config.adminPw
 	}
 ]
 
@@ -42,7 +38,7 @@ async function seed() {
 		await user
 			.save()
 			.then((user) => {
-				console.info(`User ${user.name} created ...`)
+				console.info(`User ${user.username} created ...`)
 				if (i + 1 >= users.length) {
 					console.info("Done")
 					process.exit(0)

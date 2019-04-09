@@ -1,10 +1,5 @@
 {
-	"jwtPrivateKey": "career_fair_jwtPrivateKey",
-	"adminPw": "career_fair_adminPw",
-	"marobenPw": "career_fair_marobenPw",
-	"userPw": "career_fair_userPw",
-	"mongoDb": "career_fair_db",
-	"mongoPort": "career_fair_db_port",
-	"mongoUser": "career_fair_db_user",
-	"mongoPw": "career_fair_db_pw"
+	"jwtPrivateKey": "fishit_jwtPrivateKey",
+	"adminPw": "fishit_adminPw",
+	"userPw": "fishit_userPw"
 }
