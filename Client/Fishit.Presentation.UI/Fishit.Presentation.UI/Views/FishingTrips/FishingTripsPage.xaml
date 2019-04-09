@@ -3,6 +3,7 @@
 <ContentPage Title="Fishing Trips"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:SuaveControls.Views;assembly=SuaveControls.FloatingActionButton"
              x:Class="Fishit.Presentation.UI.Views.FishingTrips.FishingTripsPage">
     <StackLayout x:Name="Root">
         <ListView x:Name="FishingTripsListView"
@@ -29,6 +30,8 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Button Text="add trip" Clicked="AddTrip_OnClicked" />
+        <views:FloatingActionButton Image="plus.png" ButtonColor="Red" WidthRequest="56" HeightRequest="56" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Clicked="AddTrip_OnClicked"/>
+
+<Button Text="add trip" Clicked="AddTrip_OnClicked" />
     </StackLayout>
 </ContentPage>
