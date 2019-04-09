@@ -23,9 +23,14 @@
 		"mongoose": "^5.4.19",
 		"path": "^0.12.7"
 	},
+	"devDependencies": {
+		"jasmine": "3.4.0",
+		"jasmine-reporters": "2.3.2"
+	},
 	"scripts": {
 		"start": "node server.js",
 		"build": "node handleWindowsService.js install",
-		"clean": "node handleWindowsService.js remove"
+		"clean": "node handleWindowsService.js remove",
+		"test": "jasmine JASMINE_CONFIG_PATH=test/jasmine.json"
 	}
 }
