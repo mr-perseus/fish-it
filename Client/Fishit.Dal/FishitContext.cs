@@ -23,10 +23,6 @@ namespace Fishit.Dal
             modelBuilder.Entity<FishingTrip>()
                 .Property(e => e.Location)
                 .HasMaxLength(50);
-
-            modelBuilder.Entity<FishingTrip>()
-                .Property(e => e.RowVersion)
-                .IsRowVersion();
         }
     }
 }
