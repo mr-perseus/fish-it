@@ -3,6 +3,7 @@ const Joi = require("joi")
 const _ = require("lodash")
 
 const { User } = require("./userService")
+const getLogger = require("log4js").getLogger;
 
 function validateAuth(body) {
 	const user = _.pick(body, ["email", "password"])
@@ -24,14 +25,24 @@ function validateAuth(body) {
 
 module.exports.login = async function(req, res) {
 	const { error } = validateAuth(req.body)
-	if (error) return res.status(400).send(error.details[0].message)
+	if (error) {
+		getLogger().error(`authService; login; Error validating; error;`, error);
+		return res.status(400).send(error.details[0].message)
+	}
 
 	let user = await User.findOne({ email: req.body.email })
-	if (!user) return res.status(400).send("Invalid email or password.")
+	if (!user) {
+		getLogger().error(`authService; login; Error finding user; req.body.email; `, req.body.email);
+		return res.status(400).send("Invalid email or password.")
+	}
 
 	const validPassword = await bcrypt.compare(req.body.password, user.password)
-	if (!validPassword) return res.status(400).send("Invalid email or password.")
+	if (!validPassword) {
+		getLogger().error(`authService; login; Error validPassword`);
+		return res.status(400).send("Invalid email or password.")
+	}
 
 	const token = user.generateAuthToken()
+	getLogger().debug(`authService; login; End successful;`);
 	res.send(token)
 }

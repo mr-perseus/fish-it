@@ -1,11 +1,6 @@
 {
 	"jwtPrivateKey": "",
 	"adminPw": "",
-	"marobenPw": "",
 	"userPw": "",
-	"mongoDb": "",
-	"mongoPort": "",
-	"mongoUser": "",
-	"mongoPw": "",
-	"db": "mongodb://localhost:27017/career"
+	"db": "mongodb://localhost:27017/fishit"
 }
