@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Fishit.Dal;
 using Fishit.Dal.Entities;
 using Fishit.Logging;
@@ -10,18 +11,33 @@ namespace Fishit.Common
 {
     public class FishingTripDao : DaoBase
     {
-        async void CreateHTTPGetRequest(string url)
+        async Task CreateHTTPGetRequest(string url)
         {
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = await client.GetAsync("http://sinv-56038.edu.hsr.ch:40007/api/fishingtrips"))
+                using (HttpResponseMessage response = await client.GetAsync(url))
                 {
                     using (HttpContent content = response.Content)
                     {
                         string mycontent = await content.ReadAsStringAsync();
-                        Console.Writeline(mycontent);
                     }
-                    
+
+                }
+            }
+
+        }
+
+        async void DeleteFishingTripHTTPRequest(string url)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpResponseMessage response = await client.DeleteAsync(url))
+                {
+                    using (HttpContent content = response.Content)
+                    {
+                        string mycontent = await content.ReadAsStringAsync();
+                    }
+
                 }
             }
 
