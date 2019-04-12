@@ -1,13 +1,48 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Fishit.Presentation.UI.Views.FishingTrips.Catches.CatchForm">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+             x:Class="Fishit.Presentation.UI.Views.FishingTrips.Catches.CatchForm"
+             Title="Grid Demo Page">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <!--Horizontal, Reihe-->
+            <RowDefinition Height="5" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="0" />
+            <RowDefinition Height="70" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions><!--Spalte-->
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+      
+        </Grid.ColumnDefinitions>
+
+        <Label Text="Fishtype:"
+               Grid.Row="1" Grid.Column="0" />
+
+        <Entry Grid.Row="1" Grid.Column="1" Text="{Binding Fishtype}" />
+
+        <Label Text="Timestamp:"
+               Grid.Row="2" Grid.Column="0" />
+
+        <Entry Grid.Row="2" Grid.Column="1" Text="{Binding DateTime}" />
+
+        <Label Text="Length:"
+               Grid.Row="3" Grid.Column="0" />
+
+        <Entry Grid.Row="3" Grid.Column="1" Text="{Binding Length}" />
+
+        <Label Text="Weight:"
+               Grid.Row="4" Grid.Column="0" />
+
+        <Entry Grid.Row="4" Grid.Column="1" Text="{Binding Weight}" />
+
+        <Button Grid.Row="6" Grid.Column="0" Text="Cancel" Clicked="CancelCatchForm_OnClicked" />
+        <Button Grid.Row="6" Grid.Column="1" Text="Save" Clicked="SaveCatch_OnClicked" />
+
+    </Grid>
 </ContentPage>
