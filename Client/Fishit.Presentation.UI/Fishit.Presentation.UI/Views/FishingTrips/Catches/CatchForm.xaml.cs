@@ -9,7 +9,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CatchForm : ContentPage
     {
-     //   public CatchForm() : this(new Catch()) { }
         public CatchForm()
         {
             InitializeComponent();

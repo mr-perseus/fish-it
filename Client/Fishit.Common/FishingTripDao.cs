@@ -27,7 +27,7 @@ namespace Fishit.Common
 
         }
 
-        async void DeleteFishingTripHTTPRequest(string url)
+        async Task DeleteFishingTripHTTPRequest(string url)
         {
             using (HttpClient client = new HttpClient())
             {
