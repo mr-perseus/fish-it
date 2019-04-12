@@ -5,7 +5,6 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <!--Horizontal, Reihe-->
             <RowDefinition Height="5" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -15,7 +14,7 @@
             <RowDefinition Height="70" />
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions><!--Spalte-->
+        <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
       

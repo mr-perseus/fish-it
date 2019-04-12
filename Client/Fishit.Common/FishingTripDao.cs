@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using Fishit.Dal;
 using Fishit.Dal.Entities;
 using Fishit.Logging;
@@ -9,6 +10,22 @@ namespace Fishit.Common
 {
     public class FishingTripDao : DaoBase
     {
+        async void CreateHTTPGetRequest(string url)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpResponseMessage response = await client.GetAsync("http://sinv-56038.edu.hsr.ch:40007/api/fishingtrips"))
+                {
+                    using (HttpContent content = response.Content)
+                    {
+                        string mycontent = await content.ReadAsStringAsync();
+                        Console.Writeline(mycontent);
+                    }
+                    
+                }
+            }
+
+        }
         private readonly ILogger _logger;
 
         public FishingTripDao()
