@@ -6,6 +6,7 @@ using Fishit.Dal;
 using Fishit.Dal.Entities;
 using Fishit.Logging;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Fishit.Common
 {
@@ -20,6 +21,7 @@ namespace Fishit.Common
                     using (HttpContent content = response.Content)
                     {
                         string mycontent = await content.ReadAsStringAsync();
+                        GetAllFishingTripObjectsFromJSON(mycontent);
                     }
 
                 }
@@ -27,11 +29,18 @@ namespace Fishit.Common
 
         }
 
-        async Task DeleteFishingTripHTTPRequest(string url)
+        public List<FishingTrip> GetAllFishingTripObjectsFromJSON(string jsonContent)
+        {
+
+             List<FishingTrip> fishingTrip = JsonConvert.DeserializeObject<List<FishingTrip>>(jsonContent);
+             return fishingTrip;
+        }
+
+        async Task DeleteFishingTripByRequest(string url, string id)
         {
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = await client.DeleteAsync(url))
+                using (HttpResponseMessage response = await client.DeleteAsync(url + id))
                 {
                     using (HttpContent content = response.Content)
                     {
@@ -42,6 +51,8 @@ namespace Fishit.Common
             }
 
         }
+
+
         private readonly ILogger _logger;
 
         public FishingTripDao()
