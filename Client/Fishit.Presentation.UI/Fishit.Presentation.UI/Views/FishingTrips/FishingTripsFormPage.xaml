@@ -2,13 +2,14 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Fishit.Presentation.UI.Views.FishingTrips.FishingTripsFormPage">
+             x:Class="Fishit.Presentation.UI.Views.FishingTrips.FishingTripsFormPage"
+             x:Name="This">
     <ContentPage.Content>
         <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand">
             <Entry Text="{Binding DateTime}" />
             <Entry Text="{Binding Location}" />
             <Editor Text="{Binding Description}" />
-            <Picker x:Name="WeatherPicker" Title="Select the Weather" ItemsSource="{Binding WeatherOptions}" SelectedItem="{Binding SelectedWeather}" />
+            <Picker BindingContext="{x:Reference This}" x:Name="WeatherPicker" Title="Select the Weather" ItemsSource="{Binding WeatherOptions}" SelectedItem="{Binding SelectedWeather}" />
             <Entry Text="{Binding TemperatureCelsius, StringFormat='{0:N}°C'}" />
 
             <StackLayout VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
