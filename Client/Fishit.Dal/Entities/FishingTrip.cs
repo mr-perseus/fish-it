@@ -8,7 +8,7 @@ namespace Fishit.Dal.Entities
     {
         public enum Weather
         {
-            Sunny,
+            Sunny = 1,
             Overcast,
             Raining,
             Snowing,

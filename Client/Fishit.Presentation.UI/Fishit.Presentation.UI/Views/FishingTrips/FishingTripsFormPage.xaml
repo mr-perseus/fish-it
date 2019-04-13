@@ -2,19 +2,54 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:behaviors="clr-namespace:Fishit.Presentation.UI.Behaviors"
              x:Class="Fishit.Presentation.UI.Views.FishingTrips.FishingTripsFormPage"
              x:Name="This">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand">
-            <Entry Text="{Binding DateTime}" />
-            <Entry Text="{Binding Location}" />
-            <Editor Text="{Binding Description}" />
-            <Picker BindingContext="{x:Reference This}" x:Name="WeatherPicker" Title="Select the Weather" ItemsSource="{Binding WeatherOptions}" SelectedItem="{Binding SelectedWeather}" />
-            <Entry Text="{Binding Temperature, StringFormat='{0:N}°C'}" />
+        <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Padding="20">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <DatePicker BindingContext="{x:Reference This}" x:Name="FishingTripDatePicker" Format="D" DateSelected="Refresh_DateTime" Date="{Binding Date}" />
+                <TimePicker BindingContext="{x:Reference This}" x:Name="FishingTripTimePicker" PropertyChanged="Refresh_DateTime" Time="{Binding Time}"/>
+            </StackLayout>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <StackLayout VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Column="0" Grid.Row="0" Text="Location:" VerticalOptions="Center" FontSize="Medium" />
+                <Entry Grid.Column="1" Grid.Row="0" Text="{Binding Location}">
+                    <Entry.Behaviors>
+                        <behaviors:CharOnlyBehavior />
+                        <behaviors:MaxLengthBehavior MaxLength="20" />
+                    </Entry.Behaviors>
+                </Entry>
+                <Label Grid.Column="0" Grid.Row="1" Text="Description:" VerticalOptions="Start" Margin="0, 8, 0, 0" FontSize="Medium" />
+                <ScrollView Grid.Column="1" Grid.Row="1">
+                    <StackLayout Spacing="10" VerticalOptions="FillAndExpand" Orientation="Vertical">
+                        <Editor Text="{Binding Description}" HeightRequest="150" />
+                    </StackLayout>
+                </ScrollView>
+                <Label Grid.Column="0" Grid.Row="2" Text="Weather:" VerticalOptions="Center" FontSize="Medium" />
+                <Picker Grid.Column="1" Grid.Row="2" BindingContext="{x:Reference This}" x:Name="WeatherPicker" Title="Select the Weather"
+                    ItemsSource="{Binding WeatherOptions}" SelectedItem="{Binding SelectedWeather}" />
+
+                <Label Grid.Column="0" Grid.Row="3" Text="Temperature:" VerticalOptions="Center" FontSize="Medium" />
+                <Entry Grid.Column="1" Grid.Row="3" Text="{Binding Temperature}" />
+            </Grid>
+
+            <Button BindingContext="{x:Reference This}" Text="View Catches" Clicked="openCatches_OnClicked" IsVisible="{Binding IsEdit}" />
+
+            <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
                 <Button Text="Cancel" Clicked="CancelForm_OnClicked" />
-                <Button Text="Save" Clicked="SaveFishingTrip_OnClicked" />
+                <Button HorizontalOptions="EndAndExpand" Text="Save" Clicked="SaveFishingTrip_OnClicked" />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>
