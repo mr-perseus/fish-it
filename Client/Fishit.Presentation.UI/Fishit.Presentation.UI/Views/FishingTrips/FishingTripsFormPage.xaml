@@ -10,7 +10,7 @@
             <Entry Text="{Binding Location}" />
             <Editor Text="{Binding Description}" />
             <Picker BindingContext="{x:Reference This}" x:Name="WeatherPicker" Title="Select the Weather" ItemsSource="{Binding WeatherOptions}" SelectedItem="{Binding SelectedWeather}" />
-            <Entry Text="{Binding TemperatureCelsius, StringFormat='{0:N}°C'}" />
+            <Entry Text="{Binding Temperature, StringFormat='{0:N}°C'}" />
 
             <StackLayout VerticalOptions="EndAndExpand" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
                 <Button Text="Cancel" Clicked="CancelForm_OnClicked" />
