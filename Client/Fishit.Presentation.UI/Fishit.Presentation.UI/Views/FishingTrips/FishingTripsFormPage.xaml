@@ -42,7 +42,10 @@
                     ItemsSource="{Binding WeatherOptions}" SelectedItem="{Binding SelectedWeather}" />
 
                 <Label Grid.Column="0" Grid.Row="3" Text="Temperature:" VerticalOptions="Center" FontSize="Medium" />
-                <Entry Grid.Column="1" Grid.Row="3" Text="{Binding Temperature}" />
+                <StackLayout Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
+                    <Entry Text="{Binding Temperature}" HorizontalOptions="FillAndExpand"/>
+                    <Label Text="°C" Margin="-5, 0, 0, 0" VerticalOptions="Center" FontSize="Medium" HorizontalOptions="End"></Label>
+                </StackLayout>
             </Grid>
 
             <Button BindingContext="{x:Reference This}" Text="View Catches" Clicked="openCatches_OnClicked" IsVisible="{Binding IsEdit}" />

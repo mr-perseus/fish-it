@@ -13,10 +13,16 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Padding="5">
-                            <StackLayout Orientation="Horizontal">
-                                <Label Text="{Binding DateTime}" HorizontalOptions="StartAndExpand" />
-                                <Label Text="{Binding Location}" TextColor="Gray" />
+                        <StackLayout Padding="20">
+                            <StackLayout Orientation="Vertical">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Location}"/>
+                                    <Label Text="{Binding DateTime, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" HorizontalOptions="EndAndExpand" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Temperature}" HorizontalOptions="EndAndExpand" />
+                                    <Label Text="°C" Margin="-5, 0, 0, 0" />
+                                </StackLayout>
                             </StackLayout>
                         </StackLayout>
                         <ViewCell.ContextActions>
