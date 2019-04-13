@@ -27,7 +27,7 @@
                 <Label Grid.Column="0" Grid.Row="0" Text="Location:" VerticalOptions="Center" FontSize="Medium" />
                 <Entry Grid.Column="1" Grid.Row="0" Text="{Binding Location}">
                     <Entry.Behaviors>
-                        <behaviors:CharOnlyBehavior />
+                        <behaviors:LocationBehavior x:Name="LocationBehavior" />
                         <behaviors:MaxLengthBehavior MaxLength="20" />
                     </Entry.Behaviors>
                 </Entry>
@@ -43,8 +43,13 @@
 
                 <Label Grid.Column="0" Grid.Row="3" Text="Temperature:" VerticalOptions="Center" FontSize="Medium" />
                 <StackLayout Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
-                    <Entry Text="{Binding Temperature}" HorizontalOptions="FillAndExpand"/>
-                    <Label Text="°C" Margin="-5, 0, 0, 0" VerticalOptions="Center" FontSize="Medium" HorizontalOptions="End"></Label>
+                    <Entry Text="{Binding Temperature}" HorizontalOptions="FillAndExpand">
+                        <Entry.Behaviors>
+                            <behaviors:TemperatureBehavior x:Name="TemperatureBehavior" />
+                            <behaviors:MaxLengthBehavior MaxLength="4" />
+                        </Entry.Behaviors>
+                    </Entry>
+                        <Label Text="°C" Margin="-5, 0, 0, 0" VerticalOptions="Center" FontSize="Medium" HorizontalOptions="End"></Label>
                 </StackLayout>
             </Grid>
 
@@ -52,7 +57,17 @@
 
             <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
                 <Button Text="Cancel" Clicked="CancelForm_OnClicked" />
-                <Button HorizontalOptions="EndAndExpand" Text="Save" Clicked="SaveFishingTrip_OnClicked" />
+                <Button HorizontalOptions="EndAndExpand" Text="Save" Clicked="SaveFishingTrip_OnClicked" IsEnabled="True">
+                    <Button.Triggers>
+                        <MultiTrigger TargetType="Button">
+                            <MultiTrigger.Conditions>
+                                <BindingCondition  Binding="{Binding Source={x:Reference LocationBehavior}, Path=IsValid}" Value="true" />
+                                <BindingCondition  Binding="{Binding Source={x:Reference TemperatureBehavior}, Path=IsValid}" Value="true" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="IsEnabled" Value="True" />
+                        </MultiTrigger>
+                    </Button.Triggers>
+                </Button>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

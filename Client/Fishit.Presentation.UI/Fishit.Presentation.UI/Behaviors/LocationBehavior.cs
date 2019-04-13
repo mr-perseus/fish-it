@@ -6,9 +6,10 @@ using Xamarin.Forms;
 
 namespace Fishit.Presentation.UI.Behaviors
 {
-    class CharOnlyBehavior : Behavior<Entry>
+    class LocationBehavior : Behavior<Entry>
     {
-        private const string charOnlyRegex = @"^[A-Za-z]*";
+        public bool IsValid { get; set; }
+        private const string CharOnlyRegex = @"^([A-Za-z]|-| )*$";
 
         protected override void OnAttachedTo(Entry bindable)
         {
@@ -18,8 +19,8 @@ namespace Fishit.Presentation.UI.Behaviors
 
         void HandleTextChanged(object sender, TextChangedEventArgs e)
         {
-            bool IsValid = false;
-            IsValid = (Regex.IsMatch(e.NewTextValue, charOnlyRegex));
+            IsValid = false;
+            IsValid = (Regex.IsMatch(e.NewTextValue, CharOnlyRegex));
             ((Entry) sender).TextColor = IsValid ? Color.Default : Color.Red;
         }
 

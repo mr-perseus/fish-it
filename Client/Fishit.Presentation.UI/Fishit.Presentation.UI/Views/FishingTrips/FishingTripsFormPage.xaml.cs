@@ -39,7 +39,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
         public IList<FishingTrip.Weather> WeatherOptions =>
             Enum.GetValues(typeof(FishingTrip.Weather)).Cast<FishingTrip.Weather>().ToList();
-
+        
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
         private FishingTrip FishingTrip { get; }
