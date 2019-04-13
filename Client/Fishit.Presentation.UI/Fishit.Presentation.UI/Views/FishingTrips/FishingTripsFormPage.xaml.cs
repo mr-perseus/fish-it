@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Fishit.Dal.Entities;
+using Fishit.Presentation.UI.Views.FishingTrips.Catches;
 using Java.Util;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -64,6 +65,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
         private async void openCatches_OnClicked(object sender, EventArgs e)
         {
+            await Navigation.PushAsync(new CatchesListPage(FishingTrip));
         }
 
         public void Refresh_DateTime(object sender, EventArgs e)

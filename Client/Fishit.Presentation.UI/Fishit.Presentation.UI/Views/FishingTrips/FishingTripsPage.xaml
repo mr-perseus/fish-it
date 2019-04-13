@@ -35,6 +35,6 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Button Text="add trip" Clicked="AddTrip_OnClicked" />
+        <Button Text="Add Fishing-Trip" Clicked="AddTrip_OnClicked" />
     </StackLayout>
 </ContentPage>
