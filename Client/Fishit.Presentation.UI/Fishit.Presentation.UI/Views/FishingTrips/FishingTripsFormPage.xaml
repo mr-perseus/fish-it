@@ -53,7 +53,7 @@
                 </StackLayout>
             </Grid>
 
-            <Button BindingContext="{x:Reference This}" Text="View Catches" Clicked="openCatches_OnClicked" IsVisible="{Binding IsEdit}" />
+            <Button BindingContext="{x:Reference This}" Text="View Catches" Clicked="ViewCatches_OnClicked" IsVisible="{Binding IsEdit}" />
 
             <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
                 <Button Text="Cancel" Clicked="CancelForm_OnClicked" />

@@ -63,7 +63,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             await Navigation.PopAsync();
         }
 
-        private async void openCatches_OnClicked(object sender, EventArgs e)
+        private async void ViewCatches_OnClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new CatchesListPage(FishingTrip));
         }

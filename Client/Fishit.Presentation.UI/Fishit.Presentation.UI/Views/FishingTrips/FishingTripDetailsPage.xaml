@@ -3,13 +3,48 @@
 <ContentPage Title="{Binding Name}"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Fishit.Presentation.UI.Views.FishingTrips.FishingTripDetailsPage">
-    <StackLayout HorizontalOptions="StartAndExpand"
-                 VerticalOptions="StartAndExpand">
-        <Label Text="{Binding DateTime}" />
-        <Label Text="{Binding Location}" />
-        <Label Text="{Binding Description}" />
-        <Label Text="{Binding PredominantWeather}" />
-        <Label Text="{Binding TemperatureCelsius, StringFormat='{0:N}°C'}" />
+             x:Class="Fishit.Presentation.UI.Views.FishingTrips.FishingTripDetailsPage"
+             x:Name="This">
+    <StackLayout HorizontalOptions="Fill"
+                 VerticalOptions="StartAndExpand" Padding="20">
+        <Label Text="{Binding DateTime, StringFormat='{}{0:dd.MM.yyyy - HH:mm}'}" HorizontalOptions="Center" FontSize="Medium" />
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Column="0" Grid.Row="0" Text="Location:" VerticalOptions="Center" FontSize="Medium" />
+            <Label Grid.Column="1" Grid.Row="0" Text="{Binding Location}" FontSize="Medium" />
+
+            <Label Grid.Column="0" Grid.Row="1" Text="Weather:" VerticalOptions="Center" FontSize="Medium" />
+            <Label Grid.Column="1" Grid.Row="1" Text="{Binding PredominantWeather}" FontSize="Medium"/>
+
+            <Label Grid.Column="0" Grid.Row="2" Text="Temperature:" VerticalOptions="Center" FontSize="Medium" />
+            <StackLayout Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
+                <Label Text="{Binding Temperature}" FontSize="Medium" />
+                <Label Text="°C" HorizontalOptions="Start" FontSize="Medium" />
+            </StackLayout>
+
+            <Label Grid.Column="0" Grid.Row="3" Text="Number of Catches:" FontSize="Medium" />
+            <Label Grid.Column="1" Grid.Row="3" BindingContext="{x:Reference This}" Text="{Binding NumberOfCatches}" FontSize="Medium" />
+
+            <Label Grid.Column="0" Grid.Row="4" Text="Description:" VerticalOptions="Start" FontSize="Medium" />
+            <ScrollView Grid.Column="1" Grid.Row="4">
+                <StackLayout Spacing="10" VerticalOptions="FillAndExpand" Orientation="Vertical">
+                    <Label Text="{Binding Description}" HeightRequest="150" FontSize="Medium" />
+                </StackLayout>
+            </ScrollView>
+        </Grid>
+        <Button BindingContext="{x:Reference This}" Text="View Catches" Clicked="ViewCatches_OnClicked" IsVisible="{Binding IsEdit}" />
     </StackLayout>
 </ContentPage>
