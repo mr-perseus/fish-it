@@ -16,10 +16,10 @@ namespace Fishit.TestEnvironment
         private static List<FishingTrip> FishingTrips =>
             new List<FishingTrip>
             {
-                new FishingTrip {Id = 1, Name = "FishingTrip Number 1", Location = "Zurich"},
-                new FishingTrip {Id = 2, Name = "FishingTrip Number 2", Location = "Wil"},
-                new FishingTrip {Id = 3, Name = "FishingTrip Number 3", Location = "Zurich"},
-                new FishingTrip {Id = 4, Name = "FishingTrip Number 4", Location = "Geneva"}
+                new FishingTrip {_id = 1,  Location = "Zurich"},
+                new FishingTrip {_id = 2,  Location = "Wil"},
+                new FishingTrip {_id = 3,  Location = "Zurich"},
+                new FishingTrip {_id = 4,  Location = "Geneva"}
             };
 
         public static void InitializeTestData(this FishitContext context)
@@ -42,10 +42,10 @@ namespace Fishit.TestEnvironment
         {
             try
             {
-                // Reset the identity seed (Id's will start again from 1)
+                // Reset the identity seed (_id's will start again from 1)
                 context.ResetEntitySeed(fishingTripTableName);
 
-                // Temporarily allow insertion of identity columns (Id)
+                // Temporarily allow insertion of identity columns (_id)
                 context.SetAutoIncrementOnTable(fishingTripTableName, true);
 
                 // Insert test data
@@ -54,7 +54,7 @@ namespace Fishit.TestEnvironment
             }
             finally
             {
-                // Disable insertion of identity columns (Id)
+                // Disable insertion of identity columns (_id)
                 context.SetAutoIncrementOnTable(fishingTripTableName, false);
             }
         }

@@ -118,7 +118,7 @@ namespace Fishit.Common
         {
             _logger.Info(nameof(GetById) + "; Start; " + "id; " + id);
 
-            FishingTrip fishingTrip = GetList().FirstOrDefault(entry => entry.Id == id);
+            FishingTrip fishingTrip = GetList().FirstOrDefault(entry => entry._id == id);
 
             _logger.Info(nameof(GetById) + "; End; " + "fishingTrip; " + fishingTrip);
 

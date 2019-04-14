@@ -16,7 +16,6 @@ namespace Fishit.Dal.Entities
         }
 
         public int _id { get; set; }
-        public string Name { get; set; }
         public string Location { get; set; }
         public DateTime DateTime { get; set; }
         public string Description { get; set; }
@@ -29,7 +28,6 @@ namespace Fishit.Dal.Entities
         {
             return base.ToString() + "; " +
                    nameof(_id) + "; " + _id + "; " +
-                   nameof(Name) + "; " + Name + "; " +
                    nameof(Location) + "; " + Location + "; " +
                    nameof(DateTime) + "; " + DateTime.ToString(CultureInfo.CurrentCulture) + "; " +
                    nameof(PredominantWeather) + "; " + PredominantWeather + "; " +

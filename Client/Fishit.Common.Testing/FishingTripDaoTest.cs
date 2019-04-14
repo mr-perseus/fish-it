@@ -19,14 +19,14 @@ namespace Fishit.Common.Testing
         {
             FishingTrip fishingTrip = new FishingTrip
             {
-                Id = 5,
-                Name = "Test"
+                _id = 5,
+                Location = "Test"
             };
 
             FishingTripDao.AddFishingTrip(fishingTrip);
 
             FishingTrip returnedFishingTrip = FishingTripDao.GetById(5);
-            Assert.Equal(fishingTrip.Name, returnedFishingTrip.Name);
+            Assert.Equal(fishingTrip._id, returnedFishingTrip._id);
         }
 
         [Fact]
@@ -34,7 +34,6 @@ namespace Fishit.Common.Testing
         {
             FishingTrip fishingTrip = new FishingTrip
             {
-                Name = "Test",
                 Location = "Sufnersee",
                 DateTime = new DateTime(2019, 04, 14), 
                 Description = "Erster POST Versuch",
@@ -46,7 +45,7 @@ namespace Fishit.Common.Testing
             await FishingTripDao.AddFishingTripByPostRequest(fishingTrip);
 
             FishingTrip returnedFishingTrip = FishingTripDao.GetById(5);
-            Assert.Equal(fishingTrip.Name, returnedFishingTrip.Name);
+            Assert.Equal(fishingTrip._id, returnedFishingTrip._id);
         }
 
         [Fact]
@@ -56,8 +55,7 @@ namespace Fishit.Common.Testing
 
             Assert.Single(actualList);
 
-            Assert.Equal(2, actualList.First().Id);
-            Assert.Equal("FishingTrip Number 2", actualList.First().Name);
+            Assert.Equal(2, actualList.First()._id);
             Assert.Equal("Wil", actualList.First().Location);
         }
     }
