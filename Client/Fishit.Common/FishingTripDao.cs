@@ -48,7 +48,7 @@ namespace Fishit.Common
             return jsonFishingTrip;
         }
 
-        async Task AddFishingTripByPostRequest(FishingTrip fishingtrip)
+        public async Task AddFishingTripByPostRequest(FishingTrip fishingtrip)
         {
             string content = ConvertFishingTripObjectToJson(fishingtrip);
             var contentForRequest = new StringContent(content, Encoding.UTF8, "application/json");
@@ -66,7 +66,7 @@ namespace Fishit.Common
             }
         }
 
-        async Task DeleteFishingTripByRequest(string url, string id)
+        public async Task DeleteFishingTripByRequest(string url, string id)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -79,7 +79,11 @@ namespace Fishit.Common
 
                 }
             }
+        }
 
+        public async Task GetFishingTripID(FishingTrip fishingtripObject)
+        {
+            
         }
 
 
