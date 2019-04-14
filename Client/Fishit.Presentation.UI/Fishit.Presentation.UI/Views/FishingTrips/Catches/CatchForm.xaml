@@ -1,7 +1,13 @@
 ﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Fishit.Presentation.UI.Views.FishingTrips.Catches.CatchForm"
-             Title="Grid Demo Page">
+             Title="Add Catch Form">
+
+        <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Padding="20">
+            <StackLayout Orientation="Horizontal">
+                <DatePicker BindingContext="{x:Reference This}" x:Name="FishingTripDatePicker" HorizontalOptions="FillAndExpand" Format="D" DateSelected="Refresh_DateTime" Date="{Binding Date}" />
+                <TimePicker BindingContext="{x:Reference This}" x:Name="FishingTripTimePicker" HorizontalOptions="End" PropertyChanged="Refresh_DateTime" Time="{Binding Time}"/>
+            </StackLayout>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -44,4 +50,5 @@
         <Button Grid.Row="6" Grid.Column="1" Text="Save" Clicked="SaveCatch_OnClicked" />
 
     </Grid>
+            </StackLayout>
 </ContentPage>
