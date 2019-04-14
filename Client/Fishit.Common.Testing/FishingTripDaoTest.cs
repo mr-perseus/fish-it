@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Fishit.Dal.Entities;
@@ -23,6 +24,26 @@ namespace Fishit.Common.Testing
             };
 
             FishingTripDao.AddFishingTrip(fishingTrip);
+
+            FishingTrip returnedFishingTrip = FishingTripDao.GetById(5);
+            Assert.Equal(fishingTrip.Name, returnedFishingTrip.Name);
+        }
+
+        [Fact]
+        public async void AddFishingTripByRequestTestAsync()
+        {
+            FishingTrip fishingTrip = new FishingTrip
+            {
+                Name = "Test",
+                Location = "Sufnersee",
+                DateTime = new DateTime(2019, 04, 14), 
+                Description = "Erster POST Versuch",
+                PredominantWeather = FishingTrip.Weather.Hailing,
+                Temperature = 12.5,
+                Catches = new List<Catch>()
+
+            };
+            await FishingTripDao.AddFishingTripByPostRequest(fishingTrip);
 
             FishingTrip returnedFishingTrip = FishingTripDao.GetById(5);
             Assert.Equal(fishingTrip.Name, returnedFishingTrip.Name);
