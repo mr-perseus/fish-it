@@ -15,7 +15,7 @@ namespace Fishit.Dal.Entities
             Hailing
         }
 
-        public int Id { get; set; }
+        public int _id { get; set; }
         public string Name { get; set; }
         public string Location { get; set; }
         public DateTime DateTime { get; set; }
@@ -28,7 +28,7 @@ namespace Fishit.Dal.Entities
         public override string ToString()
         {
             return base.ToString() + "; " +
-                   nameof(Id) + "; " + Id + "; " +
+                   nameof(_id) + "; " + _id + "; " +
                    nameof(Name) + "; " + Name + "; " +
                    nameof(Location) + "; " + Location + "; " +
                    nameof(DateTime) + "; " + DateTime.ToString(CultureInfo.CurrentCulture) + "; " +

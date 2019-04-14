@@ -23,7 +23,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             FishingTrip = fishingTrip;
             BindingContext = fishingTrip;
             SelectedWeather = fishingTrip.PredominantWeather;
-            if (fishingTrip.Id != 0)
+            if (fishingTrip._id != 0)
             {
                 IsEdit = true;
             }
