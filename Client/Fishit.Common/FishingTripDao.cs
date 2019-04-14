@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Fishit.Dal;
 using Fishit.Dal.Entities;
@@ -12,7 +14,7 @@ namespace Fishit.Common
 {
     public class FishingTripDao : DaoBase
     {
-        async Task CreateHTTPGetRequest(string url)
+        async Task GetAllFishingTripsInJson(string url)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -21,7 +23,7 @@ namespace Fishit.Common
                     using (HttpContent content = response.Content)
                     {
                         string mycontent = await content.ReadAsStringAsync();
-                        GetAllFishingTripObjectsFromJSON(mycontent);
+                        GetAllFishingTripObjectsFromJson(mycontent);
                     }
 
                 }
@@ -29,11 +31,39 @@ namespace Fishit.Common
 
         }
 
-        public List<FishingTrip> GetAllFishingTripObjectsFromJSON(string jsonContent)
+        public List<FishingTrip> GetAllFishingTripObjectsFromJson(string jsonContent)
         {
-
              List<FishingTrip> fishingTrip = JsonConvert.DeserializeObject<List<FishingTrip>>(jsonContent);
              return fishingTrip;
+        }
+
+        public FishingTrip ConvertJsonToFishingTripObject(string jsonFishingTrip)
+        {
+            FishingTrip fishingtripObject = JsonConvert.DeserializeObject<FishingTrip>(jsonFishingTrip);
+            return fishingtripObject;
+        }
+        public string ConvertFishingTripObjectToJson(FishingTrip fishingtripObject)
+        {
+            var jsonFishingTrip = JsonConvert.SerializeObject(fishingtripObject);
+            return jsonFishingTrip;
+        }
+
+        async Task AddFishingTripByPostRequest(FishingTrip fishingtrip)
+        {
+            string content = ConvertFishingTripObjectToJson(fishingtrip);
+            var contentForRequest = new StringContent(content, Encoding.UTF8, "application/json");
+
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpResponseMessage response = await client.PostAsync("http://sinv-56038.edu.hsr.ch:40007/api/fishingtrips/new", contentForRequest))
+                {
+                    using (HttpContent responseContent = response.Content)
+                    {
+                        string addedFishingTrip = await responseContent.ReadAsStringAsync();
+                    }
+
+                }
+            }
         }
 
         async Task DeleteFishingTripByRequest(string url, string id)
@@ -44,7 +74,7 @@ namespace Fishit.Common
                 {
                     using (HttpContent content = response.Content)
                     {
-                        string mycontent = await content.ReadAsStringAsync();
+                        string deletedFishingTrip = await content.ReadAsStringAsync();
                     }
 
                 }
