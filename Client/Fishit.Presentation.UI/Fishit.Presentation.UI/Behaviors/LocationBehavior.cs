@@ -9,7 +9,7 @@ namespace Fishit.Presentation.UI.Behaviors
     class LocationBehavior : Behavior<Entry>
     {
         public bool IsValid { get; set; }
-        private const string CharOnlyRegex = @"^([A-Za-z]|-| )*$";
+        private const string CharOnlyRegex = @"^([A-Za-z]|Ä|Ö|Ü|ä|ö|ü|-| )*$";
 
         protected override void OnAttachedTo(Entry bindable)
         {
