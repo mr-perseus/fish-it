@@ -39,7 +39,7 @@ module.exports.createFishType = async (req, res) => {
 		.save()
 		.then((fishType) => {
 			getLogger().info(`fishTypeService; createfishType; End; fishType; `, fishType)
-			res.send(_.pick(fishType, fishTypeAttr))
+			res.send(_.pick(fishType, "_id"))
 		})
 		.catch((error) => {
 			getLogger().error(
@@ -73,7 +73,7 @@ module.exports.updateFishType = async (req, res) => {
 				fishType,
 				"; _id; " + _id
 			)
-			res.send(_.pick(fishType, fishTypeAttr))
+			res.send(_.pick(fishType, "_id"))
 		})
 		.catch((error) => {
 			getLogger().error(
@@ -97,7 +97,7 @@ module.exports.deleteFishType = async (req, res) => {
 				fishType,
 				"; _id; " + _id
 			)
-			res.send(_.pick(fishType, fishTypeAttr))
+			res.send(_.pick(fishType, "_id"))
 		})
 		.catch((error) => {
 			getLogger().error(`fishTypeService; deleteFish; Error; _id;`, _id, "; error; ", error)
