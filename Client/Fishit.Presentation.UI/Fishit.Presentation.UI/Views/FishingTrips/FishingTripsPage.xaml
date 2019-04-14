@@ -3,8 +3,10 @@
 <ContentPage Title="Fishing Trips"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Fishit.Presentation.UI.Views.FishingTrips.FishingTripsPage">
+             x:Class="Fishit.Presentation.UI.Views.FishingTrips.FishingTripsPage"
+             x:Name="This">
     <StackLayout x:Name="Root">
+        <Label BindingContext="{x:Reference This}" Text="Go Fishing!" IsVisible="{Binding IsListEmpty}" HorizontalOptions="Center" />
         <ListView x:Name="FishingTripsListView"
                   HasUnevenRows="True"
                   ItemSelected="TripsListView_ItemSelected"
@@ -16,8 +18,8 @@
                         <StackLayout Padding="20">
                             <StackLayout Orientation="Vertical">
                                 <StackLayout Orientation="Horizontal">
-                                    <Label Text="{Binding Location}"/>
-                                    <Label Text="{Binding DateTime, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" HorizontalOptions="EndAndExpand" />
+                                    <Label Text="{Binding Location}" />
+                                    <Label Text="{Binding DateTime, StringFormat='{}{0:dd.MM.yyyy, HH:mm}'}" HorizontalOptions="EndAndExpand" />
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="{Binding Temperature}" HorizontalOptions="EndAndExpand" />
@@ -35,6 +37,6 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Button Text="Add Fishingtrip" Clicked="AddTrip_OnClicked" Style="{StaticResource ButtonStyle}" Margin="20,0" />
+        <Button Text="Add Fishing Trip" Clicked="AddTrip_OnClicked" Style="{StaticResource ButtonStyle}" Margin="20,0" />
     </StackLayout>
 </ContentPage>

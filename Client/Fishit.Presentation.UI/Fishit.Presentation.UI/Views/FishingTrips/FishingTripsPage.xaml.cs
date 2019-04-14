@@ -13,12 +13,15 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
     {
         private ObservableCollection<FishingTrip> _fishingTrips;
 
+        public bool IsListEmpty { get; set; } = true;
         public FishingTripsPage()
         {
             InitializeData();
+            RefreshIsListEmpty();
             InitializeComponent();
 
             FishingTripsListView.ItemsSource = _fishingTrips;
+
         }
 
         public FishingTripsPage(string location)
@@ -100,6 +103,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         private async void AddTrip_OnClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new FishingTripsFormPage());
+            RefreshIsListEmpty();
         }
 
         private async void Edit_Clicked(object sender, EventArgs e)
@@ -113,12 +117,22 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         {
             FishingTrip fishingTrip = (sender as MenuItem)?.CommandParameter as FishingTrip;
             _fishingTrips.Remove(fishingTrip);
+            RefreshIsListEmpty();
         }
 
         private void Handle_Refreshing(object sender, EventArgs e)
         {
             FishingTripsListView.ItemsSource = _fishingTrips;
+            RefreshIsListEmpty();
             FishingTripsListView.EndRefresh();
+        }
+
+        private void RefreshIsListEmpty()
+        {
+            if (_fishingTrips != null)
+            {
+                IsListEmpty = _fishingTrips.Count == 0;
+            }
         }
     }
 }

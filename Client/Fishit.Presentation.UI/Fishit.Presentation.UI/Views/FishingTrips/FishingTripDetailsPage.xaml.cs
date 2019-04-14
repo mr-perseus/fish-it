@@ -11,6 +11,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
     {
         public int NumberOfCatches { get; set; }
         private FishingTrip _fishingTrip;
+        public string Name { get; set; }
 
         public FishingTripDetailsPage(FishingTrip fishingTrip)
         {
