@@ -24,5 +24,16 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         {
             await Navigation.PushAsync(new CatchesListPage(_fishingTrip));
         }
+
+        private async void Edit_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new FishingTripsFormPage(_fishingTrip));
+        }
+
+        private void Delete_Clicked(object sender, EventArgs e)
+        {
+            FishingTrip fishingTrip = (sender as MenuItem)?.CommandParameter as FishingTrip;
+            //Call manager to remove
+        }
     }
 }

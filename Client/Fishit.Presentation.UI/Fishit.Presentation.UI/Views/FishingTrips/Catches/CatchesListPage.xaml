@@ -20,9 +20,9 @@
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="{Binding Weight}" />
-                                    <Label Text="kg" Margin="-5, 0, 0, 0" />
+                                    <Label Text="kg" />
                                     <Label Text="{Binding Length}" HorizontalOptions="EndAndExpand" />
-                                    <Label Text="m" Margin="-5, 0, 0, 0" />
+                                    <Label Text="m" />
                                 </StackLayout>
                             </StackLayout>
                         </StackLayout>
@@ -36,6 +36,6 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Button Text="Add Catch" Clicked="BtnAddCatch_OnClicked" />
+        <Button Text="Add Catch" Clicked="BtnAddCatch_OnClicked" Margin="20,0" />
     </StackLayout>
 </ContentPage>

@@ -21,7 +21,7 @@
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="{Binding Temperature}" HorizontalOptions="EndAndExpand" />
-                                    <Label Text="°C" Margin="-5, 0, 0, 0" />
+                                    <Label Text="°C" />
                                 </StackLayout>
                             </StackLayout>
                         </StackLayout>
@@ -35,6 +35,6 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Button Text="Add Fishingtrip" Clicked="AddTrip_OnClicked" />
+        <Button Text="Add Fishingtrip" Clicked="AddTrip_OnClicked" Style="{StaticResource ButtonStyle}" Margin="20,0" />
     </StackLayout>
 </ContentPage>
