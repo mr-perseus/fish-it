@@ -8,7 +8,7 @@
     <DebugType>pdbonly</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <None Remove="Images\logo.png" />
   </ItemGroup>
