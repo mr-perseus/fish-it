@@ -3,9 +3,7 @@ const mongoose = require("mongoose")
 
 const fishingTripSchema = new mongoose.Schema({
 	PredominantWeather: {
-		type: String,
-		required: true,
-		maxlength: 64
+		type: Number
 	},
 	Location: {
 		type: String,
@@ -13,7 +11,7 @@ const fishingTripSchema = new mongoose.Schema({
 		maxlength: 64
 	},
 	DateTime: {
-		type: String,
+		type: Date,
 		required: true
 	},
 	Description: {
@@ -44,13 +42,11 @@ const fishingTripAttr = [
 ]
 
 const fishingTripJoi = {
-	PredominantWeather: Joi.string()
-		.max(64)
-		.required(),
+	PredominantWeather: Joi.number().required,
 	Location: Joi.string()
 		.max(64)
 		.required(),
-	DateTime: Joi.string().required(),
+	DateTime: Joi.date().required(),
 	Description: Joi.string().max(1024),
 	Temperature: Joi.number(),
 	Catches: Joi.array()

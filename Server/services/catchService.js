@@ -15,6 +15,25 @@ module.exports.getCatches = async (req, res) => {
 		})
 }
 
+module.exports.getCatchesById = async (catchesId) => {
+	let catches = []
+
+	const result = catchesId.map(async (_id) => {
+		await Catch.findOne({ _id })
+			.then((aCatch) => {
+				getLogger().info(`catchService; getCatch; End; _id;`, _id, "; catch; ", aCatch)
+				catches.push(_.pick(aCatch, catchAttr))
+			})
+			.catch((error) => {
+				getLogger().error(`catchService; getCatch; Error; _id;`, _id, "; error; ", error)
+			})
+	})
+
+	return Promise.all(result).then(() => {
+		return catches
+	})
+}
+
 module.exports.getCatch = async (req, res) => {
 	const _id = req.params.id
 

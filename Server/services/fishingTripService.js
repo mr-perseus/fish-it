@@ -1,15 +1,24 @@
 const _ = require("lodash")
 const { FishingTrip, fishingTripAttr, validateFishingTrip } = require("../models/FishingTrip")
+const { getCatchesById } = require("./catchService")
 const getLogger = require("log4js").getLogger
 
 module.exports.getFishingTrips = async (req, res) => {
 	await FishingTrip.find()
-		.then((fishingTrips) => {
+		.then(async (fishingTrips) => {
 			getLogger().info(
 				`fishingTripService; getFishingTrips; End; fishingTrips;`,
 				fishingTrips
 			)
-			res.send(fishingTrips)
+
+			const result = await fishingTrips.map(async (fishingTrip) => {
+				const Catches = await getCatchesById(fishingTrip.Catches)
+				fishingTrip.Catches = Catches
+			})
+
+			Promise.all(result).then(() => {
+				res.send(fishingTrips)
+			})
 		})
 		.catch((error) => {
 			getLogger().error(`fishingTripService; getFishingTrips; Error; error;`, error)
