@@ -14,21 +14,23 @@ namespace Fishit.Common.Testing
         private FishingTripDao FishingTripDao =>
             _fishingTripDao ?? (_fishingTripDao = new FishingTripDao());
 
+
         [Fact]
         public void AddFishingTripTest()
         {
             FishingTrip fishingTrip = new FishingTrip
             {
-                _id = 5,
+                Id = 5,
                 Location = "Test"
             };
 
             FishingTripDao.AddFishingTrip(fishingTrip);
 
             FishingTrip returnedFishingTrip = FishingTripDao.GetById(5);
-            Assert.Equal(fishingTrip._id, returnedFishingTrip._id);
+            Assert.Equal(fishingTrip.Id, returnedFishingTrip.Id);
         }
 
+        //Always OK, not finished test
         [Fact]
         public async void AddFishingTripByRequestTestAsync()
         {
@@ -39,13 +41,13 @@ namespace Fishit.Common.Testing
                 Description = "Erster POST Versuch",
                 PredominantWeather = FishingTrip.Weather.Hailing,
                 Temperature = 12.5,
-                Catches = new List<Catch>()
+                Catches = new Catch[2]
 
             };
             await FishingTripDao.AddFishingTripByPostRequest(fishingTrip);
 
             FishingTrip returnedFishingTrip = FishingTripDao.GetById(5);
-            Assert.Equal(fishingTrip._id, returnedFishingTrip._id);
+            Assert.Equal(fishingTrip.Id, returnedFishingTrip.Id);
         }
 
         [Fact]
@@ -55,7 +57,7 @@ namespace Fishit.Common.Testing
 
             Assert.Single(actualList);
 
-            Assert.Equal(2, actualList.First()._id);
+            Assert.Equal(2, actualList.First().Id);
             Assert.Equal("Wil", actualList.First().Location);
         }
     }

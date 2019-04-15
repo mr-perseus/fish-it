@@ -15,24 +15,24 @@ namespace Fishit.Dal.Entities
             Hailing
         }
 
-        public int _id { get; set; }
+        public int Id { get; set; }
         public string Location { get; set; }
         public DateTime DateTime { get; set; }
         public string Description { get; set; }
         public Weather PredominantWeather { get; set; }
         public double Temperature { get; set; }
-        public List<Catch> Catches { get; set; }
+        public Catch[] Catches { get; set; }
 
 
         public override string ToString()
         {
             return base.ToString() + "; " +
-                   nameof(_id) + "; " + _id + "; " +
+                   nameof(Id) + "; " + Id + "; " +
                    nameof(Location) + "; " + Location + "; " +
                    nameof(DateTime) + "; " + DateTime.ToString(CultureInfo.CurrentCulture) + "; " +
                    nameof(PredominantWeather) + "; " + PredominantWeather + "; " +
-                   nameof(Temperature) + "; " + Temperature + "; " +
-                   nameof(Catches) + "; " + (Catches != null ? Catches.Count.ToString() : "null");
+                   nameof(Temperature) + "; " + Temperature + "; ";// + statt ;
+            // nameof(Catches) + "; " + (Catches != null ? Catches.Count.ToString() : "null");
         }
     }
 }

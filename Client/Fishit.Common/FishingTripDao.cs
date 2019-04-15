@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -14,11 +16,13 @@ namespace Fishit.Common
 {
     public class FishingTripDao : DaoBase
     {
-        async Task GetAllFishingTripsInJson(string url)
+        private string endPointUri = "http://sinv-56038.edu.hsr.ch:40007/api/fishingtrips";
+
+        async Task GetAllFishingTripsJson()
         {
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = await client.GetAsync(url))
+                using (HttpResponseMessage response = await client.GetAsync(endPointUri))
                 {
                     using (HttpContent content = response.Content)
                     {
@@ -31,10 +35,71 @@ namespace Fishit.Common
 
         }
 
+
+        public async Task AddFishingTripByPostRequest(FishingTrip fishingtrip)
+        {
+            string content = ConvertFishingTripObjectToJson(fishingtrip);
+            var contentForRequest = new StringContent(content.ToString(), Encoding.UTF8, "application/json");
+            //var contentForRequest = new StringContent(content.ToString()); should be same like code above
+            
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpResponseMessage response = await client.PostAsync(endPointUri+"/new", contentForRequest))
+                {
+                    using (HttpContent responseContent = response.Content)
+                    {
+                        string addedFishingTrip = await responseContent.ReadAsStringAsync();
+                    }
+
+                }
+            }
+        }
+
+        // Second Way to Add/Create Fishing Trips
+        public async Task AddFishingTripByWebRequest(FishingTrip fishingtrip)
+        {
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(endPointUri+"/new");
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "POST";
+
+            string content = ConvertFishingTripObjectToJson(fishingtrip);
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+
+                streamWriter.Write(content);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+            }
+        }
+
+        public async Task DeleteFishingTripByRequest(string id)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpResponseMessage response = await client.DeleteAsync(endPointUri + id))
+                {
+                    using (HttpContent content = response.Content)
+                    {
+                        string deletedFishingTrip = await content.ReadAsStringAsync();
+                    }
+
+                }
+            }
+        }
+
+        // De-/Serialization of JSON/FishingTrip Objects 
+
         public List<FishingTrip> GetAllFishingTripObjectsFromJson(string jsonContent)
         {
-             List<FishingTrip> fishingTrip = JsonConvert.DeserializeObject<List<FishingTrip>>(jsonContent);
-             return fishingTrip;
+            List<FishingTrip> fishingTripList = JsonConvert.DeserializeObject<List<FishingTrip>>(jsonContent);
+            return fishingTripList;
         }
 
         public FishingTrip ConvertJsonToFishingTripObject(string jsonFishingTrip)
@@ -48,44 +113,7 @@ namespace Fishit.Common
             return jsonFishingTrip;
         }
 
-        public async Task AddFishingTripByPostRequest(FishingTrip fishingtrip)
-        {
-            string content = ConvertFishingTripObjectToJson(fishingtrip);
-            var contentForRequest = new StringContent(content, Encoding.UTF8, "application/json");
-
-            using (HttpClient client = new HttpClient())
-            {
-                using (HttpResponseMessage response = await client.PostAsync("http://sinv-56038.edu.hsr.ch:40007/api/fishingtrips/new", contentForRequest))
-                {
-                    using (HttpContent responseContent = response.Content)
-                    {
-                        string addedFishingTrip = await responseContent.ReadAsStringAsync();
-                    }
-
-                }
-            }
-        }
-
-        public async Task DeleteFishingTripByRequest(string url, string id)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                using (HttpResponseMessage response = await client.DeleteAsync(url + id))
-                {
-                    using (HttpContent content = response.Content)
-                    {
-                        string deletedFishingTrip = await content.ReadAsStringAsync();
-                    }
-
-                }
-            }
-        }
-
-        public async Task GetFishingTripID(FishingTrip fishingtripObject)
-        {
-            
-        }
-
+        //OLD CODE v (DOWN) ----  NEW CODE ^(UP)
 
         private readonly ILogger _logger;
 
@@ -113,41 +141,42 @@ namespace Fishit.Common
                 }
             }
         }
+        
 
-        public FishingTrip GetById(int id)
-        {
-            _logger.Info(nameof(GetById) + "; Start; " + "id; " + id);
+                public FishingTrip GetById(int id)
+                {
+                    _logger.Info(nameof(GetById) + "; Start; " + "id; " + id);
 
-            FishingTrip fishingTrip = GetList().FirstOrDefault(entry => entry._id == id);
+                    FishingTrip fishingTrip = GetList().FirstOrDefault(entry => entry.Id == id);
 
-            _logger.Info(nameof(GetById) + "; End; " + "fishingTrip; " + fishingTrip);
+                    _logger.Info(nameof(GetById) + "; End; " + "fishingTrip; " + fishingTrip);
 
-            return fishingTrip;
-        }
+                    return fishingTrip;
+                }
 
-        public IEnumerable<FishingTrip> GetListByLocation(string location)
-        {
-            _logger.Info(nameof(GetListByLocation) + "; Start; " + "location; " + location);
+                public IEnumerable<FishingTrip> GetListByLocation(string location)
+                {
+                    _logger.Info(nameof(GetListByLocation) + "; Start; " + "location; " + location);
 
-            IEnumerable<FishingTrip> fishingTrips = GetList().Where(trip => trip.Location == location).ToList();
+                    IEnumerable<FishingTrip> fishingTrips = GetList().Where(trip => trip.Location == location).ToList();
 
-            _logger.Info(nameof(GetListByLocation) + "; End; " + "fishingTrips.Count; " + fishingTrips.Count());
+                    _logger.Info(nameof(GetListByLocation) + "; End; " + "fishingTrips.Count; " + fishingTrips.Count());
 
-            return fishingTrips;
-        }
+                    return fishingTrips;
+                }
 
-        public IEnumerable<FishingTrip> GetList()
-        {
-            using (FishitContext context = new FishitContext())
-            {
-                _logger.Debug(nameof(GetList) + "; Start; ");
+                public IEnumerable<FishingTrip> GetList()
+                {
+                    using (FishitContext context = new FishitContext())
+                    {
+                        _logger.Debug(nameof(GetList) + "; Start; ");
 
-                IEnumerable<FishingTrip> fishingTrips = context.FishingTrips.ToList();
+                        IEnumerable<FishingTrip> fishingTrips = context.FishingTrips.ToList();
 
-                _logger.Debug(nameof(GetList) + "; End; " + "fishingTrips.Count; " + fishingTrips.Count());
+                        _logger.Debug(nameof(GetList) + "; End; " + "fishingTrips.Count; " + fishingTrips.Count());
 
-                return fishingTrips;
-            }
-        }
+                        return fishingTrips;
+                    }
+                }
     }
 }
