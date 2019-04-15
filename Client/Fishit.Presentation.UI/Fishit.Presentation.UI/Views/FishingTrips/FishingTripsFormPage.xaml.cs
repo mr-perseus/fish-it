@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Views.FishingTrips.Catches;
-using Java.Util;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

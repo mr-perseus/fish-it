@@ -21,7 +21,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             CatchesListView.ItemsSource = _catches;
         }
 
-        private async void CatchesListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private void CatchesListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null)
                 return;
@@ -31,7 +31,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             CatchesListView.SelectedItem = null;
         }
 
-        private async void Edit_Clicked(object sender, EventArgs e)
+        private void Edit_Clicked(object sender, EventArgs e)
         {
             Catch _catch = (sender as MenuItem)?.CommandParameter as Catch;
             Console.Write(_catch);

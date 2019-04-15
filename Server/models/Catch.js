@@ -12,12 +12,10 @@ const catchSchema = new mongoose.Schema({
 		maxlength: 64
 	},
 	Length: {
-		type: String,
-		maxlength: 8
+		type: Number
 	},
 	Weight: {
-		type: String,
-		maxlength: 12
+		type: Number
 	}
 })
 
@@ -28,8 +26,8 @@ const catchAttr = ["_id", "FishType", "DateTime", "Length", "Weight"]
 const catchJoi = {
 	FishType: Joi.string(),
 	DateTime: Joi.string().length(16),
-	Length: Joi.string().max(8),
-	Weight: Joi.string().max(16)
+	Length: Joi.number(),
+	Weight: Joi.number()
 }
 
 const validateCatch = (c) => Joi.validate(c, catchJoi)
