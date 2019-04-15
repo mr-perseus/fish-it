@@ -21,8 +21,7 @@ const fishingTripSchema = new mongoose.Schema({
 		maxlength: 1024
 	},
 	Temperature: {
-		type: String,
-		maxlength: 8
+		type: Number
 	},
 	Catches: [
 		{
@@ -53,7 +52,7 @@ const fishingTripJoi = {
 		.required(),
 	DateTime: Joi.string().required(),
 	Description: Joi.string().max(1024),
-	Temperature: Joi.string().max(8),
+	Temperature: Joi.number(),
 	Catches: Joi.array()
 }
 
