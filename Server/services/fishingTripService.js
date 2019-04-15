@@ -11,13 +11,18 @@ module.exports.getFishingTrips = async (req, res) => {
 				fishingTrips
 			)
 
+			const trips = []
 			const result = await fishingTrips.map(async (fishingTrip) => {
 				const Catches = await getCatchesById(fishingTrip.Catches)
-				fishingTrip.Catches = Catches
+				const trip = {
+					..._.pick(fishingTrip, fishingTripAttr.filter((f) => f != Catches)),
+					Catches: Catches
+				}
+				trips.push(trip)
 			})
 
 			Promise.all(result).then(() => {
-				res.send(fishingTrips)
+				res.send(trips)
 			})
 		})
 		.catch((error) => {
