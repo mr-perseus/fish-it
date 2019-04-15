@@ -36,6 +36,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             InitializeComponent();
         }
 
+        //NOSONAR
         public IList<FishingTrip.Weather> WeatherOptions =>
             Enum.GetValues(typeof(FishingTrip.Weather)).Cast<FishingTrip.Weather>().ToList();
         

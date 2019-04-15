@@ -36,7 +36,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
         private void Delete_Clicked(object sender, EventArgs e)
         {
-            FishingTrip fishingTrip = (sender as MenuItem)?.CommandParameter as FishingTrip;
             //Call manager to remove
         }
     }

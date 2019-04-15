@@ -35,7 +35,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         {
             Catch _catch = (sender as MenuItem)?.CommandParameter as Catch;
             Console.Write(_catch);
-            //await Navigation.PushAsync(new CatchForm(_catch));
         }
 
         private async void BtnAddCatch_OnClicked(object sender, EventArgs e)
