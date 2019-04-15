@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Views.FishingTrips.Catches;
 using Xamarin.Forms;
@@ -17,7 +19,8 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         {
             _fishingTrip = fishingTrip;
             BindingContext = fishingTrip;
-            NumberOfCatches = fishingTrip.Catches.Count;
+            List<Catch> catchArrayToList = fishingTrip.Catches.ToList();
+            NumberOfCatches = catchArrayToList.Count;
             InitializeComponent();
         }
 
