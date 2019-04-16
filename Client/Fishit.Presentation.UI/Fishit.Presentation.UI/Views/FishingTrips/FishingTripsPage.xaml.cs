@@ -36,8 +36,8 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
         public void InitializeData()
         {
-            Fishtype salmon = new Fishtype {Name = "Salmon", Description = "It is a fish"};
-            Fishtype tuna = new Fishtype {Name = "Tuna", Description = "That is also a fish"};
+            FishType salmon = new FishType {Name = "Salmon", Description = "It is a fish"};
+            FishType tuna = new FishType {Name = "Tuna", Description = "That is also a fish"};
 
             FishingTrip fishingTrip1 = new FishingTrip
             {

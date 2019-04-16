@@ -1,6 +1,6 @@
 ﻿namespace Fishit.Dal.Entities
 {
-    public class Fishtype
+    public class FishType
     {
         public string Id { get; set; }
         public string Name { get; set; }
