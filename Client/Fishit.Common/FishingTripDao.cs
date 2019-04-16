@@ -23,7 +23,8 @@ namespace Fishit.Common
 
         public async Task<List<FishingTrip>> GetAllFishingTrips()
         {
-            // string endPointUri = ConfigurationManager.ConnectionStrings["Setting1"].ConnectionString ?? "Not found";
+            _logger.Info(nameof(GetAllFishingTrips) + "; Start; ");
+
             using (HttpClient client = new HttpClient())
             {
                 using (HttpResponseMessage response = await client.GetAsync(EndPointUri))
@@ -32,7 +33,7 @@ namespace Fishit.Common
                     {
                         string myContent = await content.ReadAsStringAsync();
                         List<FishingTrip> allFishingTrips = GetAllFishingTripObjectsFromJson(myContent);
-                        string fishingTripId = allFishingTrips.FirstOrDefault()?.Id;
+                        _logger.Info(nameof(GetAllFishingTrips) + "; End; ");
                         return allFishingTrips;
                     }
                 }
@@ -42,18 +43,26 @@ namespace Fishit.Common
         public async Task<FishingTrip> GetFishingTripById(string fishingTripId)
         {
             _logger.Info(nameof(GetFishingTripById) + "; Start; " + "id; " + fishingTripId);
-
-            // FishingTrip fishingTrip = GetAllFishingTrips().Result.FirstOrDefault(entry => entry.Id == id);
-            // TODO async http request using Endpoint + "/" + id
-            //_logger.Info(nameof(GetFishingTripById) + "; End; " + "fishingTrip; " + fishingTrip);
-
-            return new FishingTrip();
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpResponseMessage response = await client.GetAsync(EndPointUri+"/"+fishingTripId))
+                {
+                    using (HttpContent content = response.Content)
+                    {
+                        string myContent = await content.ReadAsStringAsync();
+                        FishingTrip fishingTrip = ConvertJsonToFishingTripObject(myContent);
+                        _logger.Info(nameof(GetFishingTripById) + "; End; " + "fishingTrip; " + fishingTrip);
+                        return fishingTrip;
+                    }
+                }
+            }
         }
 
-        public async Task CreateFishingTrip(FishingTrip fishingTrip)
+        public Task<bool> CreateFishingTrip(FishingTrip fishingTrip)
         {
-           
-                // var endPointUri = ConfigurationManager.ConnectionStrings["GetFishingTripUri"].ConnectionString;
+            return Task.Run(() =>
+            {
+                _logger.Info(nameof(CreateFishingTrip) + "; Start; " + "fishingTrip; " + fishingTrip);
                 HttpWebRequest httpWebRequest = (HttpWebRequest) WebRequest.Create(EndPointUri + "/new");
                 httpWebRequest.ContentType = "application/json";
                 httpWebRequest.Method = "POST";
@@ -74,14 +83,37 @@ namespace Fishit.Common
                     string result = streamReader.ReadToEnd();
                 }
 
-             
+                _logger.Info(nameof(CreateFishingTrip) + "; End; " + "fishingTrip; " + fishingTrip);
+
+                return true;
+            }); 
+
         }
 
-        public async Task<FishingTrip> UpdateFishingTrip(FishingTrip fishingTrip)
+        public async Task UpdateFishingTrip(FishingTrip fishingTrip)
         {
-            string Id = fishingTrip.Id;
-            // TODO async http request using Endpoint + "/" + id
-            return new FishingTrip();
+            _logger.Info(nameof(CreateFishingTrip) + "; Start; " + "id; " + fishingTrip);
+            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(EndPointUri + "/"+fishingTrip.Id);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "PUT";
+
+            string content = ConvertFishingTripObjectToJson(fishingTrip);
+
+            using (StreamWriter streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(content);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+
+            HttpWebResponse httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (StreamReader streamReader =
+                new StreamReader(httpResponse.GetResponseStream() ?? throw new InvalidOperationException()))
+            {
+                string result = streamReader.ReadToEnd();
+            }
+
+            _logger.Info(nameof(CreateFishingTrip) + "; End; " + "fishingTrip; " + fishingTrip);
         }
 
         public async Task DeleteFishingTrip(string id)
@@ -110,7 +142,9 @@ namespace Fishit.Common
 
         public FishingTrip ConvertJsonToFishingTripObject(string jsonFishingTrip)
         {
-            return JsonConvert.DeserializeObject<FishingTrip>(jsonFishingTrip);
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {ContractResolver = new CustomContractResolver()};
+            return JsonConvert.DeserializeObject<FishingTrip>(jsonFishingTrip, settings);
         }
 
         public string ConvertFishingTripObjectToJson(FishingTrip fishingTripObject)

@@ -56,7 +56,7 @@ namespace Fishit.Common.Testing
         public async void GetAllFishingTripsAsObjects()
         {
             List<FishingTrip> allRegisteredFishingTrips = await FishingTripDao.GetAllFishingTrips();
-            Assert.True(allRegisteredFishingTrips.Count == 27);
+            Assert.True(allRegisteredFishingTrips.Count == 42);
         }
 
         [Fact]
@@ -65,6 +65,15 @@ namespace Fishit.Common.Testing
             FishingTrip ft = await FishingTripDao.GetFishingTripById("5cb5d242c5d4d81b1863c34e");
             Assert.True(ft.Description == "Good trip");
             Assert.True(ft.Location == "Type");
+        }
+
+        [Fact]
+
+        public async void UpdateFishingTrip()
+        {
+          FishingTrip fishingTripLondon = await FishingTripDao.GetFishingTripById("5cb34e19500b0509f4244304");
+          fishingTripLondon.Description = "it was so mad";
+          await FishingTripDao.UpdateFishingTrip(fishingTripLondon);
         }
 
         [Fact]
