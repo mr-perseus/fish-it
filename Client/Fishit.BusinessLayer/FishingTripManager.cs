@@ -31,10 +31,10 @@ namespace Fishit.BusinessLayer
         }
 
         //public async Task<FishingTrip> UpdateFishingTrip(FishingTrip fishingTrip)
-        public FishingTrip UpdateFishingTrip(FishingTrip fishingTrip)
+        public async Task<bool> UpdateFishingTrip(FishingTrip fishingTrip)
         {
-            //return await new FishingTripDao().UpdateFishingTrip(fishingTrip);
-            return new FishingTrip();
+            return await new FishingTripDao().UpdateFishingTrip(fishingTrip);
+            //return new FishingTrip();
         }
 
         public async Task<bool> DeleteFishingTrip(string fishingTripId)
@@ -47,14 +47,16 @@ namespace Fishit.BusinessLayer
         {
             Catch bCatch = await new CatchManager().CreateCatch(aCatch);
             fishingTrip.Catches.Add(bCatch);
-            return UpdateFishingTrip(fishingTrip);
+            //return UpdateFishingTrip(fishingTrip);
+            return fishingTrip;
         }
 
         public async Task<FishingTrip> UpdateCatch(FishingTrip fishingTrip, Catch aCatch)
         {
             Catch bCatch = await new CatchManager().UpdateCatch(aCatch);
             fishingTrip.Catches.Add(bCatch);
-            return UpdateFishingTrip(fishingTrip);
+            //return UpdateFishingTrip(fishingTrip);
+            return fishingTrip;
         }
     }
 }
