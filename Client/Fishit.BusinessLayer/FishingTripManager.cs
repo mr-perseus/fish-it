@@ -16,7 +16,32 @@ namespace Fishit.BusinessLayer
         {
             _logger = LogManager.GetLogger(nameof(FishingTripManager));
         }
-        
+
+        public IEnumerable<FishingTrip> GetAllFishingTrips()
+        {
+            return new List<FishingTrip>();
+        }
+
+        public FishingTrip GetFishingTripById(string fishingTripId)
+        {
+            return new FishingTrip();
+        }
+
+        public async void CreateFishingTrip(FishingTrip fishingTrip)
+        {
+            await new FishingTripDao().AddFishingTripByWebRequest(fishingTrip);
+        }
+
+        public async void UpdateFishingTrip(FishingTrip fishingTrip)
+        {
+            //await new FishingTripDao().UpdateFishingTripByPutRequest(fishingTrip);
+        }
+
+        public void DeleteFishingTrip(string fishingTripId)
+        {
+
+        }
+
         public IList<string> GetAllLocations()
         {
             IList<string> locations = GetAllFishingTrips().GroupBy(trip => trip.Location).Select(l => l.Key).ToList();
@@ -29,11 +54,6 @@ namespace Fishit.BusinessLayer
         public IEnumerable<FishingTrip> GetFishingTripsByLocation(string location)
         {
             return new FishingTripDao().GetListByLocation(location);
-        }
-
-        public IEnumerable<FishingTrip> GetAllFishingTrips()
-        {
-            return new FishingTripDao().GetList();
         }
 
         public void AddFishingTrip(FishingTrip fishingTrip)
