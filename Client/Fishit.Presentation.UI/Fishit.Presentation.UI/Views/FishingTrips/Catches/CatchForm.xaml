@@ -26,7 +26,7 @@
       
         </Grid.ColumnDefinitions>
 
-        <Label Text="Fishtype:"
+        <Label Text="FishType:"
                Grid.Row="1" Grid.Column="0" />
 
         <Entry Grid.Row="1" Grid.Column="1" Text="{Binding Fishtype}" />
