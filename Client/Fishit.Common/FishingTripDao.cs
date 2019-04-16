@@ -50,10 +50,9 @@ namespace Fishit.Common
             return new FishingTrip();
         }
 
-        public Task<bool> CreateFishingTrip(FishingTrip fishingTrip)
+        public async Task CreateFishingTrip(FishingTrip fishingTrip)
         {
-            return Task.Run(() =>
-            {
+           
                 // var endPointUri = ConfigurationManager.ConnectionStrings["GetFishingTripUri"].ConnectionString;
                 HttpWebRequest httpWebRequest = (HttpWebRequest) WebRequest.Create(EndPointUri + "/new");
                 httpWebRequest.ContentType = "application/json";
@@ -75,8 +74,7 @@ namespace Fishit.Common
                     string result = streamReader.ReadToEnd();
                 }
 
-                return true;
-            });
+             
         }
 
         public async Task<FishingTrip> UpdateFishingTrip(FishingTrip fishingTrip)

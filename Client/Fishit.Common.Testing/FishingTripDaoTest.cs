@@ -13,26 +13,34 @@ namespace Fishit.Common.Testing
         private FishingTripDao FishingTripDao =>
             _fishingTripDao ?? (_fishingTripDao = new FishingTripDao());
 
+        FishingTrip fishingTrip = new FishingTrip
+        {
+            
+            Location = "Letzte",
+            DateTime = new DateTime(2019, 04, 16),
+            Description = "Neu POST Versuch",
+            PredominantWeather = FishingTrip.Weather.Sunny,
+            Temperature = 12.5,
+            Catches = 
+                {
+                    new Catch {FishType = new FishType
+                    {   Id = "0",
+                        Name = "Tuna", 
+                        Description = "Meeresfisch, mit Sonde gefangen"
+                    },
+                    DateTime = new DateTime(2019,04,16,11,25,00),
+                    Length = 50,
+                    Weight = 100,
+                    Id = "0"
+                    }
+                }
+        };
+
+
         //Always OK, not finished test
         [Fact]
         public async void AddFishingTripTest()
         {
-            FishingTrip fishingTrip = new FishingTrip
-            {
-                Id = "Zero",
-                Location = "TestHuzaaa",
-                DateTime = new DateTime(2019, 04, 16),
-                Description = "Neu POST Versuch",
-                PredominantWeather = FishingTrip.Weather.Sunny,
-                Temperature = 12.5
-
-
-                /*
-                {
-                    new Catch {FishType = new Fishtype(), DateTime = new DateTime(2019,04,16,11,25,00),Length = 50, Weight = 100}
-                
-                } */
-            };
             await FishingTripDao.CreateFishingTrip(fishingTrip);
         }
 

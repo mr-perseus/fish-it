@@ -15,7 +15,7 @@ namespace Fishit.Dal.Entities
             Hailing
         }
 
-        public string Id { get; set; }
+        public string Id { get; set; } = "0";
         public string Location { get; set; }
         public DateTime DateTime { get; set; }
         public string Description { get; set; }
