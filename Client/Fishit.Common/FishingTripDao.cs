@@ -90,9 +90,11 @@ namespace Fishit.Common
 
         }
 
-        public async Task UpdateFishingTrip(FishingTrip fishingTrip)
+        public Task<bool> UpdateFishingTrip(FishingTrip fishingTrip)
         {
-            _logger.Info(nameof(CreateFishingTrip) + "; Start; " + "id; " + fishingTrip);
+            return Task.Run(() =>
+            {
+                _logger.Info(nameof(UpdateFishingTrip) + "; Start; " + "fishingTripbefore; " + fishingTrip);
             HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(EndPointUri + "/"+fishingTrip.Id);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "PUT";
@@ -113,12 +115,14 @@ namespace Fishit.Common
                 string result = streamReader.ReadToEnd();
             }
 
-            _logger.Info(nameof(CreateFishingTrip) + "; End; " + "fishingTrip; " + fishingTrip);
+            _logger.Info(nameof(UpdateFishingTrip) + "; End; " + "fishingTripafter; " + fishingTrip);
+            return true;
+            });
         }
 
         public async Task DeleteFishingTrip(string id)
         {
-            // var endPointUri = ConfigurationManager.ConnectionStrings["GetFishingTripUri"].ConnectionString;
+            _logger.Info(nameof(DeleteFishingTrip) + "; Start; " + "id; " + id);
             using (HttpClient client = new HttpClient())
             {
                 using (HttpResponseMessage response = await client.DeleteAsync(EndPointUri + "/" + id))
@@ -126,29 +130,34 @@ namespace Fishit.Common
                     using (HttpContent content = response.Content)
                     {
                         string deletedFishingTrip = await content.ReadAsStringAsync();
+                        _logger.Info(nameof(UpdateFishingTrip) + "; End; " + "deletedFishingTrip; " + deletedFishingTrip);
                     }
                 }
             }
         }
 
-        // De-/Serialization of JSON/FishingTrip Objects 
-
+  
         public List<FishingTrip> GetAllFishingTripObjectsFromJson(string jsonContent)
         {
+            _logger.Info(nameof(GetAllFishingTripObjectsFromJson) + "; Start; ");
             JsonSerializerSettings settings = new JsonSerializerSettings
                 {ContractResolver = new CustomContractResolver()};
+            _logger.Info(nameof(GetAllFishingTripObjectsFromJson) + "; End; ");
             return JsonConvert.DeserializeObject<List<FishingTrip>>(jsonContent, settings);
         }
 
         public FishingTrip ConvertJsonToFishingTripObject(string jsonFishingTrip)
         {
+            _logger.Info(nameof(ConvertJsonToFishingTripObject) + "; Start; ");
             JsonSerializerSettings settings = new JsonSerializerSettings
             {ContractResolver = new CustomContractResolver()};
+            _logger.Info(nameof(ConvertJsonToFishingTripObject) + "; End; ");
             return JsonConvert.DeserializeObject<FishingTrip>(jsonFishingTrip, settings);
         }
 
         public string ConvertFishingTripObjectToJson(FishingTrip fishingTripObject)
         {
+            _logger.Info(nameof(ConvertFishingTripObjectToJson) + "; Start and End; ");
             return JsonConvert.SerializeObject(fishingTripObject);
         }
     }

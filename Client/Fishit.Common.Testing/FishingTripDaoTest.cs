@@ -36,8 +36,6 @@ namespace Fishit.Common.Testing
                 }
         };
 
-
-        //Always OK, not finished test
         [Fact]
         public async void AddFishingTripTest()
         {
@@ -52,7 +50,6 @@ namespace Fishit.Common.Testing
         }
 
         [Fact]
-        //Trouble with FishType(JSON) convert to Fishtype(C#)
         public async void GetAllFishingTripsAsObjects()
         {
             List<FishingTrip> allRegisteredFishingTrips = await FishingTripDao.GetAllFishingTrips();
@@ -68,11 +65,10 @@ namespace Fishit.Common.Testing
         }
 
         [Fact]
-
         public async void UpdateFishingTrip()
         {
           FishingTrip fishingTripLondon = await FishingTripDao.GetFishingTripById("5cb34e19500b0509f4244304");
-          fishingTripLondon.Description = "it was so mad";
+          fishingTripLondon.Description = "it was so good";
           await FishingTripDao.UpdateFishingTrip(fishingTripLondon);
         }
 
