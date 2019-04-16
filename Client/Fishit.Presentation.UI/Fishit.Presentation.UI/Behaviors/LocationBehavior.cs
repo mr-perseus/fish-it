@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using Xamarin.Forms;
 
 namespace Fishit.Presentation.UI.Behaviors
 {
-    class LocationBehavior : Behavior<Entry>
+    internal class LocationBehavior : Behavior<Entry>
     {
-        public bool IsValid { get; set; }
         private const string CharOnlyRegex = @"^([A-Za-z]|Ä|Ö|Ü|ä|ö|ü|-| )*$";
+        public bool IsValid { get; set; }
 
         protected override void OnAttachedTo(Entry bindable)
         {
@@ -17,10 +14,10 @@ namespace Fishit.Presentation.UI.Behaviors
             base.OnAttachedTo(bindable);
         }
 
-        void HandleTextChanged(object sender, TextChangedEventArgs e)
+        private void HandleTextChanged(object sender, TextChangedEventArgs e)
         {
             IsValid = false;
-            IsValid = (Regex.IsMatch(e.NewTextValue, CharOnlyRegex));
+            IsValid = Regex.IsMatch(e.NewTextValue, CharOnlyRegex);
             ((Entry) sender).TextColor = IsValid ? Color.Default : Color.Red;
         }
 

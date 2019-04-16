@@ -11,9 +11,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FishingTripDetailsPage : ContentPage
     {
-        public int NumberOfCatches { get; set; }
-        private FishingTrip _fishingTrip;
-        public string Name { get; set; }
+        private readonly FishingTrip _fishingTrip;
 
         public FishingTripDetailsPage(FishingTrip fishingTrip)
         {
@@ -23,6 +21,9 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             NumberOfCatches = catchArrayToList.Count;
             InitializeComponent();
         }
+
+        public int NumberOfCatches { get; set; }
+        public string Name { get; set; }
 
         private async void ViewCatches_OnClicked(object sender, EventArgs e)
         {

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Fishit.Dal.Entities;
 using Fishit.TestEnvironment;
 using Xunit;
@@ -14,59 +13,55 @@ namespace Fishit.Common.Testing
         private FishingTripDao FishingTripDao =>
             _fishingTripDao ?? (_fishingTripDao = new FishingTripDao());
 
+        //Always OK, not finished test
+        [Fact]
+        public async void AddFishingTripTest()
+        {
+            FishingTrip fishingTrip = new FishingTrip
+            {
+                Id = "Zero",
+                Location = "TestHuzaaa",
+                DateTime = new DateTime(2019, 04, 16),
+                Description = "Neu POST Versuch",
+                PredominantWeather = FishingTrip.Weather.Sunny,
+                Temperature = 12.5
+
+
+                /*
+                {
+                    new Catch {FishType = new Fishtype(), DateTime = new DateTime(2019,04,16,11,25,00),Length = 50, Weight = 100}
+                
+                } */
+            };
+            await FishingTripDao.CreateFishingTrip(fishingTrip);
+        }
+
+        [Fact]
+        public async void DeleteFishingTripById()
+        {
+            string existingFishingTripId = "5cb34e41500b0509f4244305";
+            await FishingTripDao.DeleteFishingTrip(existingFishingTripId);
+        }
+
         [Fact]
         //Trouble with FishType(JSON) convert to Fishtype(C#)
         public async void GetAllFishingTripsAsObjects()
         {
-          List<FishingTrip> allRegisteredFishingTrips = await FishingTripDao.GetListOfAllFishingTripObjects();
-          Assert.True(allRegisteredFishingTrips.Count == 6);
+            List<FishingTrip> allRegisteredFishingTrips = await FishingTripDao.GetAllFishingTrips();
+            Assert.True(allRegisteredFishingTrips.Count == 27);
         }
 
         [Fact]
-        public void AddFishingTripTest()
+        public async void GetFishingTripById()
         {
-            FishingTrip fishingTrip = new FishingTrip
-            {
-                Id = 5,
-                Location = "Test"
-            };
-
-            FishingTripDao.AddFishingTrip(fishingTrip);
-
-            FishingTrip returnedFishingTrip = FishingTripDao.GetById(5);
-            Assert.Equal(fishingTrip.Id, returnedFishingTrip.Id);
-        }
-
-        //Always OK, not finished test
-        [Fact]
-        public async void AddFishingTripByRequestTestAsync()
-        {
-            FishingTrip fishingTrip = new FishingTrip
-            {
-                Id = 0,
-                Location = "Lago di Maggiore",
-                DateTime = new DateTime(2019, 04, 14), 
-                Description = "Catchlist POST Versuch",
-                PredominantWeather = FishingTrip.Weather.Hailing,
-                Temperature = 12.5,
-                Catches = new List<Catch>()
-
-            };
-            await FishingTripDao.AddFishingTripByWebRequest(fishingTrip);
-
-            FishingTrip returnedFishingTrip = FishingTripDao.GetById(5);
-            Assert.Equal(fishingTrip.Id, returnedFishingTrip.Id);
+            FishingTrip ft = await FishingTripDao.GetFishingTripById("5cb5d242c5d4d81b1863c34e");
+            Assert.True(ft.Description == "Good trip");
+            Assert.True(ft.Location == "Type");
         }
 
         [Fact]
         public void GetListByLocationTest()
         {
-            IEnumerable<FishingTrip> actualList = FishingTripDao.GetListByLocation("Wil").ToList();
-
-            Assert.Single(actualList);
-
-            Assert.Equal(2, actualList.First().Id);
-            Assert.Equal("Wil", actualList.First().Location);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Views.FishingTrips.Catches;
 using Xamarin.Forms;
@@ -21,25 +22,20 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             FishingTrip = fishingTrip;
             BindingContext = fishingTrip;
             SelectedWeather = fishingTrip.PredominantWeather;
-            if (fishingTrip.Id != 0)
-            {
+            if (!fishingTrip.Id.Equals("0"))
                 IsEdit = true;
-            }
             else
-            {
                 fishingTrip.DateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
                     DateTime.Now.Hour, DateTime.Now.Minute, 0);
-            }
 
             Date = fishingTrip.DateTime.Date;
             Time = fishingTrip.DateTime.TimeOfDay;
             InitializeComponent();
         }
 
-        //NOSONAR
         public IList<FishingTrip.Weather> WeatherOptions =>
             Enum.GetValues(typeof(FishingTrip.Weather)).Cast<FishingTrip.Weather>().ToList();
-        
+
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
         private FishingTrip FishingTrip { get; }
@@ -48,6 +44,8 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
         private async Task SaveFishingTrip()
         {
+            FishingTrip.PredominantWeather = SelectedWeather;
+            await new FishingTripManager().CreateFishingTrip(FishingTrip);
             await DisplayAlert("Fishing Trip", "Saved Successfully", "Ok");
         }
 

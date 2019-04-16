@@ -6,7 +6,8 @@
              x:Class="Fishit.Presentation.UI.Views.FishingTrips.FishingTripsPage"
              x:Name="This">
     <StackLayout x:Name="Root">
-        <Label BindingContext="{x:Reference This}" Text="Go Fishing!" IsVisible="{Binding IsListEmpty}" HorizontalOptions="Center" />
+        <Label BindingContext="{x:Reference This}" Text="Go Fishing!" IsVisible="{Binding IsListEmpty}"
+               HorizontalOptions="Center" />
         <ListView x:Name="FishingTripsListView"
                   HasUnevenRows="True"
                   ItemSelected="TripsListView_ItemSelected"
@@ -19,7 +20,8 @@
                             <StackLayout Orientation="Vertical">
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="{Binding Location}" />
-                                    <Label Text="{Binding DateTime, StringFormat='{}{0:dd.MM.yyyy, HH:mm}'}" HorizontalOptions="EndAndExpand" />
+                                    <Label Text="{Binding DateTime, StringFormat='{}{0:dd.MM.yyyy, HH:mm}'}"
+                                           HorizontalOptions="EndAndExpand" />
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="{Binding Temperature}" HorizontalOptions="EndAndExpand" />

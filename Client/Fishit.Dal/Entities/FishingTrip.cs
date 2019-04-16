@@ -15,13 +15,13 @@ namespace Fishit.Dal.Entities
             Hailing
         }
 
-        public int Id { get; set; }
+        public string Id { get; set; } = "0";
         public string Location { get; set; }
         public DateTime DateTime { get; set; }
         public string Description { get; set; }
         public Weather PredominantWeather { get; set; }
         public double Temperature { get; set; }
-        public List<Catch> Catches { get; set; }
+        public List<Catch> Catches { get; set; } = new List<Catch>();
 
 
         public override string ToString()
@@ -31,7 +31,7 @@ namespace Fishit.Dal.Entities
                    nameof(Location) + "; " + Location + "; " +
                    nameof(DateTime) + "; " + DateTime.ToString(CultureInfo.CurrentCulture) + "; " +
                    nameof(PredominantWeather) + "; " + PredominantWeather + "; " +
-                   nameof(Temperature) + "; " + Temperature + "; ";// + statt ;
+                   nameof(Temperature) + "; " + Temperature + "; "; // + statt ;
             // nameof(Catches) + "; " + (Catches != null ? Catches.Count.ToString() : "null");
         }
     }

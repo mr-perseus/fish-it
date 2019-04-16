@@ -4,100 +4,99 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Fishit.Dal;
 using Fishit.Dal.Entities;
 using Fishit.Logging;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using System.Configuration;
-
 
 namespace Fishit.Common
 {
     public class FishingTripDao : DaoBase
     {
-        
-       private string endPointUri = "http://sinv-56038.edu.hsr.ch:40007/api/fishingtrips";
+        private const string EndPointUri = "http://sinv-56038.edu.hsr.ch:40007/api/fishingtrips";
+        private readonly ILogger _logger;
 
-        public async Task<List<FishingTrip>> GetListOfAllFishingTripObjects()
+        public FishingTripDao()
         {
-           // string endPointUri = ConfigurationManager.ConnectionStrings["Setting1"].ConnectionString ?? "Not found";
+            _logger = LogManager.GetLogger(nameof(DaoBase));
+        }
+
+        public async Task<List<FishingTrip>> GetAllFishingTrips()
+        {
+            // string endPointUri = ConfigurationManager.ConnectionStrings["Setting1"].ConnectionString ?? "Not found";
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = await client.GetAsync(endPointUri))
+                using (HttpResponseMessage response = await client.GetAsync(EndPointUri))
                 {
                     using (HttpContent content = response.Content)
                     {
-                        string mycontent = await content.ReadAsStringAsync();
-                        List<FishingTrip> allFishingTrips = GetAllFishingTripObjectsFromJson(mycontent);
+                        string myContent = await content.ReadAsStringAsync();
+                        List<FishingTrip> allFishingTrips = GetAllFishingTripObjectsFromJson(myContent);
+                        string fishingTripId = allFishingTrips.FirstOrDefault()?.Id;
                         return allFishingTrips;
                     }
-
                 }
             }
-
         }
 
-
-        public async Task AddFishingTripByPostRequest(FishingTrip fishingtrip)
+        public async Task<FishingTrip> GetFishingTripById(string fishingTripId)
         {
-          //  var endPointUri = ConfigurationManager.ConnectionStrings["GetFishingTripUri"].ConnectionString;
-            string content = ConvertFishingTripObjectToJson(fishingtrip);
-            var contentForRequest = new StringContent(content.ToString(), Encoding.UTF8, "application/json");
-            //var contentForRequest = new StringContent(content.ToString()); should be same like code above
-            
-            using (HttpClient client = new HttpClient())
+            _logger.Info(nameof(GetFishingTripById) + "; Start; " + "id; " + fishingTripId);
+
+            // FishingTrip fishingTrip = GetAllFishingTrips().Result.FirstOrDefault(entry => entry.Id == id);
+            // TODO async http request using Endpoint + "/" + id
+            //_logger.Info(nameof(GetFishingTripById) + "; End; " + "fishingTrip; " + fishingTrip);
+
+            return new FishingTrip();
+        }
+
+        public Task<bool> CreateFishingTrip(FishingTrip fishingTrip)
+        {
+            return Task.Run(() =>
             {
-                using (HttpResponseMessage response = await client.PostAsync(endPointUri+"/new", contentForRequest))
+                // var endPointUri = ConfigurationManager.ConnectionStrings["GetFishingTripUri"].ConnectionString;
+                HttpWebRequest httpWebRequest = (HttpWebRequest) WebRequest.Create(EndPointUri + "/new");
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Method = "POST";
+
+                string content = ConvertFishingTripObjectToJson(fishingTrip);
+
+                using (StreamWriter streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
-                    using (HttpContent responseContent = response.Content)
-                    {
-                        string addedFishingTrip = await responseContent.ReadAsStringAsync();
-                    }
-
+                    streamWriter.Write(content);
+                    streamWriter.Flush();
+                    streamWriter.Close();
                 }
-            }
+
+                HttpWebResponse httpResponse = (HttpWebResponse) httpWebRequest.GetResponse();
+                using (StreamReader streamReader =
+                    new StreamReader(httpResponse.GetResponseStream() ?? throw new InvalidOperationException()))
+                {
+                    string result = streamReader.ReadToEnd();
+                }
+
+                return true;
+            });
         }
 
-        // Second Way to Add/Create Fishing Trips
-        public async Task AddFishingTripByWebRequest(FishingTrip fishingtrip)
+        public async Task<FishingTrip> UpdateFishingTrip(FishingTrip fishingTrip)
         {
-           // var endPointUri = ConfigurationManager.ConnectionStrings["GetFishingTripUri"].ConnectionString;
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create(endPointUri+"/new");
-            httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Method = "POST";
-
-            string content = ConvertFishingTripObjectToJson(fishingtrip);
-
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-
-                streamWriter.Write(content);
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
-
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var result = streamReader.ReadToEnd();
-            }
+            string Id = fishingTrip.Id;
+            // TODO async http request using Endpoint + "/" + id
+            return new FishingTrip();
         }
 
-        public async Task DeleteFishingTripByRequest(string id)
+        public async Task DeleteFishingTrip(string id)
         {
-            var endPointUri = ConfigurationManager.ConnectionStrings["GetFishingTripUri"].ConnectionString;
+            // var endPointUri = ConfigurationManager.ConnectionStrings["GetFishingTripUri"].ConnectionString;
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = await client.DeleteAsync(endPointUri + id))
+                using (HttpResponseMessage response = await client.DeleteAsync(EndPointUri + "/" + id))
                 {
                     using (HttpContent content = response.Content)
                     {
                         string deletedFishingTrip = await content.ReadAsStringAsync();
                     }
-
                 }
             }
         }
@@ -106,85 +105,19 @@ namespace Fishit.Common
 
         public List<FishingTrip> GetAllFishingTripObjectsFromJson(string jsonContent)
         {
-            List<FishingTrip> fishingTripList = JsonConvert.DeserializeObject<List<FishingTrip>>(jsonContent);
-            return fishingTripList;
+            JsonSerializerSettings settings = new JsonSerializerSettings
+                {ContractResolver = new CustomContractResolver()};
+            return JsonConvert.DeserializeObject<List<FishingTrip>>(jsonContent, settings);
         }
 
         public FishingTrip ConvertJsonToFishingTripObject(string jsonFishingTrip)
         {
-            FishingTrip fishingtripObject = JsonConvert.DeserializeObject<FishingTrip>(jsonFishingTrip);
-            return fishingtripObject;
+            return JsonConvert.DeserializeObject<FishingTrip>(jsonFishingTrip);
         }
-        public string ConvertFishingTripObjectToJson(FishingTrip fishingtripObject)
+
+        public string ConvertFishingTripObjectToJson(FishingTrip fishingTripObject)
         {
-            var jsonFishingTrip = JsonConvert.SerializeObject(fishingtripObject);
-            return jsonFishingTrip;
+            return JsonConvert.SerializeObject(fishingTripObject);
         }
-
-        //OLD CODE v (DOWN) ----  NEW CODE ^(UP)
-
-        private readonly ILogger _logger;
-
-        public FishingTripDao()
-        {
-            _logger = LogManager.GetLogger(nameof(DaoBase));
-        }
-
-        public void AddFishingTrip(FishingTrip fishingTrip)
-        {
-            using (FishitContext context = new FishitContext())
-            {
-                try
-                {
-                    _logger.Info(nameof(AddFishingTrip) + "; Start; " + "FishingTrip; " + fishingTrip);
-
-                    context.Entry(fishingTrip).State = EntityState.Added;
-                    context.SaveChanges();
-
-                    _logger.Info(nameof(AddFishingTrip) + "; End; ");
-                }
-                catch (DbUpdateException exception)
-                {
-                    HandleDbUpdateException(exception, context, fishingTrip);
-                }
-            }
-        }
-        
-
-                public FishingTrip GetById(int id)
-                {
-                    _logger.Info(nameof(GetById) + "; Start; " + "id; " + id);
-
-                    FishingTrip fishingTrip = GetList().FirstOrDefault(entry => entry.Id == id);
-
-                    _logger.Info(nameof(GetById) + "; End; " + "fishingTrip; " + fishingTrip);
-
-                    return fishingTrip;
-                }
-
-                public IEnumerable<FishingTrip> GetListByLocation(string location)
-                {
-                    _logger.Info(nameof(GetListByLocation) + "; Start; " + "location; " + location);
-
-                    IEnumerable<FishingTrip> fishingTrips = GetList().Where(trip => trip.Location == location).ToList();
-
-                    _logger.Info(nameof(GetListByLocation) + "; End; " + "fishingTrips.Count; " + fishingTrips.Count());
-
-                    return fishingTrips;
-                }
-
-                public IEnumerable<FishingTrip> GetList()
-                {
-                    using (FishitContext context = new FishitContext())
-                    {
-                        _logger.Debug(nameof(GetList) + "; Start; ");
-
-                        IEnumerable<FishingTrip> fishingTrips = context.FishingTrips.ToList();
-
-                        _logger.Debug(nameof(GetList) + "; End; " + "fishingTrips.Count; " + fishingTrips.Count());
-
-                        return fishingTrips;
-                    }
-                }
     }
 }

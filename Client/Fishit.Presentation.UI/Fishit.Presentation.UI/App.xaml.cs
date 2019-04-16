@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Fishit.Presentation.UI.Views;
+﻿using Fishit.Presentation.UI.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Fishit.Presentation.UI
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class App : Application
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class App : Application
+    {
         public App()
         {
             InitializeComponent();
