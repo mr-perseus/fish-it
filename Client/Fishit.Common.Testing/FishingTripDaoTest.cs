@@ -19,7 +19,7 @@ namespace Fishit.Common.Testing
         public async void GetAllFishingTripsAsObjects()
         {
           List<FishingTrip> allRegisteredFishingTrips = await FishingTripDao.GetListOfAllFishingTripObjects();
-          Assert.True(allRegisteredFishingTrips.Count == 6);
+          Assert.True(allRegisteredFishingTrips.Count == 16);
         }
 
 
@@ -30,8 +30,8 @@ namespace Fishit.Common.Testing
         {
             FishingTrip fishingTrip = new FishingTrip
             {
-                Id = 0,
-                Location = "Zürichsee Glarus",
+                Id = "Zero",
+                Location = "testhuza",
                 DateTime = new DateTime(2019, 04, 16), 
                 Description = "Neu POST Versuch",
                 PredominantWeather = FishingTrip.Weather.Sunny,

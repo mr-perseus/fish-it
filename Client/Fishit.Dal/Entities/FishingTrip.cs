@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Newtonsoft.Json.Serialization;
 
 namespace Fishit.Dal.Entities
 {
@@ -14,8 +15,7 @@ namespace Fishit.Dal.Entities
             Snowing,
             Hailing
         }
-
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Location { get; set; }
         public DateTime DateTime { get; set; }
         public string Description { get; set; }

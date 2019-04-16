@@ -32,7 +32,7 @@ namespace Fishit.Common
                     {
                         string mycontent = await content.ReadAsStringAsync();
                         List<FishingTrip> allFishingTrips = GetAllFishingTripObjectsFromJson(mycontent);
-                        int zahl = allFishingTrips.FirstOrDefault().Id;
+                        string FishingTripId = allFishingTrips.FirstOrDefault().Id;
                         return allFishingTrips;
                         
 
@@ -106,7 +106,7 @@ namespace Fishit.Common
             }
         }
 
-        public FishingTrip GetFishingTripById(int id)
+        public FishingTrip GetFishingTripById(string id)
         {
             _logger.Info(nameof(GetFishingTripById) + "; Start; " + "id; " + id);
 
@@ -121,7 +121,9 @@ namespace Fishit.Common
 
         public List<FishingTrip> GetAllFishingTripObjectsFromJson(string jsonContent)
         {
-            List<FishingTrip> fishingTripList = JsonConvert.DeserializeObject<List<FishingTrip>>(jsonContent);
+            var settings = new JsonSerializerSettings();
+            settings.ContractResolver = new CustomContractResolver();
+            List<FishingTrip> fishingTripList = JsonConvert.DeserializeObject<List<FishingTrip>>(jsonContent, settings);
             return fishingTripList;
         }
 

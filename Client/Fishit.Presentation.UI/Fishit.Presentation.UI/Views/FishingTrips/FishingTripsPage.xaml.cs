@@ -39,11 +39,11 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             Fishtype salmon = new Fishtype {Name = "Salmon", Description = "It is a fish"};
             Fishtype tuna = new Fishtype {Name = "Tuna", Description = "That is also a fish"};
 
-            FishingTrip fishingTrip1 = new FishingTrip {Id = 1, DateTime = new DateTime(2018,6,15,10,20,26), Location = "Rapperswil", Description = "It was awesome!", PredominantWeather = FishingTrip.Weather.Sunny, Temperature = 25.4};
-            FishingTrip fishingTrip2 = new FishingTrip {Id = 2, DateTime = new DateTime(2018,9,1,11,44,34), Location = "Zürich", Description = "Beautiful day.", PredominantWeather = FishingTrip.Weather.Sunny, Temperature = 23.1};
-            FishingTrip fishingTrip3 = new FishingTrip {Id = 3, DateTime = new DateTime(2019,2,17,14,50,22), Location = "Genf", Description = "It was a little bit chilli.", PredominantWeather = FishingTrip.Weather.Raining, Temperature = 16.2};
-            FishingTrip fishingTrip4 = new FishingTrip {Id = 4, DateTime = new DateTime(2019,1,5,13,45,0), Location = "Zürich", Description = "It was freezing, but still nice.", PredominantWeather = FishingTrip.Weather.Snowing, Temperature = -2.9};
-            FishingTrip fishingTrip5 = new FishingTrip {Id = 5, DateTime = new DateTime(2018,8,14,4,5,2), Location = "Rapperswil", Description = "That is too hot!", PredominantWeather = FishingTrip.Weather.Sunny, Temperature = 35.0};
+            FishingTrip fishingTrip1 = new FishingTrip {Id = "1", DateTime = new DateTime(2018,6,15,10,20,26), Location = "Rapperswil", Description = "It was awesome!", PredominantWeather = FishingTrip.Weather.Sunny, Temperature = 25.4};
+            FishingTrip fishingTrip2 = new FishingTrip {Id = "2", DateTime = new DateTime(2018,9,1,11,44,34), Location = "Zürich", Description = "Beautiful day.", PredominantWeather = FishingTrip.Weather.Sunny, Temperature = 23.1};
+            FishingTrip fishingTrip3 = new FishingTrip {Id = "3", DateTime = new DateTime(2019,2,17,14,50,22), Location = "Genf", Description = "It was a little bit chilli.", PredominantWeather = FishingTrip.Weather.Raining, Temperature = 16.2};
+            FishingTrip fishingTrip4 = new FishingTrip {Id = "4", DateTime = new DateTime(2019,1,5,13,45,0), Location = "Zürich", Description = "It was freezing, but still nice.", PredominantWeather = FishingTrip.Weather.Snowing, Temperature = -2.9};
+            FishingTrip fishingTrip5 = new FishingTrip {Id = "5", DateTime = new DateTime(2018,8,14,4,5,2), Location = "Rapperswil", Description = "That is too hot!", PredominantWeather = FishingTrip.Weather.Sunny, Temperature = 35.0};
 
             fishingTrip1.Catches = new List<Catch>
             {
