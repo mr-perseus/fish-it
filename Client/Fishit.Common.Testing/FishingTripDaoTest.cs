@@ -52,9 +52,9 @@ namespace Fishit.Common.Testing
         }
 
         [Fact]
-        public void GetFishingTripById()
+        public async void GetFishingTripById()
         {
-            FishingTrip ft = FishingTripDao.GetFishingTripById("5cb5d242c5d4d81b1863c34e");
+            FishingTrip ft = await FishingTripDao.GetFishingTripById("5cb5d242c5d4d81b1863c34e");
             Assert.True(ft.Description == "Good trip");
             Assert.True(ft.Location == "Type");
         }

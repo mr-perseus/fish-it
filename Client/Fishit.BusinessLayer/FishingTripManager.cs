@@ -52,5 +52,12 @@ namespace Fishit.BusinessLayer
             fishingTrip.Catches.Add(bCatch);
             return UpdateFishingTrip(fishingTrip);
         }
+
+        public async Task<FishingTrip> UpdateCatch(FishingTrip fishingTrip, Catch aCatch)
+        {
+            Catch bCatch = await new CatchManager().UpdateCatch(aCatch);
+            fishingTrip.Catches.Add(bCatch);
+            return UpdateFishingTrip(fishingTrip);
+        }
     }
 }
