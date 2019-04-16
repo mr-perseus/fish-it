@@ -16,7 +16,7 @@
                         <StackLayout Padding="20">
                             <StackLayout Orientation="Vertical">
                                 <StackLayout Orientation="Horizontal">
-                                    <Label BindingContext="{Binding Fishtype}" Text="{Binding Name}" />
+                                    <Label BindingContext="{Binding FishType}" Text="{Binding Name}" />
                                     <Label Text="{Binding DateTime, StringFormat='{}{0:HH:mm}'}" HorizontalOptions="EndAndExpand" />
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal">
@@ -37,6 +37,6 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Button Text="Add Catch" Clicked="BtnAddCatch_OnClicked" Margin="20,0" />
+        <Button Text="Add Catch" Clicked="BtnAddCatch_OnClicked" Margin="20,20" Style="{StaticResource ButtonStyle}" />
     </StackLayout>
 </ContentPage>

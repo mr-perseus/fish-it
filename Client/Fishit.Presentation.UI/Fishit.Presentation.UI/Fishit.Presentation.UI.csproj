@@ -42,6 +42,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\FishingTrips\Catches\CatchFormPage.xaml.cs">
+      <DependentUpon>CatchFormPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\FishingTrips\FishingTripsFormPage.xaml.cs">
       <DependentUpon>FishingTripsFormPage.xaml</DependentUpon>
     </Compile>
@@ -63,7 +66,7 @@
     <EmbeddedResource Update="Views\FishingTrips\Catches\CatchesListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\FishingTrips\Catches\CatchForm.xaml">
+    <EmbeddedResource Update="Views\FishingTrips\Catches\CatchFormPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\FishingTrips\FishingTripDetailsPage.xaml">

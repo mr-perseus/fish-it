@@ -14,32 +14,36 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 	public partial class CatchesListPage : ContentPage
     {
         private ObservableCollection<Catch> _catches;
+        private FishingTrip FishingTrip;
 		public CatchesListPage(FishingTrip fishingTrip)
         {
+            FishingTrip = fishingTrip;
             _catches = new ObservableCollection<Catch>(fishingTrip.Catches);
 			InitializeComponent ();
             CatchesListView.ItemsSource = _catches;
         }
 
-        private void CatchesListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private async void CatchesListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null)
                 return;
 
             Catch _catch = e.SelectedItem as Catch;
             Console.WriteLine(_catch);
+            await Navigation.PushAsync(new CatchFormPage(FishingTrip, _catch));
             CatchesListView.SelectedItem = null;
         }
 
-        private void Edit_Clicked(object sender, EventArgs e)
+        private async void Edit_Clicked(object sender, EventArgs e)
         {
             Catch _catch = (sender as MenuItem)?.CommandParameter as Catch;
             Console.Write(_catch);
+            await Navigation.PushAsync(new CatchFormPage(FishingTrip, _catch));
         }
 
         private async void BtnAddCatch_OnClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new CatchForm());
+            await Navigation.PushAsync(new CatchFormPage(FishingTrip));
         }
 
         private void Delete_Clicked(object sender, EventArgs e)
