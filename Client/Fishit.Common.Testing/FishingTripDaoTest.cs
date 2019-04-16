@@ -14,6 +14,13 @@ namespace Fishit.Common.Testing
         private FishingTripDao FishingTripDao =>
             _fishingTripDao ?? (_fishingTripDao = new FishingTripDao());
 
+        [Fact]
+        //Trouble with FishType(JSON) convert to Fishtype(C#)
+        public async void GetAllFishingTripsAsObjects()
+        {
+          List<FishingTrip> allRegisteredFishingTrips = await FishingTripDao.GetListOfAllFishingTripObjects();
+          Assert.True(allRegisteredFishingTrips.Count == 6);
+        }
 
         [Fact]
         public void AddFishingTripTest()
@@ -36,15 +43,16 @@ namespace Fishit.Common.Testing
         {
             FishingTrip fishingTrip = new FishingTrip
             {
-                Location = "Sufnersee",
+                Id = 0,
+                Location = "Lago di Maggiore",
                 DateTime = new DateTime(2019, 04, 14), 
-                Description = "Erster POST Versuch",
+                Description = "Catchlist POST Versuch",
                 PredominantWeather = FishingTrip.Weather.Hailing,
                 Temperature = 12.5,
-                Catches = new Catch[2]
+                Catches = new List<Catch>()
 
             };
-            await FishingTripDao.AddFishingTripByPostRequest(fishingTrip);
+            await FishingTripDao.AddFishingTripByWebRequest(fishingTrip);
 
             FishingTrip returnedFishingTrip = FishingTripDao.GetById(5);
             Assert.Equal(fishingTrip.Id, returnedFishingTrip.Id);

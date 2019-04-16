@@ -45,39 +45,39 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             FishingTrip fishingTrip4 = new FishingTrip {Id = 4, DateTime = new DateTime(2019,1,5,13,45,0), Location = "Zürich", Description = "It was freezing, but still nice.", PredominantWeather = FishingTrip.Weather.Snowing, Temperature = -2.9};
             FishingTrip fishingTrip5 = new FishingTrip {Id = 5, DateTime = new DateTime(2018,8,14,4,5,2), Location = "Rapperswil", Description = "That is too hot!", PredominantWeather = FishingTrip.Weather.Sunny, Temperature = 35.0};
 
-            fishingTrip1.Catches = new Catch[]
+            fishingTrip1.Catches = new List<Catch>
             {
-                new Catch {Fishtype = salmon, DateTime = new DateTime(2018, 6, 15, 12, 25, 6), Weight = 2.3, Length = 0.8},
-                new Catch {Fishtype = salmon, DateTime = new DateTime(2018, 6, 15, 13, 45, 55), Weight = 2.1, Length = 0.95},
-                new Catch {Fishtype = tuna, DateTime = new DateTime(2018, 6, 15, 16, 2, 7), Weight = 4.3, Length = 1.2},
+                new Catch {FishType = salmon, DateTime = new DateTime(2018, 6, 15, 12, 25, 6), Weight = 2.3, Length = 0.8},
+                new Catch {FishType = salmon, DateTime = new DateTime(2018, 6, 15, 13, 45, 55), Weight = 2.1, Length = 0.95},
+                new Catch {FishType = tuna, DateTime = new DateTime(2018, 6, 15, 16, 2, 7), Weight = 4.3, Length = 1.2},
             };
 
-            fishingTrip2.Catches = new Catch[]
+            fishingTrip2.Catches = new List<Catch>
             {
-                new Catch {Fishtype = salmon, DateTime = new DateTime(2018,9,1,12,4,37), Weight = 1.2, Length = 0.4},
-                new Catch {Fishtype = salmon, DateTime = new DateTime(2018,9,1,18,5,31), Weight = 1.3, Length = 0.6},
-                new Catch {Fishtype = tuna, DateTime = new DateTime(2018,9,1,18,48,54), Weight = 3.3, Length = 1.5},
+                new Catch {FishType = salmon, DateTime = new DateTime(2018,9,1,12,4,37), Weight = 1.2, Length = 0.4},
+                new Catch {FishType = salmon, DateTime = new DateTime(2018,9,1,18,5,31), Weight = 1.3, Length = 0.6},
+                new Catch {FishType = tuna, DateTime = new DateTime(2018,9,1,18,48,54), Weight = 3.3, Length = 1.5},
             };
 
-            fishingTrip3.Catches = new Catch[]
+            fishingTrip3.Catches = new List<Catch>
             {
-                new Catch {Fishtype = tuna, DateTime = new DateTime(2019,2,17,15,56,29), Weight = 1.8, Length = 1.1},
-                new Catch {Fishtype = tuna, DateTime = new DateTime(2019,2,17,17,26,16), Weight = 2.3, Length = 1.4},
-                new Catch {Fishtype = tuna, DateTime = new DateTime(2019,2,17,17,59,54), Weight = 2.6, Length = 1.2},
+                new Catch {FishType = tuna, DateTime = new DateTime(2019,2,17,15,56,29), Weight = 1.8, Length = 1.1},
+                new Catch {FishType = tuna, DateTime = new DateTime(2019,2,17,17,26,16), Weight = 2.3, Length = 1.4},
+                new Catch {FishType = tuna, DateTime = new DateTime(2019,2,17,17,59,54), Weight = 2.6, Length = 1.2},
             };
 
-            fishingTrip4.Catches = new Catch[]
+            fishingTrip4.Catches = new List<Catch>
             {
-                new Catch {Fishtype = salmon, DateTime = new DateTime(2019,1,5,17,5,6), Weight = 2.9, Length = 0.85},
-                new Catch {Fishtype = salmon, DateTime = new DateTime(2019,1,5,17,45,33), Weight = 2.6, Length = 0.8},
-                new Catch {Fishtype = salmon, DateTime = new DateTime(2019,1,5,18,42,30), Weight = 2.5, Length = 0.7},
+                new Catch {FishType = salmon, DateTime = new DateTime(2019,1,5,17,5,6), Weight = 2.9, Length = 0.85},
+                new Catch {FishType = salmon, DateTime = new DateTime(2019,1,5,17,45,33), Weight = 2.6, Length = 0.8},
+                new Catch {FishType = salmon, DateTime = new DateTime(2019,1,5,18,42,30), Weight = 2.5, Length = 0.7},
             };
 
-            fishingTrip5.Catches = new Catch[]
+            fishingTrip5.Catches = new List<Catch>
             {
-                new Catch {Fishtype = tuna, DateTime = new DateTime(2018,8,14,4,15,27), Weight = 2.7, Length = 1.3},
-                new Catch {Fishtype = tuna, DateTime = new DateTime(2018,8,14,5,7,34), Weight = 2.3, Length = 1.2},
-                new Catch {Fishtype = salmon, DateTime = new DateTime(2018,8,14,7,43,22), Weight = 1.8, Length = 0.9},
+                new Catch {FishType = tuna, DateTime = new DateTime(2018,8,14,4,15,27), Weight = 2.7, Length = 1.3},
+                new Catch {FishType = tuna, DateTime = new DateTime(2018,8,14,5,7,34), Weight = 2.3, Length = 1.2},
+                new Catch {FishType = salmon, DateTime = new DateTime(2018,8,14,7,43,22), Weight = 1.8, Length = 0.9},
             };
 
             _fishingTrips = new ObservableCollection<FishingTrip>

@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Fishit.Dal\Fishit.Dal.csproj" />
     <ProjectReference Include="..\Fishit.Logging\Fishit.Logging.csproj" />
   </ItemGroup>

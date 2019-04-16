@@ -11,15 +11,19 @@ using Fishit.Dal.Entities;
 using Fishit.Logging;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Configuration;
+
 
 namespace Fishit.Common
 {
     public class FishingTripDao : DaoBase
     {
-        private string endPointUri = "http://sinv-56038.edu.hsr.ch:40007/api/fishingtrips";
+        
+       private string endPointUri = "http://sinv-56038.edu.hsr.ch:40007/api/fishingtrips";
 
-        async Task GetAllFishingTripsJson()
+        public async Task<List<FishingTrip>> GetListOfAllFishingTripObjects()
         {
+           // string endPointUri = ConfigurationManager.ConnectionStrings["Setting1"].ConnectionString ?? "Not found";
             using (HttpClient client = new HttpClient())
             {
                 using (HttpResponseMessage response = await client.GetAsync(endPointUri))
@@ -27,7 +31,8 @@ namespace Fishit.Common
                     using (HttpContent content = response.Content)
                     {
                         string mycontent = await content.ReadAsStringAsync();
-                        GetAllFishingTripObjectsFromJson(mycontent);
+                        List<FishingTrip> allFishingTrips = GetAllFishingTripObjectsFromJson(mycontent);
+                        return allFishingTrips;
                     }
 
                 }
@@ -38,6 +43,7 @@ namespace Fishit.Common
 
         public async Task AddFishingTripByPostRequest(FishingTrip fishingtrip)
         {
+          //  var endPointUri = ConfigurationManager.ConnectionStrings["GetFishingTripUri"].ConnectionString;
             string content = ConvertFishingTripObjectToJson(fishingtrip);
             var contentForRequest = new StringContent(content.ToString(), Encoding.UTF8, "application/json");
             //var contentForRequest = new StringContent(content.ToString()); should be same like code above
@@ -58,6 +64,7 @@ namespace Fishit.Common
         // Second Way to Add/Create Fishing Trips
         public async Task AddFishingTripByWebRequest(FishingTrip fishingtrip)
         {
+           // var endPointUri = ConfigurationManager.ConnectionStrings["GetFishingTripUri"].ConnectionString;
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(endPointUri+"/new");
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
@@ -81,6 +88,7 @@ namespace Fishit.Common
 
         public async Task DeleteFishingTripByRequest(string id)
         {
+            var endPointUri = ConfigurationManager.ConnectionStrings["GetFishingTripUri"].ConnectionString;
             using (HttpClient client = new HttpClient())
             {
                 using (HttpResponseMessage response = await client.DeleteAsync(endPointUri + id))
