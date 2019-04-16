@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Views.FishingTrips.Catches;
 using Xamarin.Forms;
@@ -48,6 +49,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
         private async Task SaveFishingTrip()
         {
+            new FishingTripManager().CreateFishingTrip(FishingTrip);
             await DisplayAlert("Fishing Trip", "Saved Successfully", "Ok");
         }
 
