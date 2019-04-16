@@ -41,11 +41,11 @@ namespace Fishit.Common
 
         public async Task<FishingTrip> GetFishingTripById(string fishingTripId)
         {
-            _logger.Info(nameof(GetFishingTripById) + "; Start; " + "id; " + id);
+            _logger.Info(nameof(GetFishingTripById) + "; Start; " + "id; " + fishingTripId);
 
             // FishingTrip fishingTrip = GetAllFishingTrips().Result.FirstOrDefault(entry => entry.Id == id);
             // TODO async http request using Endpoint + "/" + id
-            _logger.Info(nameof(GetFishingTripById) + "; End; " + "fishingTrip; " + fishingTrip);
+            //_logger.Info(nameof(GetFishingTripById) + "; End; " + "fishingTrip; " + fishingTrip);
 
             return new FishingTrip();
         }

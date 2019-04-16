@@ -10,15 +10,5 @@ namespace Fishit.BusinessLayer.Testing
 
         private FishingTripManager FishingTripManager =>
             _fishingTripManager ?? (_fishingTripManager = new FishingTripManager());
-
-        [Fact]
-        public void GetAllLocationsTest()
-        {
-            IList<string> actualList = FishingTripManager.GetAllLocations();
-
-            string[] expectedList = {"Zurich", "Wil", "Geneva"};
-
-            Assert.Equal(expectedList, actualList);
-        }
     }
 }

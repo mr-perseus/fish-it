@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Fishit.Common;
 using Fishit.Dal.Entities;
 using Fishit.Logging;
@@ -17,40 +18,39 @@ namespace Fishit.BusinessLayer
             _logger = LogManager.GetLogger(nameof(FishingTripManager));
         }
 
-        public IEnumerable<FishingTrip> GetAllFishingTrips()
+        public async Task<IEnumerable<FishingTrip>> GetAllFishingTrips()
         {
-            List<FishingTrip> allFishingTrips = new FishingTripDao().GetListOfAllFishingTripObjects().Result;
-            return allFishingTrips;
+            return await new FishingTripDao().GetAllFishingTrips();
         }
 
-        public FishingTrip GetFishingTripById(string fishingTripId)
+        public async Task<FishingTrip> GetFishingTripById(string fishingTripId)
         {
-            FishingTrip selectedFishingTrip = GetFishingTripById(fishingTripId);
-            return selectedFishingTrip;
+            return await new FishingTripDao().GetFishingTripById(fishingTripId);
         }
 
-        public async void CreateFishingTrip(FishingTrip fishingTrip)
+        public async Task<bool> CreateFishingTrip(FishingTrip fishingTrip)
         {
-            await new FishingTripDao().AddFishingTripByWebRequest(fishingTrip);
+            return await new FishingTripDao().CreateFishingTrip(fishingTrip);
         }
 
-        public async void UpdateFishingTrip(FishingTrip fishingTrip)
+        //public async Task<FishingTrip> UpdateFishingTrip(FishingTrip fishingTrip)
+        public FishingTrip UpdateFishingTrip(FishingTrip fishingTrip)
         {
-            //await new FishingTripDao().UpdateFishingTripByPutRequest(fishingTrip);
+            //return await new FishingTripDao().UpdateFishingTrip(fishingTrip);
+            return new FishingTrip();
         }
 
-        public async void DeleteFishingTrip(string fishingTripId)
+        public async Task<Boolean> DeleteFishingTrip(string fishingTripId)
         {
-            await new FishingTripDao().DeleteFishingTripByRequest(fishingTripId);
+            await new FishingTripDao().DeleteFishingTrip(fishingTripId);
+            return true;
         }
 
-        public IList<string> GetAllLocations()
+        public async Task<FishingTrip> AddCatch(FishingTrip fishingTrip, Catch aCatch)
         {
-            IList<string> locations = GetAllFishingTrips().GroupBy(trip => trip.Location).Select(l => l.Key).ToList();
-            
-            _logger.Info(nameof(GetAllLocations) + "; locations; "+ locations);
-
-            return locations;
+            Catch bCatch = await new CatchManager().CreateCatch(aCatch);
+            fishingTrip.Catches.Add(bCatch);
+            return UpdateFishingTrip(fishingTrip);
         }
     }
 }
