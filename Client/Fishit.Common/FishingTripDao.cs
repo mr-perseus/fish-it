@@ -43,27 +43,6 @@ namespace Fishit.Common
 
         }
 
-        public async Task AddFishingTripByPostRequest(FishingTrip fishingtrip)
-        {
-          //  var endPointUri = ConfigurationManager.ConnectionStrings["GetFishingTripUri"].ConnectionString;
-            string content = ConvertFishingTripObjectToJson(fishingtrip);
-            var contentForRequest = new StringContent(content.ToString(), Encoding.UTF8, "application/json");
-            //var contentForRequest = new StringContent(content.ToString()); should be same like code above
-            
-            using (HttpClient client = new HttpClient())
-            {
-                using (HttpResponseMessage response = await client.PostAsync(endPointUri+"/new", contentForRequest))
-                {
-                    using (HttpContent responseContent = response.Content)
-                    {
-                        string addedFishingTrip = await responseContent.ReadAsStringAsync();
-                    }
-
-                }
-            }
-        }
-
-        // Second Way to Add/Create Fishing Trips
         public async Task AddFishingTripByWebRequest(FishingTrip fishingtrip)
         {
            // var endPointUri = ConfigurationManager.ConnectionStrings["GetFishingTripUri"].ConnectionString;
