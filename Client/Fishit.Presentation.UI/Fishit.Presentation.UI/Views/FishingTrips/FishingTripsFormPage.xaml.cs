@@ -45,7 +45,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         private async Task SaveFishingTrip()
         {
             FishingTrip.PredominantWeather = SelectedWeather;
-            new FishingTripManager().CreateFishingTrip(FishingTrip);
+            await new FishingTripManager().CreateFishingTrip(FishingTrip);
             await DisplayAlert("Fishing Trip", "Saved Successfully", "Ok");
         }
 
