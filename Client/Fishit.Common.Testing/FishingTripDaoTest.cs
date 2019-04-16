@@ -22,51 +22,43 @@ namespace Fishit.Common.Testing
           Assert.True(allRegisteredFishingTrips.Count == 6);
         }
 
-        [Fact]
-        public void AddFishingTripTest()
-        {
-            FishingTrip fishingTrip = new FishingTrip
-            {
-                Id = 5,
-                Location = "Test"
-            };
 
-            FishingTripDao.AddFishingTrip(fishingTrip);
-
-            FishingTrip returnedFishingTrip = FishingTripDao.GetById(5);
-            Assert.Equal(fishingTrip.Id, returnedFishingTrip.Id);
-        }
 
         //Always OK, not finished test
         [Fact]
-        public async void AddFishingTripByRequestTestAsync()
+        public async void AddFishingTripTest()
         {
             FishingTrip fishingTrip = new FishingTrip
             {
                 Id = 0,
-                Location = "Lago di Maggiore",
-                DateTime = new DateTime(2019, 04, 14), 
-                Description = "Catchlist POST Versuch",
+                Location = "Zürichsee",
+                DateTime = new DateTime(2019, 04, 16), 
+                Description = "Neuer POST Versuch",
                 PredominantWeather = FishingTrip.Weather.Hailing,
                 Temperature = 12.5,
                 Catches = new List<Catch>()
+                /*
+                {
+                    new Catch {FishType = new Fishtype(), DateTime = new DateTime(2019,04,16,11,25,00),Length = 50, Weight = 100}
+                
+                } */
 
             };
             await FishingTripDao.AddFishingTripByWebRequest(fishingTrip);
+        }
 
-            FishingTrip returnedFishingTrip = FishingTripDao.GetById(5);
-            Assert.Equal(fishingTrip.Id, returnedFishingTrip.Id);
+        [Fact]
+
+        public async void DeleteFishingTripById()
+        {
+            string existingFishingTripId = "5cb34e41500b0509f4244305";
+            await FishingTripDao.DeleteFishingTripByRequest(existingFishingTripId);
         }
 
         [Fact]
         public void GetListByLocationTest()
         {
-            IEnumerable<FishingTrip> actualList = FishingTripDao.GetListByLocation("Wil").ToList();
-
-            Assert.Single(actualList);
-
-            Assert.Equal(2, actualList.First().Id);
-            Assert.Equal("Wil", actualList.First().Location);
+            
         }
     }
 }

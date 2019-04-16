@@ -40,7 +40,6 @@ namespace Fishit.Common
 
         }
 
-
         public async Task AddFishingTripByPostRequest(FishingTrip fishingtrip)
         {
           //  var endPointUri = ConfigurationManager.ConnectionStrings["GetFishingTripUri"].ConnectionString;
@@ -86,12 +85,14 @@ namespace Fishit.Common
             }
         }
 
+
+
         public async Task DeleteFishingTripByRequest(string id)
         {
-            var endPointUri = ConfigurationManager.ConnectionStrings["GetFishingTripUri"].ConnectionString;
+           // var endPointUri = ConfigurationManager.ConnectionStrings["GetFishingTripUri"].ConnectionString;
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = await client.DeleteAsync(endPointUri + id))
+                using (HttpResponseMessage response = await client.DeleteAsync(endPointUri+"/" + id))
                 {
                     using (HttpContent content = response.Content)
                     {
@@ -100,6 +101,17 @@ namespace Fishit.Common
 
                 }
             }
+        }
+
+        public FishingTrip GetFishingTripById(int id)
+        {
+            _logger.Info(nameof(GetFishingTripById) + "; Start; " + "id; " + id);
+
+            FishingTrip fishingTrip = GetListOfAllFishingTripObjects().Result.FirstOrDefault(entry => entry.Id == id);
+
+            _logger.Info(nameof(GetFishingTripById) + "; End; " + "fishingTrip; " + fishingTrip);
+
+            return fishingTrip;
         }
 
         // De-/Serialization of JSON/FishingTrip Objects 
@@ -151,16 +163,7 @@ namespace Fishit.Common
         }
         
 
-                public FishingTrip GetById(int id)
-                {
-                    _logger.Info(nameof(GetById) + "; Start; " + "id; " + id);
 
-                    FishingTrip fishingTrip = GetList().FirstOrDefault(entry => entry.Id == id);
-
-                    _logger.Info(nameof(GetById) + "; End; " + "fishingTrip; " + fishingTrip);
-
-                    return fishingTrip;
-                }
 
                 public IEnumerable<FishingTrip> GetListByLocation(string location)
                 {
