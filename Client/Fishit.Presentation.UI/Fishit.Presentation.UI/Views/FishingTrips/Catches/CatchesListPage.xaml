@@ -17,7 +17,8 @@
                             <StackLayout Orientation="Vertical">
                                 <StackLayout Orientation="Horizontal">
                                     <Label BindingContext="{Binding FishType}" Text="{Binding Name}" />
-                                    <Label Text="{Binding DateTime, StringFormat='{}{0:HH:mm}'}" HorizontalOptions="EndAndExpand" />
+                                    <Label Text="{Binding DateTime, StringFormat='{}{0:HH:mm}'}"
+                                           HorizontalOptions="EndAndExpand" />
                                 </StackLayout>
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="{Binding Weight}" />

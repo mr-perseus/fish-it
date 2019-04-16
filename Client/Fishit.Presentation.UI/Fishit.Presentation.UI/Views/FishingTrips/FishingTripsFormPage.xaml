@@ -9,8 +9,11 @@
     <ContentPage.Content>
         <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Padding="20">
             <StackLayout Orientation="Horizontal">
-                <DatePicker BindingContext="{x:Reference This}" x:Name="FishingTripDatePicker" HorizontalOptions="FillAndExpand" Format="D" DateSelected="Refresh_DateTime" Date="{Binding Date}" />
-                <TimePicker BindingContext="{x:Reference This}" x:Name="FishingTripTimePicker" HorizontalOptions="End" PropertyChanged="Refresh_DateTime" Time="{Binding Time}"/>
+                <DatePicker BindingContext="{x:Reference This}" x:Name="FishingTripDatePicker"
+                            HorizontalOptions="FillAndExpand" Format="D" DateSelected="Refresh_DateTime"
+                            Date="{Binding Date}" />
+                <TimePicker BindingContext="{x:Reference This}" x:Name="FishingTripTimePicker" HorizontalOptions="End"
+                            PropertyChanged="Refresh_DateTime" Time="{Binding Time}" />
             </StackLayout>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -26,7 +29,7 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Column="0" Grid.Row="0" Text="Location:" VerticalOptions="Center" />
-                <Entry Grid.Column="1" Grid.Row="0" Text="{Binding Location}" >
+                <Entry Grid.Column="1" Grid.Row="0" Text="{Binding Location}">
                     <Entry.Behaviors>
                         <behaviors:LocationBehavior x:Name="LocationBehavior" />
                         <behaviors:MaxLengthBehavior MaxLength="20" />
@@ -39,8 +42,9 @@
                     </StackLayout>
                 </ScrollView>
                 <Label Grid.Column="0" Grid.Row="2" Text="Weather:" VerticalOptions="Center" />
-                <Picker Grid.Column="1" Grid.Row="2" BindingContext="{x:Reference This}" x:Name="WeatherPicker" Title="Select the Weather"
-                    ItemsSource="{Binding WeatherOptions}" SelectedItem="{Binding SelectedWeather}" />
+                <Picker Grid.Column="1" Grid.Row="2" BindingContext="{x:Reference This}" x:Name="WeatherPicker"
+                        Title="Select the Weather"
+                        ItemsSource="{Binding WeatherOptions}" SelectedItem="{Binding SelectedWeather}" />
 
                 <Label Grid.Column="0" Grid.Row="3" Text="Temperature:" VerticalOptions="Center" />
                 <StackLayout Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
@@ -50,20 +54,26 @@
                             <behaviors:MaxLengthBehavior MaxLength="4" />
                         </Entry.Behaviors>
                     </Entry>
-                        <Label Text="°C" Margin="-5, 0, 0, 0" VerticalOptions="Center" HorizontalOptions="End"></Label>
+                    <Label Text="°C" Margin="-5, 0, 0, 0" VerticalOptions="Center" HorizontalOptions="End" />
                 </StackLayout>
             </Grid>
 
-            <Button BindingContext="{x:Reference This}" Text="View Catches" Clicked="ViewCatches_OnClicked" IsVisible="{Binding IsEdit}" Style="{StaticResource ButtonStyle}" />
+            <Button BindingContext="{x:Reference This}" Text="View Catches" Clicked="ViewCatches_OnClicked"
+                    IsVisible="{Binding IsEdit}" Style="{StaticResource ButtonStyle}" />
 
             <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
                 <Button Text="Cancel" Clicked="CancelForm_OnClicked" Style="{StaticResource ButtonStyle}" />
-                <Button HorizontalOptions="EndAndExpand" Text="Save" Clicked="SaveFishingTrip_OnClicked" IsEnabled="True" Style="{StaticResource ButtonStyle}">
+                <Button HorizontalOptions="EndAndExpand" Text="Save" Clicked="SaveFishingTrip_OnClicked"
+                        IsEnabled="True" Style="{StaticResource ButtonStyle}">
                     <Button.Triggers>
                         <MultiTrigger TargetType="Button">
                             <MultiTrigger.Conditions>
-                                <BindingCondition  Binding="{Binding Source={x:Reference LocationBehavior}, Path=IsValid}" Value="true" />
-                                <BindingCondition  Binding="{Binding Source={x:Reference TemperatureBehavior}, Path=IsValid}" Value="true" />
+                                <BindingCondition
+                                    Binding="{Binding Source={x:Reference LocationBehavior}, Path=IsValid}"
+                                    Value="true" />
+                                <BindingCondition
+                                    Binding="{Binding Source={x:Reference TemperatureBehavior}, Path=IsValid}"
+                                    Value="true" />
                             </MultiTrigger.Conditions>
                             <Setter Property="IsEnabled" Value="True" />
                         </MultiTrigger>

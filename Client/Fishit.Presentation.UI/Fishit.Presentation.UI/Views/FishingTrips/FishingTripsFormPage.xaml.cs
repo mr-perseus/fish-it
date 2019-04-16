@@ -23,23 +23,19 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             BindingContext = fishingTrip;
             SelectedWeather = fishingTrip.PredominantWeather;
             if (fishingTrip.Id != "0")
-            {
                 IsEdit = true;
-            }
             else
-            {
                 fishingTrip.DateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
                     DateTime.Now.Hour, DateTime.Now.Minute, 0);
-            }
 
             Date = fishingTrip.DateTime.Date;
             Time = fishingTrip.DateTime.TimeOfDay;
             InitializeComponent();
         }
-        
+
         public IList<FishingTrip.Weather> WeatherOptions =>
             Enum.GetValues(typeof(FishingTrip.Weather)).Cast<FishingTrip.Weather>().ToList();
-        
+
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
         private FishingTrip FishingTrip { get; }

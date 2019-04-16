@@ -6,7 +6,8 @@
 
     <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Padding="20">
         <StackLayout Orientation="Horizontal">
-            <TimePicker BindingContext="{x:Reference This}" x:Name="FishingTripTimePicker" HorizontalOptions="EndAndExpand"
+            <TimePicker BindingContext="{x:Reference This}" x:Name="FishingTripTimePicker"
+                        HorizontalOptions="EndAndExpand"
                         PropertyChanged="Refresh_DateTime" Time="{Binding Time}" />
         </StackLayout>
 
@@ -33,7 +34,8 @@
 
         <StackLayout Orientation="Horizontal">
             <Button Text="Cancel" Clicked="BtnCancel_OnClicked" Style="{StaticResource ButtonStyle}" />
-            <Button Text="Save" Clicked="SaveCatch_OnClicked" Style="{StaticResource ButtonStyle}" HorizontalOptions="EndAndExpand" />
+            <Button Text="Save" Clicked="SaveCatch_OnClicked" Style="{StaticResource ButtonStyle}"
+                    HorizontalOptions="EndAndExpand" />
         </StackLayout>
     </StackLayout>
 </ContentPage>

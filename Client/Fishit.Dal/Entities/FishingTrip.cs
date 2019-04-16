@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using Newtonsoft.Json.Serialization;
 
 namespace Fishit.Dal.Entities
 {
@@ -15,6 +14,7 @@ namespace Fishit.Dal.Entities
             Snowing,
             Hailing
         }
+
         public string Id { get; set; }
         public string Location { get; set; }
         public DateTime DateTime { get; set; }
@@ -31,7 +31,7 @@ namespace Fishit.Dal.Entities
                    nameof(Location) + "; " + Location + "; " +
                    nameof(DateTime) + "; " + DateTime.ToString(CultureInfo.CurrentCulture) + "; " +
                    nameof(PredominantWeather) + "; " + PredominantWeather + "; " +
-                   nameof(Temperature) + "; " + Temperature + "; ";// + statt ;
+                   nameof(Temperature) + "; " + Temperature + "; "; // + statt ;
             // nameof(Catches) + "; " + (Catches != null ? Catches.Count.ToString() : "null");
         }
     }

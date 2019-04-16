@@ -9,6 +9,8 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CatchFormPage : ContentPage
     {
+        private readonly FishingTrip FishingTrip;
+
         public CatchFormPage(FishingTrip fishingTrip) : this(fishingTrip, new Catch())
         {
         }
@@ -22,10 +24,11 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             Time = fishingTrip.DateTime.TimeOfDay;
             InitializeComponent();
         }
+
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
-        private FishingTrip FishingTrip;
         public Catch Catch { get; set; }
+
         private async Task SaveCatch()
         {
             await DisplayAlert("Catch Entry", "Saved Successfully", "Ok");
@@ -54,4 +57,3 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         }
     }
 }
-
