@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Fishit.Common;
 using Fishit.Dal.Entities;
@@ -40,7 +37,7 @@ namespace Fishit.BusinessLayer
             return new FishingTrip();
         }
 
-        public async Task<Boolean> DeleteFishingTrip(string fishingTripId)
+        public async Task<bool> DeleteFishingTrip(string fishingTripId)
         {
             await new FishingTripDao().DeleteFishingTrip(fishingTripId);
             return true;

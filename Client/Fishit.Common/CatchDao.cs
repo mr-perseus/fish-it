@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -12,7 +11,7 @@ namespace Fishit.Common
     public class CatchDao
     {
         private const string EndPointUri = "http://sinv-56038.edu.hsr.ch:40007/api/catches";
-        
+
         public async Task<List<Catch>> GetAllCatches()
         {
             using (HttpClient client = new HttpClient())
@@ -33,7 +32,7 @@ namespace Fishit.Common
 
         public async Task<Catch> CreateCatch(Catch aCatch)
         {
-            var body = new StringContent(StringifyCatch(aCatch), Encoding.UTF8, "application/json");
+            StringContent body = new StringContent(StringifyCatch(aCatch), Encoding.UTF8, "application/json");
 
             using (HttpClient client = new HttpClient())
             {
@@ -50,7 +49,7 @@ namespace Fishit.Common
 
         public async Task<Catch> UpdateCatch(Catch aCatch)
         {
-            var body = new StringContent(StringifyCatch(aCatch), Encoding.UTF8, "application/json");
+            StringContent body = new StringContent(StringifyCatch(aCatch), Encoding.UTF8, "application/json");
 
             using (HttpClient client = new HttpClient())
             {
@@ -83,13 +82,15 @@ namespace Fishit.Common
         public List<Catch> ParseListCatches(string catches)
         {
             JsonSerializerSettings settings = new JsonSerializerSettings
-                { ContractResolver = new CustomContractResolver() };
+                {ContractResolver = new CustomContractResolver()};
             return JsonConvert.DeserializeObject<List<Catch>>(catches, settings);
         }
+
         public Catch ParseCatch(string aCatch)
         {
-            return (Catch) JsonConvert.DeserializeObject<Catch>(aCatch);
+            return JsonConvert.DeserializeObject<Catch>(aCatch);
         }
+
         public string StringifyCatch(Catch aCatch)
         {
             return JsonConvert.SerializeObject(aCatch);

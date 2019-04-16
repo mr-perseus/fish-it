@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Fishit.Common;
 using Fishit.Dal.Entities;
@@ -8,7 +6,7 @@ using Fishit.Logging;
 
 namespace Fishit.BusinessLayer
 {
-    class CatchManager
+    internal class CatchManager
     {
         private readonly ILogger _logger;
 
