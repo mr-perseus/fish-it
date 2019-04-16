@@ -31,7 +31,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 
         private async Task SaveCatch()
         {
-            await DisplayAlert("Catch Entry", "Saved Successfully", "Ok");
+            await DisplayAlert("Catch Entry", "This is not yet implemented", "Ok");
         }
 
         private async void BtnCancel_OnClicked(object sender, EventArgs e)
