@@ -29,6 +29,17 @@ module.exports.getFishType = async (req, res) => {
 		})
 }
 
+module.exports.getFishTypeById = async (_id) => {
+	return await FishType.findOne({ _id })
+		.then((fishType) => {
+			getLogger().info(`fishTypeService; getFish; End; _id;`, _id, "; fishType; ", fishType)
+			return _.pick(fishType, fishTypeAttr)
+		})
+		.catch((error) => {
+			getLogger().error(`fishTypeService; getFish; Error; _id;`, _id, "; error; ", error)
+		})
+}
+
 module.exports.createFishType = async (req, res) => {
 	const fishType = _.pick(req.body, fishTypeAttr)
 	const { error } = validateFishType(fishType)

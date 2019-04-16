@@ -1,13 +1,23 @@
 const _ = require("lodash")
 const { Catch, catchAttr, validateCatch } = require("../models/Catch")
 const getLogger = require("log4js").getLogger
+const { getFishTypeById } = require("./fishTypeService")
 
 module.exports.getCatches = async (req, res) => {
 	await Catch.find()
-		.then((catches) => {
+		.then(async (catches) => {
 			getLogger().info(`catchService; getCatches; End; catch;`, catches)
-			catches = catches.map((c) => _.pick(c, catchAttr))
-			res.send(catches)
+			const aCatches = []
+			const result = await catches.map(async (aCatch) => {
+				const FishType = await getFishTypeById(aCatch.FishType)
+				const bCatch = {
+					..._.pick(aCatch, catchAttr.filter((f) => f != FishType)),
+					FishType: FishType
+				}
+
+				aCatches.push(_.pick(bCatch, catchAttr))
+			})
+			Promise.all(result).then(() => res.send(aCatches))
 		})
 		.catch((error) => {
 			getLogger().error(`catchService; getCatches; Error; error;`, error)
@@ -20,9 +30,16 @@ module.exports.getCatchesById = async (catchesId) => {
 
 	const result = catchesId.map(async (_id) => {
 		await Catch.findOne({ _id })
-			.then((aCatch) => {
+			.then(async (aCatch) => {
 				getLogger().info(`catchService; getCatch; End; _id;`, _id, "; catch; ", aCatch)
-				catches.push(_.pick(aCatch, catchAttr))
+
+				const FishType = await getFishTypeById(aCatch.FishType)
+				const bCatch = {
+					..._.pick(aCatch, catchAttr.filter((f) => f != FishType)),
+					FishType: FishType
+				}
+
+				catches.push(_.pick(bCatch, catchAttr))
 			})
 			.catch((error) => {
 				getLogger().error(`catchService; getCatch; Error; _id;`, _id, "; error; ", error)
