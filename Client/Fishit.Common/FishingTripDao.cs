@@ -45,7 +45,7 @@ namespace Fishit.Common
             _logger.Info(nameof(GetFishingTripById) + "; Start; " + "id; " + fishingTripId);
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = await client.GetAsync(EndPointUri+"/"+fishingTripId))
+                using (HttpResponseMessage response = await client.GetAsync(EndPointUri+Path.DirectorySeparatorChar+fishingTripId))
                 {
                     using (HttpContent content = response.Content)
                     {
@@ -81,10 +81,8 @@ namespace Fishit.Common
                     new StreamReader(httpResponse.GetResponseStream() ?? throw new InvalidOperationException()))
                 {
                     string result = streamReader.ReadToEnd();
+                    _logger.Info(nameof(CreateFishingTrip) + "; End; " + "createdFishingTripResult; " + result);
                 }
-
-                _logger.Info(nameof(CreateFishingTrip) + "; End; " + "fishingTrip; " + fishingTrip);
-
                 return true;
             }); 
 
@@ -95,7 +93,7 @@ namespace Fishit.Common
             return Task.Run(() =>
             {
                 _logger.Info(nameof(UpdateFishingTrip) + "; Start; " + "fishingTripbefore; " + fishingTrip);
-            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(EndPointUri + "/"+fishingTrip.Id);
+            HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(EndPointUri + Path.DirectorySeparatorChar + fishingTrip.Id);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "PUT";
 
@@ -113,10 +111,10 @@ namespace Fishit.Common
                 new StreamReader(httpResponse.GetResponseStream() ?? throw new InvalidOperationException()))
             {
                 string result = streamReader.ReadToEnd();
+                _logger.Info(nameof(UpdateFishingTrip) + "; End; " + "result; " + result);
             }
 
-            _logger.Info(nameof(UpdateFishingTrip) + "; End; " + "fishingTripafter; " + fishingTrip);
-            return true;
+                return true;
             });
         }
 

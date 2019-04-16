@@ -31,8 +31,8 @@ namespace Fishit.Dal.Entities
                    nameof(Location) + "; " + Location + "; " +
                    nameof(DateTime) + "; " + DateTime.ToString(CultureInfo.CurrentCulture) + "; " +
                    nameof(PredominantWeather) + "; " + PredominantWeather + "; " +
-                   nameof(Temperature) + "; " + Temperature + "; "; // + statt ;
-            // nameof(Catches) + "; " + (Catches != null ? Catches.Count.ToString() : "null");
+                   nameof(Temperature) + "; " + Temperature + "; " + 
+                   nameof(Catches) + "; " + (Catches != null ? Catches.Count.ToString() : "null");
         }
     }
 }
