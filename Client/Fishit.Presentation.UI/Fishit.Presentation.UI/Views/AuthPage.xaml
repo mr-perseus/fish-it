@@ -12,7 +12,9 @@
                    HorizontalOptions="CenterAndExpand" />
             <Button VerticalOptions="EndAndExpand"
                     Text="Login"
-                    Clicked="Login_OnClicked" />
+                    Clicked="Login_OnClicked"
+                    Style="{StaticResource ButtonStyle}"
+                    Margin="20,0"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

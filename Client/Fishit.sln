@@ -25,11 +25,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fishit.Common.Testing", "Fi
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{667C3A04-FA65-4377-824A-669C7016DFBF}"
 	ProjectSection(SolutionItems) = preProject
-		exec-tests.bat = exec-tests.bat
 		.gitignore = .gitignore
+		exec-tests.bat = exec-tests.bat
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fishit.Logging", "Fishit.Logging\Fishit.Logging.csproj", "{F86A7085-6BB9-47E5-B38E-81FD0A5B0433}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fishit.Logging", "Fishit.Logging\Fishit.Logging.csproj", "{F86A7085-6BB9-47E5-B38E-81FD0A5B0433}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,15 +1,20 @@
-﻿using Fishit.Presentation.UI.Views;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Fishit.Presentation.UI.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
-
 namespace Fishit.Presentation.UI
 {
-    public class App : Application
-    {
+	[XamlCompilation(XamlCompilationOptions.Compile)]
+	public partial class App : Application
+	{
         public App()
         {
+            InitializeComponent();
             MainPage = new NavigationPage(new SplashScreenPage());
         }
 

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -8,7 +8,7 @@
     <DebugType>pdbonly</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
-
+  
   <ItemGroup>
     <None Remove="Images\logo.png" />
   </ItemGroup>
@@ -42,16 +42,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\FishingTrips\FishingTripsFormPage.xaml.cs">
+      <DependentUpon>FishingTripsFormPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\SplashScreenPage.xaml.cs">
       <DependentUpon>SplashScreenPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="App.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\Account\AccountPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\AuthPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\FishingTrips\Catches\CatchesListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\FishingTrips\Catches\CatchForm.xaml">

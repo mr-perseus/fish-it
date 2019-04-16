@@ -4,8 +4,8 @@ const fs = require("fs")
 
 const { FishingTrip, validateFishingTrip } = require("../models/FishingTrip")
 
-seedFishingTrips = () => {
-	fishingTrips = []
+const seedFishingTrips = () => {
+	const fishingTrips = []
 
 	fs.readFile("seed/fishingTrips.json", async (err, data) => {
 		if (err) throw err

@@ -8,10 +8,9 @@
     <StackLayout HorizontalOptions="CenterAndExpand">
         <Image VerticalOptions="CenterAndExpand"
                Source="{local:EmbeddedImage Fishit.Presentation.UI.Images.logo.png}" />
-        <ActivityIndicator VerticalOptions="End"
-                           IsRunning="True" />
         <Button VerticalOptions="End"
-                Text="Next Page Login"
-                Clicked="Next_OnClick" />
+                Text="Come and get me!"
+                Clicked="Next_OnClick"
+                Style="{StaticResource ButtonStyle}" />
     </StackLayout>
 </ContentPage>
