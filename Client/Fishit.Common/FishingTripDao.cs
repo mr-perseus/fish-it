@@ -32,7 +32,10 @@ namespace Fishit.Common
                     {
                         string mycontent = await content.ReadAsStringAsync();
                         List<FishingTrip> allFishingTrips = GetAllFishingTripObjectsFromJson(mycontent);
+                        int zahl = allFishingTrips.FirstOrDefault().Id;
                         return allFishingTrips;
+                        
+
                     }
 
                 }

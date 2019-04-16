@@ -31,12 +31,13 @@ namespace Fishit.Common.Testing
             FishingTrip fishingTrip = new FishingTrip
             {
                 Id = 0,
-                Location = "Zürichsee",
+                Location = "Zürichsee Glarus",
                 DateTime = new DateTime(2019, 04, 16), 
-                Description = "Neuer POST Versuch",
-                PredominantWeather = FishingTrip.Weather.Hailing,
-                Temperature = 12.5,
-                Catches = new List<Catch>()
+                Description = "Neu POST Versuch",
+                PredominantWeather = FishingTrip.Weather.Sunny,
+                Temperature = 12.5
+
+               
                 /*
                 {
                     new Catch {FishType = new Fishtype(), DateTime = new DateTime(2019,04,16,11,25,00),Length = 50, Weight = 100}
