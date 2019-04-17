@@ -42,10 +42,10 @@ namespace Fishit.TestEnvironment
         {
             try
             {
-                // Reset the identity seed (Id's will start again from 1)
+                // Reset the identity seed (CatchId's will start again from 1)
                 context.ResetEntitySeed(fishingTripTableName);
 
-                // Temporarily allow insertion of identity columns (Id)
+                // Temporarily allow insertion of identity columns (CatchId)
                 context.SetAutoIncrementOnTable(fishingTripTableName, true);
 
                 // Insert test data
@@ -54,7 +54,7 @@ namespace Fishit.TestEnvironment
             }
             finally
             {
-                // Disable insertion of identity columns (Id)
+                // Disable insertion of identity columns (CatchId)
                 context.SetAutoIncrementOnTable(fishingTripTableName, false);
             }
         }

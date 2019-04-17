@@ -10,12 +10,6 @@ namespace Fishit.Common
             PropertyMappings = new Dictionary<string, string>
             {
                 {"Id", "_id"},
-                {"PredominantWeather", "PredominantWeather"},
-                {"Location", "Location"},
-                {"DateTime", "DateTime"},
-                {"Description", "Description"},
-                {"Temperature", "Temperature"},
-                {"Catches", "Catches"}
             };
         }
 
