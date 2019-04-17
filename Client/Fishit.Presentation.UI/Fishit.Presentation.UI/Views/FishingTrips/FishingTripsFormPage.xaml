@@ -33,10 +33,11 @@
                 <Entry Grid.Column="1" Grid.Row="0" Text="{Binding Location}">
                     <Entry.Behaviors>
                         <behaviors:ValidationBehavior PropertyName="Text">
-                            <validators:RequiredValidator />
-                            <validators:FormatValidator
+                            <behaviors:ValidationBehavior.Validators>
+                                <validators:FormatValidator
                                 Message="Please enter a valid location"
                                 Format="^([A-Za-z]|Ä|Ö|Ü|ä|ö|ü|-| )*$" />
+                            </behaviors:ValidationBehavior.Validators>
                         </behaviors:ValidationBehavior>
                     </Entry.Behaviors>
                 </Entry>
@@ -56,11 +57,13 @@
                     <Entry Text="{Binding Temperature}" HorizontalOptions="FillAndExpand">
                         <Entry.Behaviors>
                             <behaviors:ValidationBehavior PropertyName="Text">
-                                <validators:RequiredValidator />
-                                <validators:FormatValidator
-                                    Message="Please enter a valid temperature"
-                                    Format="^-?([0-9]|([1-9][0-9]))(\.[0-9])?$" />
-                            </behaviors:ValidationBehavior>
+                                <behaviors:ValidationBehavior.Validators>
+                                    <validators:RequiredValidator />
+                                    <validators:FormatValidator
+                                        Message="Please enter a valid temperature"
+                                        Format="^-?([0-9]|([1-9][0-9]))(\.[0-9])?$" />
+                                </behaviors:ValidationBehavior.Validators>
+                                </behaviors:ValidationBehavior>
                         </Entry.Behaviors>
                     </Entry>
                     <Label Text="°C" Margin="-5, 0, 0, 0" VerticalOptions="Center" HorizontalOptions="End" />
