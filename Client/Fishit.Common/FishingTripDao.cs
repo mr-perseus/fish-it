@@ -10,14 +10,14 @@ using Newtonsoft.Json;
 
 namespace Fishit.Common
 {
-    public class FishingTripDao : DaoBase
+    public class FishingTripDao
     {
         private const string EndPointUri = "http://sinv-56038.edu.hsr.ch:40007/api/fishingtrips";
         private readonly ILogger _logger;
 
         public FishingTripDao()
         {
-            _logger = LogManager.GetLogger(nameof(DaoBase));
+            _logger = LogManager.GetLogger(nameof(FishingTripDao));
         }
 
         public async Task<List<FishingTrip>> GetAllFishingTrips()

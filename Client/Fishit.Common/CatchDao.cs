@@ -23,7 +23,7 @@ namespace Fishit.Common
                         string catchContent = await content.ReadAsStringAsync();
 
                         List<Catch> catches = ParseListCatches(catchContent);
-                        string catchId = catches.FirstOrDefault()?.Id;
+                        string catchId = catches.FirstOrDefault()?.CatchId;
                         return catches;
                     }
                 }
@@ -53,7 +53,7 @@ namespace Fishit.Common
 
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = await client.PutAsync(EndPointUri + "/" + aCatch.Id, body))
+                using (HttpResponseMessage response = await client.PutAsync(EndPointUri + "/" + aCatch.CatchId, body))
                 {
                     using (HttpContent responseContent = response.Content)
                     {
@@ -68,7 +68,7 @@ namespace Fishit.Common
         {
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = await client.DeleteAsync(EndPointUri + "/" + aCatch.Id))
+                using (HttpResponseMessage response = await client.DeleteAsync(EndPointUri + "/" + aCatch.CatchId))
                 {
                     using (HttpContent responseContent = response.Content)
                     {

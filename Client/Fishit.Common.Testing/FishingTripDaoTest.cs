@@ -25,14 +25,14 @@ namespace Fishit.Common.Testing
                 {
                     FishType = new FishType
                     {
-                        Id = "0",
+                        FishTypeId = "05cb34f29500b0509f4244306",
                         Name = "Tuna",
                         Description = "Meeresfisch, mit Sonde gefangen"
                     },
                     DateTime = new DateTime(2019, 04, 16, 11, 25, 00),
                     Length = 50,
                     Weight = 100,
-                    Id = "0"
+                    CatchId = "5cb34f68500b0509f4244307"
                 }
             }
         };
@@ -40,13 +40,13 @@ namespace Fishit.Common.Testing
         [Fact]
         public async void AddFishingTripTest()
         {
-            await FishingTripDao.CreateFishingTrip(fishingTrip);
+           await  FishingTripDao.CreateFishingTrip(fishingTrip);
         }
 
         [Fact]
         public async void DeleteFishingTripById()
         {
-            string existingFishingTripId = "5cb34e41500b0509f4244305";
+            string existingFishingTripId = "5cb6db3ebbecba05f472ef20";
             await FishingTripDao.DeleteFishingTrip(existingFishingTripId);
         }
 
@@ -60,17 +60,17 @@ namespace Fishit.Common.Testing
         [Fact]
         public async void GetFishingTripById()
         {
-            FishingTrip ft = await FishingTripDao.GetFishingTripById("5cb5d242c5d4d81b1863c34e");
-            Assert.True(ft.Description == "Good trip");
-            Assert.True(ft.Location == "Type");
+            FishingTrip ft = await FishingTripDao.GetFishingTripById("5cb5929331c4f61570c394be");
+            Assert.True(ft.Description == "it was so good");
+            Assert.True(ft.Location == "Lago di Maggiore");
         }
 
         [Fact]
         public async void UpdateFishingTrip()
         {
-            FishingTrip fishingTripLondon = await FishingTripDao.GetFishingTripById("5cb34e19500b0509f4244304");
-            fishingTripLondon.Description = "it was so good";
-            await FishingTripDao.UpdateFishingTrip(fishingTripLondon);
+            FishingTrip fishingTripLondon = await FishingTripDao.GetFishingTripById("5cb6d614bbecba05f472ef15");
+            fishingTripLondon.Location = "Baggersee Haldenstein";
+           await FishingTripDao.UpdateFishingTrip(fishingTripLondon);
         }
 
         [Fact]

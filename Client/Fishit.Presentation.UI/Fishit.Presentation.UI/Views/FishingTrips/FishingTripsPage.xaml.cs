@@ -15,16 +15,14 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
         public FishingTripsPage()
         {
-            GetAllFishingTrips();
+            SetAllFishingTrips();
             RefreshIsListEmpty();
             InitializeComponent();
-
-            FishingTripsListView.ItemsSource = _fishingTrips;
         }
 
         public FishingTripsPage(string location)
         {
-            GetAllFishingTrips();
+            SetAllFishingTrips();
             InitializeComponent();
 
             FishingTripsListView.ItemsSource = _fishingTrips;
@@ -32,7 +30,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
         public bool IsListEmpty { get; set; } = true;
 
-        private async Task GetAllFishingTrips()
+        private async Task SetAllFishingTrips()
         {
             var allFishingTrips = await new FishingTripManager().GetAllFishingTrips();
             _fishingTrips = new ObservableCollection<FishingTrip>(allFishingTrips);
@@ -75,7 +73,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
         private void Handle_Refreshing(object sender, EventArgs e)
         {
-            FishingTripsListView.ItemsSource = _fishingTrips;
+            SetAllFishingTrips();
             RefreshIsListEmpty();
             FishingTripsListView.EndRefresh();
         }
