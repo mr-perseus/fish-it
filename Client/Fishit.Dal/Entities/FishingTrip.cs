@@ -18,7 +18,7 @@ namespace Fishit.Dal.Entities
         public string Id { get; set; } = "0";
         public string Location { get; set; }
         public DateTime DateTime { get; set; }
-        public string Description { get; set; }
+        public string Description { get; set; } = "";
         public Weather PredominantWeather { get; set; }
         public double Temperature { get; set; }
         public List<Catch> Catches { get; set; } = new List<Catch>();
