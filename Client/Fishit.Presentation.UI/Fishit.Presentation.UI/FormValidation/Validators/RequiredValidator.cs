@@ -14,4 +14,3 @@ namespace Fishit.Presentation.UI.FormValidation.Validators
         }
     }
 }
-}
