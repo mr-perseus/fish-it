@@ -26,14 +26,14 @@ namespace Fishit.TestEnvironment
                 {
                     FishType = new FishType
                     {
-                        Id = "0",
+                        FishTypeId = "05cb34f29500b0509f4244306",
                         Name = "Tuna",
                         Description = "Meeresfisch, mit Sonde gefangen"
                     },
                     DateTime = new DateTime(2019, 04, 16, 11, 25, 00),
                     Length = 50,
                     Weight = 100,
-                    Id = "0"
+                    CatchId = "0",
                 }
             }
         };
