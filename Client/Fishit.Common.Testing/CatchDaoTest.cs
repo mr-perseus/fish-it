@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using Fishit.Dal.Entities;
-using Fishit.TestEnvironment;
 using Xunit;
 
 namespace Fishit.Common.Testing
 {
-    public class CatchDaoTest : TestBase
+    public class CatchDaoTest
     {
         private CatchDao _catchDao;
 

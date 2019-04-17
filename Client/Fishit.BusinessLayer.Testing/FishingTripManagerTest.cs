@@ -1,8 +1,6 @@
-using Fishit.TestEnvironment;
-
 namespace Fishit.BusinessLayer.Testing
 {
-    public class FishingTripManagerTest : TestBase
+    public class FishingTripManagerTest
     {
         private FishingTripManager _fishingTripManager;
 
