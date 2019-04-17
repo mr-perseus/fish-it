@@ -55,7 +55,7 @@ namespace Fishit.Common.Testing
         public async void GetAllFishingTripsAsObjects()
         {
             List<FishingTrip> allRegisteredFishingTrips = await FishingTripDao.GetAllFishingTrips();
-            Assert.True(allRegisteredFishingTrips.Count == 42);
+            Assert.True(allRegisteredFishingTrips.Count > 0);
         }
 
         [Fact]
