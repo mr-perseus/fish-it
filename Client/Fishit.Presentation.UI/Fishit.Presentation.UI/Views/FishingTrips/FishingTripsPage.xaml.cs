@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Xamarin.Forms;
@@ -31,7 +32,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
         public bool IsListEmpty { get; set; } = true;
 
-        private async void GetAllFishingTrips()
+        private async Task GetAllFishingTrips()
         {
             var allFishingTrips = await new FishingTripManager().GetAllFishingTrips();
             _fishingTrips = new ObservableCollection<FishingTrip>(allFishingTrips);
