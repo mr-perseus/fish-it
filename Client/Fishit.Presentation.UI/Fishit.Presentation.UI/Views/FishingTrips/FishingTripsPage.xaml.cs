@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using Android.Renderscripts;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Xamarin.Forms;

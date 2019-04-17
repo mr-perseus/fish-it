@@ -15,25 +15,27 @@ namespace Fishit.Common.Testing
 
         FishingTrip fishingTrip = new FishingTrip
         {
-            
             Location = "Letzte",
             DateTime = new DateTime(2019, 04, 16),
             Description = "Neu POST Versuch",
             PredominantWeather = FishingTrip.Weather.Sunny,
             Temperature = 12.5,
-            Catches = 
+            Catches =
+            {
+                new Catch
                 {
-                    new Catch {FishType = new FishType
-                    {   Id = "0",
-                        Name = "Tuna", 
+                    FishType = new FishType
+                    {
+                        Id = "0",
+                        Name = "Tuna",
                         Description = "Meeresfisch, mit Sonde gefangen"
                     },
-                    DateTime = new DateTime(2019,04,16,11,25,00),
+                    DateTime = new DateTime(2019, 04, 16, 11, 25, 00),
                     Length = 50,
                     Weight = 100,
                     Id = "0"
-                    }
                 }
+            }
         };
 
         [Fact]
@@ -67,9 +69,9 @@ namespace Fishit.Common.Testing
         [Fact]
         public async void UpdateFishingTrip()
         {
-          FishingTrip fishingTripLondon = await FishingTripDao.GetFishingTripById("5cb34e19500b0509f4244304");
-          fishingTripLondon.Description = "it was so good";
-          await FishingTripDao.UpdateFishingTrip(fishingTripLondon);
+            FishingTrip fishingTripLondon = await FishingTripDao.GetFishingTripById("5cb34e19500b0509f4244304");
+            fishingTripLondon.Description = "it was so good";
+            await FishingTripDao.UpdateFishingTrip(fishingTripLondon);
         }
 
         [Fact]

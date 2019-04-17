@@ -28,7 +28,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
-        private FishingTrip FishingTrip { get; set;  }
+        private FishingTrip FishingTrip { get; set; }
         public bool IsEdit { get; set; }
         public FishingTrip.Weather SelectedWeather { get; set; }
 
