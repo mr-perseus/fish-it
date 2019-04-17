@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Views.FishingTrips.Catches;
 using Xamarin.Forms;
@@ -35,9 +36,17 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             await Navigation.PushAsync(new FishingTripsFormPage(FishingTrip));
         }
 
-        private void Delete_Clicked(object sender, EventArgs e)
+        private async void Delete_Clicked(object sender, EventArgs e)
         {
-            //Call manager to remove
+            bool wasSuccessful = await new FishingTripManager().DeleteFishingTrip(FishingTrip.Id);
+            if (wasSuccessful)
+            {
+                await DisplayAlert("Fishing Trip", "Deleted Successfully", "Ok");
+            }
+            else
+            {
+                await DisplayAlert("Fishing Trip", "Something went wrong, please try again", "Ok");
+            }
         }
     }
 }
