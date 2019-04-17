@@ -5,7 +5,7 @@ using Xunit.Sdk;
 
 namespace Fishit.TestEnvironment.Attributes
 {
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class SetupDb : BeforeAfterTestAttribute
     {
         private readonly ILogger _logger;

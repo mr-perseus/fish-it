@@ -9,7 +9,6 @@ namespace Fishit.TestEnvironment
     public static class TestEnvironmentHelper
     {
         private const string InitializationError = "Error while re-initializing database entries.";
-        public static string FishingTripId { get; private set; }
         private static bool _firstTestInExecution = true;
         private static readonly SemaphoreSlim SemaphoreSlim = new SemaphoreSlim(1, 1);
 
@@ -33,7 +32,7 @@ namespace Fishit.TestEnvironment
                     DateTime = new DateTime(2019, 04, 16, 11, 25, 00),
                     Length = 50,
                     Weight = 100,
-                    CatchId = "0",
+                    CatchId = "0"
                 }
             }
         };
@@ -43,6 +42,8 @@ namespace Fishit.TestEnvironment
             AppDomain.CurrentDomain.ProcessExit +=
                 TestEnvironmentHelperDestructor;
         }
+
+        public static string FishingTripId { get; private set; }
 
         public static async Task InitializeTestDataAndGetId()
         {

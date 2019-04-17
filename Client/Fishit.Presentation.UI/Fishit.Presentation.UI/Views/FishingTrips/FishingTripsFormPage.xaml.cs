@@ -38,22 +38,14 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             FishingTripManager manager = new FishingTripManager();
             FishingTrip.PredominantWeather = SelectedWeather;
             if (IsEdit)
-            {
                 wasSuccessful = await manager.UpdateFishingTrip(FishingTrip);
-            }
             else
-            {
                 wasSuccessful = await manager.CreateFishingTrip(FishingTrip);
-            }
 
             if (wasSuccessful)
-            {
                 await DisplayAlert("Fishing Trip", "Saved Successfully", "Ok");
-            }
             else
-            {
                 await DisplayAlert("Fishing Trip", "Something went wrong, please try again", "Ok");
-            }
         }
 
         private async void CancelForm_OnClicked(object sender, EventArgs e)

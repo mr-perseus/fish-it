@@ -9,7 +9,7 @@ namespace Fishit.Common
         {
             PropertyMappings = new Dictionary<string, string>
             {
-                {"Id", "_id"},
+                {"Id", "_id"}
             };
         }
 

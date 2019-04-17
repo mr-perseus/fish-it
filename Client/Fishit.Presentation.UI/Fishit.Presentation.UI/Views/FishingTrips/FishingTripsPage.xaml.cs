@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Fishit.BusinessLayer;
@@ -32,13 +33,10 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
         private async Task SetAllFishingTrips()
         {
-            var allFishingTrips = await new FishingTripManager().GetAllFishingTrips();
+            IEnumerable<FishingTrip> allFishingTrips = await new FishingTripManager().GetAllFishingTrips();
             _fishingTrips = new ObservableCollection<FishingTrip>(allFishingTrips);
 
-            if (FishingTripsListView != null)
-            {
-                FishingTripsListView.ItemsSource = _fishingTrips;
-            }
+            if (FishingTripsListView != null) FishingTripsListView.ItemsSource = _fishingTrips;
         }
 
         private async void TripsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

@@ -12,7 +12,7 @@ namespace Fishit.Common.Testing
         private FishingTripDao FishingTripDao =>
             _fishingTripDao ?? (_fishingTripDao = new FishingTripDao());
 
-        FishingTrip fishingTrip = new FishingTrip
+        private readonly FishingTrip fishingTrip = new FishingTrip
         {
             Location = "Letzte",
             DateTime = new DateTime(2019, 04, 16),
@@ -40,7 +40,7 @@ namespace Fishit.Common.Testing
         [Fact]
         public async void AddFishingTripTest()
         {
-           await  FishingTripDao.CreateFishingTrip(fishingTrip);
+            await FishingTripDao.CreateFishingTrip(fishingTrip);
         }
 
         [Fact]
@@ -66,16 +66,16 @@ namespace Fishit.Common.Testing
         }
 
         [Fact]
+        public void GetListByLocationTest()
+        {
+        }
+
+        [Fact]
         public async void UpdateFishingTrip()
         {
             FishingTrip fishingTripLondon = await FishingTripDao.GetFishingTripById("5cb6d614bbecba05f472ef15");
             fishingTripLondon.Location = "Baggersee Haldenstein";
-           await FishingTripDao.UpdateFishingTrip(fishingTripLondon);
-        }
-
-        [Fact]
-        public void GetListByLocationTest()
-        {
+            await FishingTripDao.UpdateFishingTrip(fishingTripLondon);
         }
     }
 }

@@ -12,8 +12,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FishingTripDetailsPage : ContentPage
     {
-        public FishingTrip FishingTrip { get; set; }
-
         public FishingTripDetailsPage(FishingTrip fishingTrip)
         {
             FishingTrip = fishingTrip;
@@ -22,6 +20,8 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             NumberOfCatches = catchArrayToList.Count;
             InitializeComponent();
         }
+
+        public FishingTrip FishingTrip { get; set; }
 
         public int NumberOfCatches { get; set; }
         public string Name { get; set; }
@@ -40,13 +40,9 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         {
             bool wasSuccessful = await new FishingTripManager().DeleteFishingTrip(FishingTrip.Id);
             if (wasSuccessful)
-            {
                 await DisplayAlert("Fishing Trip", "Deleted Successfully", "Ok");
-            }
             else
-            {
                 await DisplayAlert("Fishing Trip", "Something went wrong, please try again", "Ok");
-            }
         }
     }
 }
