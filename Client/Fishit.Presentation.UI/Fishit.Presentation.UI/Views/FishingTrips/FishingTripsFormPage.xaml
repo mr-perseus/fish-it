@@ -2,8 +2,9 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:behaviors="clr-namespace:Fishit.Presentation.UI.Behaviors"
              x:Class="Fishit.Presentation.UI.Views.FishingTrips.FishingTripsFormPage"
+             xmlns:validators="clr-namespace:Fishit.Presentation.UI.FormValidation.Validators"
+             xmlns:behaviors="clr-namespace:Fishit.Presentation.UI.FormValidation.Behaviors"
              Title="Fishing Trip"
              x:Name="This">
     <ContentPage.Content>
@@ -31,8 +32,12 @@
                 <Label Grid.Column="0" Grid.Row="0" Text="Location:" VerticalOptions="Center" />
                 <Entry Grid.Column="1" Grid.Row="0" Text="{Binding Location}">
                     <Entry.Behaviors>
-                        <behaviors:LocationBehavior x:Name="LocationBehavior" />
-                        <behaviors:MaxLengthBehavior MaxLength="20" />
+                        <behaviors:ValidationBehavior PropertyName="Text">
+                            <validators:RequiredValidator />
+                            <validators:FormatValidator
+                                Message="Please enter a valid location"
+                                Format="^([A-Za-z]|Ä|Ö|Ü|ä|ö|ü|-| )*$" />
+                        </behaviors:ValidationBehavior>
                     </Entry.Behaviors>
                 </Entry>
                 <Label Grid.Column="0" Grid.Row="1" Text="Description:" VerticalOptions="Center" />
@@ -50,8 +55,12 @@
                 <StackLayout Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
                     <Entry Text="{Binding Temperature}" HorizontalOptions="FillAndExpand">
                         <Entry.Behaviors>
-                            <behaviors:TemperatureBehavior x:Name="TemperatureBehavior" />
-                            <behaviors:MaxLengthBehavior MaxLength="4" />
+                            <behaviors:ValidationBehavior PropertyName="Text">
+                                <validators:RequiredValidator />
+                                <validators:FormatValidator
+                                    Message="Please enter a valid temperature"
+                                    Format="^-?([0-9]|([1-9][0-9]))(\.[0-9])?$" />
+                            </behaviors:ValidationBehavior>
                         </Entry.Behaviors>
                     </Entry>
                     <Label Text="°C" Margin="-5, 0, 0, 0" VerticalOptions="Center" HorizontalOptions="End" />
