@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Fishit.Presentation.UI.Views.FishingTrips.Catches.CatchesListPage"
+             Title="Catches">
+    <StackLayout x:Name="Root">
+        <ListView x:Name="CatchesListView"
+                  HasUnevenRows="True"
+                  ItemSelected="CatchesListView_OnItemSelected"
+                  IsPullToRefreshEnabled="True"
+                  Refreshing="Handle_Refreshing">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="20">
+                            <StackLayout Orientation="Vertical">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label BindingContext="{Binding FishType}" Text="{Binding Name}" />
+                                    <Label Text="{Binding DateTime, StringFormat='{}{0:HH:mm}'}"
+                                           HorizontalOptions="EndAndExpand" />
+                                </StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Weight}" />
+                                    <Label Text="kg" />
+                                    <Label Text="{Binding Length}" HorizontalOptions="EndAndExpand" />
+                                    <Label Text="m" />
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+                        <ViewCell.ContextActions>
+                            <MenuItem Text="Edit" Clicked="Edit_Clicked" CommandParameter="{Binding .}" />
+                            <MenuItem Text="Delete" Clicked="Delete_Clicked" CommandParameter="{Binding .}"
+                                      IsDestructive="True" />
+                        </ViewCell.ContextActions>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button Text="Add Catch" Clicked="BtnAddCatch_OnClicked" Margin="20,20" Style="{StaticResource ButtonStyle}" />
+    </StackLayout>
+</ContentPage>

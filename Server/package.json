@@ -19,12 +19,19 @@
 		"joi": "^14.3.1",
 		"jsonwebtoken": "^8.5.0",
 		"lodash": "^4.17.11",
+		"log4js": "^4.1.0",
 		"mongoose": "^5.4.19",
+		"node-windows": "^0.1.14",
 		"path": "^0.12.7"
+	},
+	"devDependencies": {
+		"jasmine": "3.4.0",
+		"jasmine-reporters": "2.3.2"
 	},
 	"scripts": {
 		"start": "node server.js",
 		"build": "node handleWindowsService.js install",
-		"clean": "node handleWindowsService.js remove"
+		"clean": "node handleWindowsService.js remove",
+		"test": "jasmine JASMINE_CONFIG_PATH=test/jasmine.json"
 	}
 }

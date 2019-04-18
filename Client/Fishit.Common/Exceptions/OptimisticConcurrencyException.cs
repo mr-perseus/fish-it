@@ -25,5 +25,11 @@ namespace Fishit.Common.Exceptions
         }
 
         public T MergedEntity { get; set; }
+
+        public override string ToString()
+        {
+            return base.ToString() + "; " +
+                   nameof(MergedEntity) + "; " + MergedEntity;
+        }
     }
 }

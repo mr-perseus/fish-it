@@ -1,30 +1,60 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 using Fishit.Common;
 using Fishit.Dal.Entities;
+using Fishit.Logging;
 
 namespace Fishit.BusinessLayer
 {
     public class FishingTripManager
     {
-        public List<string> GetAllLocations()
+        private readonly ILogger _logger;
+
+        public FishingTripManager()
         {
-            return GetAllFishingTrips().GroupBy(trip => trip.Location).Select(l => l.Key).ToList();
+            _logger = LogManager.GetLogger(nameof(FishingTripManager));
         }
 
-        public IEnumerable<FishingTrip> GetFishingTripsByLocation(string location)
+        public async Task<IEnumerable<FishingTrip>> GetAllFishingTrips()
         {
-            return new FishingTripDao().GetListByLocation(location);
+            return await new FishingTripDao().GetAllFishingTrips();
         }
 
-        public IEnumerable<FishingTrip> GetAllFishingTrips()
+        public async Task<FishingTrip> GetFishingTripById(string fishingTripId)
         {
-            return new FishingTripDao().GetList();
+            return await new FishingTripDao().GetFishingTripById(fishingTripId);
         }
 
-        public void AddFishingTrip(FishingTrip fishingTrip)
+        public async Task<bool> CreateFishingTrip(FishingTrip fishingTrip)
         {
-            new FishingTripDao().AddFishingTrip(fishingTrip);
+            return await new FishingTripDao().CreateFishingTrip(fishingTrip);
+        }
+
+        //public async Task<FishingTrip> UpdateFishingTrip(FishingTrip fishingTrip)
+        public FishingTrip UpdateFishingTrip(FishingTrip fishingTrip)
+        {
+            //return await new FishingTripDao().UpdateFishingTrip(fishingTrip);
+            return new FishingTrip();
+        }
+
+        public async Task<bool> DeleteFishingTrip(string fishingTripId)
+        {
+            await new FishingTripDao().DeleteFishingTrip(fishingTripId);
+            return true;
+        }
+
+        public async Task<FishingTrip> AddCatch(FishingTrip fishingTrip, Catch aCatch)
+        {
+            Catch bCatch = await new CatchManager().CreateCatch(aCatch);
+            fishingTrip.Catches.Add(bCatch);
+            return UpdateFishingTrip(fishingTrip);
+        }
+
+        public async Task<FishingTrip> UpdateCatch(FishingTrip fishingTrip, Catch aCatch)
+        {
+            Catch bCatch = await new CatchManager().UpdateCatch(aCatch);
+            fishingTrip.Catches.Add(bCatch);
+            return UpdateFishingTrip(fishingTrip);
         }
     }
 }

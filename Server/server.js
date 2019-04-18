@@ -5,9 +5,11 @@ const config = require("config")
 const mongoose = require("mongoose")
 
 const auth = require("./routes/authRoutes")
-const users = require("./routes/usersRoutes")
-const friends = require("./routes/friendsRoutes")
-const fishingTrips = require("./routes/fishingTripsRoutes")
+const catches = require("./routes/catchRoutes")
+const users = require("./routes/userRoutes")
+const friends = require("./routes/friendRoutes")
+const fishTypes = require("./routes/fishTypeRoutes")
+const fishingTrips = require("./routes/fishingTripRoutes")
 
 // IMPORTANT: set your json web token private key as an environmental variable.
 if (!config.get("jwtPrivateKey")) {
@@ -28,9 +30,14 @@ server.disable("x-powered-by")
 server.use(bodyParser.json())
 server.use(bodyParser.urlencoded({ extended: true }))
 
+const logger = require("./utils/log")
+server.use(logger)
+
 server.use("/api/auth", auth)
+server.use("/api/catches", catches)
 server.use("/api/users", users)
 server.use("/api/friends", friends)
+server.use("/api/fishtypes", fishTypes)
 server.use("/api/fishingtrips", fishingTrips)
 
 const port = process.env.PORT || config.port
