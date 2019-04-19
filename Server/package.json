@@ -26,7 +26,8 @@
 	},
 	"devDependencies": {
 		"jasmine": "3.4.0",
-		"jasmine-reporters": "2.3.2"
+		"jasmine-reporters": "2.3.2",
+		"request": "^2.88.0"
 	},
 	"scripts": {
 		"start": "node server.js",
