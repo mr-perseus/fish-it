@@ -1,29 +1,16 @@
 const _ = require("lodash")
 const { FishingTrip, fishingTripAttr, validateFishingTrip } = require("../models/FishingTrip")
-const { getCatchesById } = require("./catchService")
 const getLogger = require("log4js").getLogger
 
 module.exports.getFishingTrips = async (req, res) => {
 	await FishingTrip.find()
-		.then(async (fishingTrips) => {
+		.populate({ path: "Catches", populate: { path: "FishType" } })
+		.then((fishingTrips) => {
 			getLogger().info(
 				`fishingTripService; getFishingTrips; End; fishingTrips;`,
 				fishingTrips
 			)
-
-			const trips = []
-			const result = await fishingTrips.map(async (fishingTrip) => {
-				const Catches = await getCatchesById(fishingTrip.Catches)
-				const trip = {
-					..._.pick(fishingTrip, fishingTripAttr.filter((f) => f != Catches)),
-					Catches: Catches
-				}
-				trips.push(trip)
-			})
-
-			Promise.all(result).then(() => {
-				res.send(trips)
-			})
+			res.send(fishingTrips)
 		})
 		.catch((error) => {
 			getLogger().error(`fishingTripService; getFishingTrips; Error; error;`, error)
@@ -35,6 +22,7 @@ module.exports.getFishingTrip = async (req, res) => {
 	const _id = req.params.id
 
 	await FishingTrip.findOne({ _id })
+		.populate({ path: "Catches", populate: { path: "FishType" } })
 		.then((fishingTrip) => {
 			getLogger().info(
 				`fishingTripService; getFishingTrip; End; _id;`,
