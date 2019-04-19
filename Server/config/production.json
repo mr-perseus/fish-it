@@ -1,3 +1,4 @@
 {
-	"port": 4300
+	"port": 40007,
+	"db": "mongodb://localhost:27017/fishit"
 }
