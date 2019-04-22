@@ -58,7 +58,7 @@ namespace Fishit.Common
             }
         }
 
-        public Task<bool> CreateFishingTrip(FishingTrip fishingTrip)
+        public Task<string> CreateFishingTrip(FishingTrip fishingTrip)
         {
             return Task.Run(() =>
             {
@@ -82,9 +82,10 @@ namespace Fishit.Common
                 {
                     string result = streamReader.ReadToEnd();
                     _logger.Info(nameof(CreateFishingTrip) + "; End; " + "createdFishingTripResult; " + result);
-                }
+                    FishingTrip fishingTripObject = JsonConvert.DeserializeObject<FishingTrip>(result);
 
-                return true;
+                    return fishingTripObject.Id;
+                }
             });
         }
 

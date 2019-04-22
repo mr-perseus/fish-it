@@ -6,13 +6,13 @@ using Xunit.Sdk;
 namespace Fishit.TestEnvironment.Attributes
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public class SetupDb : BeforeAfterTestAttribute
+    public class SetupTestData : BeforeAfterTestAttribute
     {
         private readonly ILogger _logger;
 
-        public SetupDb()
+        public SetupTestData()
         {
-            _logger = LogManager.GetLogger(nameof(SetupDb));
+            _logger = LogManager.GetLogger(nameof(SetupTestData));
         }
 
         public override async void Before(MethodInfo methodUnderTest)

@@ -25,7 +25,7 @@ namespace Fishit.BusinessLayer
             return await new FishingTripDao().GetFishingTripById(fishingTripId);
         }
 
-        public async Task<bool> CreateFishingTrip(FishingTrip fishingTrip)
+        public async Task<string> CreateFishingTrip(FishingTrip fishingTrip)
         {
             return await new FishingTripDao().CreateFishingTrip(fishingTrip);
         }

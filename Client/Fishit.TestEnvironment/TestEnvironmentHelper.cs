@@ -32,7 +32,7 @@ namespace Fishit.TestEnvironment
                     DateTime = new DateTime(2019, 04, 16, 11, 25, 00),
                     Length = 50,
                     Weight = 100,
-                    CatchId = "0"
+                    CatchId = "5cb34f68500b0509f4244307"
                 }
             }
         };
@@ -54,9 +54,8 @@ namespace Fishit.TestEnvironment
                     _firstTestInExecution = false;
 
                     await SemaphoreSlim.WaitAsync();
-                    await new FishingTripDao().CreateFishingTrip(TestFishingTrip);
+                    FishingTripId = await new FishingTripDao().CreateFishingTrip(TestFishingTrip);
                     SemaphoreSlim.Release();
-                    FishingTripId = "ID-TODO"; // TODO
                 }
             }
             catch (Exception exception)

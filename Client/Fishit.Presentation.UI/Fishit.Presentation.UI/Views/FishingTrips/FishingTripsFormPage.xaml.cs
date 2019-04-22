@@ -40,7 +40,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             if (IsEdit)
                 wasSuccessful = await manager.UpdateFishingTrip(FishingTrip);
             else
-                wasSuccessful = await manager.CreateFishingTrip(FishingTrip);
+                wasSuccessful = !string.IsNullOrEmpty(await manager.CreateFishingTrip(FishingTrip));
 
             if (wasSuccessful)
                 await DisplayAlert("Fishing Trip", "Saved Successfully", "Ok");
