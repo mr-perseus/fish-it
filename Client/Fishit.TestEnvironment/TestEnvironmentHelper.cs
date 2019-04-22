@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Fishit.Common;
 using Fishit.Dal.Entities;
+using Fishit.Logging;
 
 namespace Fishit.TestEnvironment
 {
     public static class TestEnvironmentHelper
     {
+        private static readonly ILogger _logger = LogManager.GetLogger(nameof(TestEnvironmentHelper));
         private const string InitializationError = "Error while re-initializing database entries.";
-        private static bool _firstTestInExecution = true;
-        private static readonly SemaphoreSlim SemaphoreSlim = new SemaphoreSlim(1, 1);
 
         private static readonly FishingTrip TestFishingTrip = new FishingTrip
         {
@@ -37,36 +36,19 @@ namespace Fishit.TestEnvironment
             }
         };
 
-        static TestEnvironmentHelper()
-        {
-            AppDomain.CurrentDomain.ProcessExit +=
-                TestEnvironmentHelperDestructor;
-        }
-
-        public static string FishingTripId { get; private set; }
-
-        public static async Task InitializeTestDataAndGetId()
+        public static async Task InitTestData(Func<string, Task> function)
         {
             try
             {
-                if (_firstTestInExecution)
-                {
-                    _firstTestInExecution = false;
+                string fishingTripId = await new FishingTripDao().CreateFishingTrip(TestFishingTrip);
+                await function(fishingTripId);
 
-                    await SemaphoreSlim.WaitAsync();
-                    FishingTripId = await new FishingTripDao().CreateFishingTrip(TestFishingTrip);
-                    SemaphoreSlim.Release();
-                }
+                await new FishingTripDao().DeleteFishingTrip(fishingTripId);
             }
             catch (Exception exception)
             {
                 throw new ApplicationException(InitializationError, exception);
             }
-        }
-
-        private static async void TestEnvironmentHelperDestructor(object sender, EventArgs e)
-        {
-            await new FishingTripDao().DeleteFishingTrip(FishingTripId);
         }
     }
 }
