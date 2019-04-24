@@ -20,7 +20,7 @@ namespace Fishit.Common
             _logger = LogManager.GetLogger(nameof(FishingTripDao));
         }
 
-        public async Task<List<FishingTrip>> GetAllFishingTrips()
+        public async Task<Response<List<FishingTrip>>> GetAllFishingTrips()
         {
             _logger.Info(nameof(GetAllFishingTrips) + "; Start; ");
 
@@ -28,18 +28,28 @@ namespace Fishit.Common
             {
                 using (HttpResponseMessage response = await client.GetAsync(EndPointUri))
                 {
+                    if (response.StatusCode != HttpStatusCode.OK)
+                        return new Response<List<FishingTrip>>
+                        {
+                            StatusCode = response.StatusCode,
+                            Message = "Unsuccessful GetAllFishingTrips",
+                            Content = new List<FishingTrip>()
+                        };
                     using (HttpContent content = response.Content)
                     {
-                        string myContent = await content.ReadAsStringAsync();
-                        List<FishingTrip> allFishingTrips = GetAllFishingTripObjectsFromJson(myContent);
-                        _logger.Info(nameof(GetAllFishingTrips) + "; End; ");
-                        return allFishingTrips;
+                        string catchContent = await content.ReadAsStringAsync();
+                        return new Response<List<FishingTrip>>
+                        {
+                            StatusCode = response.StatusCode,
+                            Message = "Successful GetAllFishingTrips",
+                            Content = GetAllFishingTripObjectsFromJson(catchContent)
+                        };
                     }
                 }
             }
         }
 
-        public async Task<FishingTrip> GetFishingTripById(string fishingTripId)
+        public async Task<Response<FishingTrip>> GetFishingTripById(string fishingTripId)
         {
             _logger.Info(nameof(GetFishingTripById) + "; Start; " + "id; " + fishingTripId);
             using (HttpClient client = new HttpClient())
@@ -47,18 +57,28 @@ namespace Fishit.Common
                 using (HttpResponseMessage response =
                     await client.GetAsync(EndPointUri + Path.DirectorySeparatorChar + fishingTripId))
                 {
+                    if (response.StatusCode != HttpStatusCode.OK)
+                        return new Response<FishingTrip>
+                        {
+                            StatusCode = response.StatusCode,
+                            Message = "Unsuccessful GetFishingTripById",
+                            Content = new FishingTrip()
+                        };
                     using (HttpContent content = response.Content)
                     {
-                        string myContent = await content.ReadAsStringAsync();
-                        FishingTrip fishingTrip = ConvertJsonToFishingTripObject(myContent);
-                        _logger.Info(nameof(GetFishingTripById) + "; End; " + "fishingTrip; " + fishingTrip);
-                        return fishingTrip;
+                        string fishingTripContent = await content.ReadAsStringAsync();
+                        return new Response<FishingTrip>
+                        {
+                            StatusCode = response.StatusCode,
+                            Message = "Successful GetFishingTripById",
+                            Content = ConvertJsonToFishingTripObject(fishingTripContent)
+                        };
                     }
                 }
             }
         }
 
-        public Task<string> CreateFishingTrip(FishingTrip fishingTrip)
+        public Task<Response<FishingTrip>> CreateFishingTrip(FishingTrip fishingTrip)
         {
             return Task.Run(() =>
             {
@@ -77,21 +97,29 @@ namespace Fishit.Common
                 }
 
                 HttpWebResponse httpResponse = (HttpWebResponse) httpWebRequest.GetResponse();
+                if (httpResponse.StatusCode != HttpStatusCode.OK)
+                    return new Response<FishingTrip>
+                    {
+                        StatusCode = httpResponse.StatusCode,
+                        Message = "Unsuccessful CreateFishingTrip",
+                        Content = new FishingTrip()
+                    };
                 using (StreamReader streamReader =
                     new StreamReader(httpResponse.GetResponseStream() ?? throw new InvalidOperationException()))
                 {
                     string result = streamReader.ReadToEnd();
                     _logger.Info(nameof(CreateFishingTrip) + "; End; " + "createdFishingTripResult; " + result);
-                    JsonSerializerSettings settings = new JsonSerializerSettings
-                        {ContractResolver = new CustomContractResolver()};
-                    FishingTrip fishingTripObject = JsonConvert.DeserializeObject<FishingTrip>(result, settings);
-
-                    return fishingTripObject.Id;
+                    return new Response<FishingTrip>
+                    {
+                        StatusCode = httpResponse.StatusCode,
+                        Message = "Successful CreateFishingTrip",
+                        Content = ConvertJsonToFishingTripObject(result)
+                    }; 
                 }
             });
         }
 
-        public Task<bool> UpdateFishingTrip(FishingTrip fishingTrip)
+        public Task<Response<FishingTrip>> UpdateFishingTrip(FishingTrip fishingTrip)
         {
             return Task.Run(() =>
             {
@@ -111,29 +139,55 @@ namespace Fishit.Common
                 }
 
                 HttpWebResponse httpResponse = (HttpWebResponse) httpWebRequest.GetResponse();
+                if (httpResponse.StatusCode != HttpStatusCode.OK)
+                    return new Response<FishingTrip>
+                    {
+                        StatusCode = httpResponse.StatusCode,
+                        Message = "Unsuccessful UpdateFishingTrip",
+                        Content = new FishingTrip()
+                    };
                 using (StreamReader streamReader =
                     new StreamReader(httpResponse.GetResponseStream() ?? throw new InvalidOperationException()))
                 {
                     string result = streamReader.ReadToEnd();
                     _logger.Info(nameof(UpdateFishingTrip) + "; End; " + "result; " + result);
+                    return new Response<FishingTrip>
+                    {
+                        StatusCode = httpResponse.StatusCode,
+                        Message = "Successful UpdateFishingTrip",
+                        Content = ConvertJsonToFishingTripObject(result)
+                    };
                 }
 
-                return true;
-            });
+
+        });
         }
 
-        public async Task DeleteFishingTrip(string id)
+        public async Task<Response<FishingTrip>> DeleteFishingTrip(string id)
         {
             _logger.Info(nameof(DeleteFishingTrip) + "; Start; " + "id; " + id);
             using (HttpClient client = new HttpClient())
             {
                 using (HttpResponseMessage response = await client.DeleteAsync(EndPointUri + "/" + id))
                 {
+                    if (response.StatusCode != HttpStatusCode.OK) 
+                        return new Response<FishingTrip>
+                        {
+                            StatusCode = response.StatusCode,
+                            Message = "Unsuccessful FishingTrip Deletion",
+                            Content = new FishingTrip()
+                        };
                     using (HttpContent content = response.Content)
                     {
                         string deletedFishingTrip = await content.ReadAsStringAsync();
                         _logger.Info(
                             nameof(UpdateFishingTrip) + "; End; " + "deletedFishingTrip; " + deletedFishingTrip);
+                        return new Response<FishingTrip>
+                        {
+                            StatusCode = response.StatusCode,
+                            Message = "Successful FishingTrip Deletion",
+                            Content = ConvertJsonToFishingTripObject(deletedFishingTrip)
+                        };
                     }
                 }
             }
