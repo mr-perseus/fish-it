@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -19,7 +18,7 @@ namespace Fishit.Common
             {
                 using (HttpResponseMessage response = await client.GetAsync(EndPointUri))
                 {
-                    if (response.StatusCode != HttpStatusCode.OK) 
+                    if (response.StatusCode != HttpStatusCode.OK)
                         return new Response<List<Catch>>
                         {
                             StatusCode = response.StatusCode,
@@ -34,7 +33,7 @@ namespace Fishit.Common
                             StatusCode = response.StatusCode,
                             Message = "Successful GetAllCatches",
                             Content = ParseListCatches(catchContent)
-                    };
+                        };
                     }
                 }
             }
