@@ -57,7 +57,7 @@ namespace Fishit.TestEnvironment
                 await function(_fishingTripId);*/
 
                 Response<FishingTrip> response = await new FishingTripDao().CreateFishingTrip(TestFishingTrip);
-                await function(response.Content.Id); //TODO HUZA/Jan
+                await function(response.Content.Id); 
 
                 await new FishingTripDao().DeleteFishingTrip(response.Content.Id);
             }
