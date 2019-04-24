@@ -82,16 +82,13 @@ namespace Fishit.Common
                 {
                     string result = streamReader.ReadToEnd();
                     _logger.Info(nameof(CreateFishingTrip) + "; End; " + "createdFishingTripResult; " + result);
-                    FishingTripIdDto fishingTripObject = JsonConvert.DeserializeObject<FishingTripIdDto>(result);
+                    JsonSerializerSettings settings = new JsonSerializerSettings
+                        {ContractResolver = new CustomContractResolver()};
+                    FishingTrip fishingTripObject = JsonConvert.DeserializeObject<FishingTrip>(result, settings);
 
                     return fishingTripObject.Id;
                 }
             });
-        }
-
-        private class FishingTripIdDto
-        {
-            [JsonProperty("_id")] public string Id { get; set; } = "0";
         }
 
         public Task<bool> UpdateFishingTrip(FishingTrip fishingTrip)
