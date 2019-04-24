@@ -7,8 +7,8 @@ namespace Fishit.Dal.Entities
 {
     public class Response<T>
     {
-        public HttpStatusCode StatusCode;
-        public String Message;
-        public T Content;
+        public HttpStatusCode StatusCode { get; set; }
+        public String Message { get; set; }
+        public T Content { get; set; }
     }
 }
