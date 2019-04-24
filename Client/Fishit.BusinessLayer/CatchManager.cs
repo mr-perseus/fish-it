@@ -9,30 +9,37 @@ namespace Fishit.BusinessLayer
     internal class CatchManager
     {
         private readonly ILogger _logger;
+        private readonly CatchDao _catchDao;
 
         public CatchManager()
         {
             _logger = LogManager.GetLogger(nameof(CatchManager));
+            _catchDao = new CatchDao();
         }
 
-        public async Task<IEnumerable<Catch>> GetAllCatches()
+        public async Task<Response<List<Catch>>> GetAllCatches()
         {
-            return await new CatchDao().GetAllCatches();
+            return await _catchDao.GetAllCatches();
         }
 
-        public async Task<Catch> CreateCatch(Catch aCatch)
+        public async Task<Response<Catch>> GetCatch()
         {
-            return await new CatchDao().CreateCatch(aCatch);
+            return await _catchDao.GetCatch();
         }
 
-        public async Task<Catch> UpdateCatch(Catch aCatch)
+        public async Task<Response<Catch>> CreateCatch(Catch aCatch)
         {
-            return await new CatchDao().UpdateCatch(aCatch);
+            return await _catchDao.CreateCatch(aCatch);
         }
 
-        public async Task<bool> DeleteCatch(Catch aCatch)
+        public async Task<Response<Catch>> UpdateCatch(Catch aCatch)
         {
-            return await new CatchDao().DeleteCatch(aCatch);
+            return await _catchDao.UpdateCatch(aCatch);
+        }
+
+        public async Task<Response<Catch>> DeleteCatch(Catch aCatch)
+        {
+            return await _catchDao.DeleteCatch(aCatch);
         }
     }
 }

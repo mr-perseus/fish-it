@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Fishit.Dal.Entities;
 using Xunit;
 
@@ -35,7 +36,6 @@ namespace Fishit.Common.Testing
                 Name = "Sea Urchin",
                 Description = "A great whatever it is"
             },
-            CatchId = "0",
             Length = 866.2,
             Weight = 175.2
         };
@@ -43,15 +43,16 @@ namespace Fishit.Common.Testing
         [Fact]
         public async void CreateCatch()
         {
-            Catch aCatch = await CatchDao.CreateCatch(_aCatch);
+            Response<Catch> response = await CatchDao.CreateCatch(_aCatch);
+            Assert.True((response.StatusCode == HttpStatusCode.OK));
         }
 
 
         [Fact]
         public async void GetAllCatches()
         {
-            List<Catch> catches = await CatchDao.GetAllCatches();
-            Assert.True(catches.Count >= 0);
+            Response<List<Catch>> response = await CatchDao.GetAllCatches();
+            Assert.True((response.StatusCode == HttpStatusCode.OK));
         }
     }
 }

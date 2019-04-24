@@ -43,20 +43,20 @@ namespace Fishit.BusinessLayer
             return true;
         }
 
-        public async Task<FishingTrip> AddCatch(FishingTrip fishingTrip, Catch aCatch)
+        /*public async Task<FishingTrip> AddCatch(FishingTrip fishingTrip, Catch aCatch)
         {
             Catch bCatch = await new CatchManager().CreateCatch(aCatch);
             fishingTrip.Catches.Add(bCatch);
             //return UpdateFishingTrip(fishingTrip);
             return fishingTrip;
-        }
+        }*/
 
-        public async Task<FishingTrip> UpdateCatch(FishingTrip fishingTrip, Catch aCatch)
+        /*public async Task<FishingTrip> UpdateCatch(FishingTrip fishingTrip, Catch aCatch)
         {
             Catch bCatch = await new CatchManager().UpdateCatch(aCatch);
             fishingTrip.Catches.Add(bCatch);
             //return UpdateFishingTrip(fishingTrip);
             return fishingTrip;
-        }
+        }*/
     }
 }
