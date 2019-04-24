@@ -8,8 +8,9 @@ namespace Fishit.TestEnvironment
 {
     public static class TestEnvironmentHelper
     {
-        private static readonly ILogger _logger = LogManager.GetLogger(nameof(TestEnvironmentHelper));
         private const string InitializationError = "Error while re-initializing database entries.";
+
+        private static readonly ILogger _logger = LogManager.GetLogger(nameof(TestEnvironmentHelper));
         // private static volatile bool _initialized;
         // private static string _fishingTripId;
 
@@ -54,7 +55,7 @@ namespace Fishit.TestEnvironment
                 }
 
                 await function(_fishingTripId);*/
-                
+
                 string fishingTripId = await new FishingTripDao().CreateFishingTrip(TestFishingTrip);
                 await function(fishingTripId);
 

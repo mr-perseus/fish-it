@@ -22,12 +22,10 @@ namespace Fishit.Logging
 
         public bool IsDebugEnabled => _logLevel == LogLevel.Debug;
 
-
         public void Error(object message)
         {
             if (_logLevel > LogLevel.Error)
                 return;
-
 
             Console.WriteLine(LogLineFormat, _loggerName, LogLevel.Error.ToString(), message);
         }

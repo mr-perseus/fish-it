@@ -44,15 +44,14 @@ namespace Fishit.Common.Testing
         public async void CreateCatch()
         {
             Response<Catch> response = await CatchDao.CreateCatch(_aCatch);
-            Assert.True((response.StatusCode == HttpStatusCode.OK));
+            Assert.True(response.StatusCode == HttpStatusCode.OK);
         }
-
 
         [Fact]
         public async void GetAllCatches()
         {
             Response<List<Catch>> response = await CatchDao.GetAllCatches();
-            Assert.True((response.StatusCode == HttpStatusCode.OK));
+            Assert.True(response.StatusCode == HttpStatusCode.OK);
         }
     }
 }

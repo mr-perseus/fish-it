@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Fishit.Logging;
+﻿using Fishit.Logging;
 
 namespace Fishit.Common
 {
-    class FishTypeDao
+    internal class FishTypeDao
     {
         private const string EndPointUri = "http://sinv-56038.edu.hsr.ch:40007/api/fishingtrips";
         private readonly ILogger _logger;

@@ -8,8 +8,8 @@ namespace Fishit.BusinessLayer
 {
     internal class CatchManager
     {
-        private readonly ILogger _logger;
         private readonly CatchDao _catchDao;
+        private readonly ILogger _logger;
 
         public CatchManager()
         {

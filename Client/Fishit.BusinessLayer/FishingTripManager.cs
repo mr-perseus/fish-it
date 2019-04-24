@@ -9,8 +9,8 @@ namespace Fishit.BusinessLayer
 {
     public class FishingTripManager
     {
-        private readonly ILogger _logger;
         private readonly CatchDao _catchDao;
+        private readonly ILogger _logger;
 
         public FishingTripManager()
         {
@@ -56,7 +56,7 @@ namespace Fishit.BusinessLayer
                     Message = "Unsuccessful addCatch",
                     Content = new FishingTrip()
                 };
-            
+
             fishingTrip.Catches.Add(catchResponse.Content);
             return new Response<FishingTrip>
             {

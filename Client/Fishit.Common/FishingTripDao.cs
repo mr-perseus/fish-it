@@ -193,30 +193,32 @@ namespace Fishit.Common
             }
         }
 
-
         public List<FishingTrip> GetAllFishingTripObjectsFromJson(string jsonContent)
         {
             _logger.Info(nameof(GetAllFishingTripObjectsFromJson) + "; Start jsonContent; " + jsonContent);
             JsonSerializerSettings settings = new JsonSerializerSettings
                 {ContractResolver = new CustomContractResolver()};
-            _logger.Info(nameof(GetAllFishingTripObjectsFromJson) + "; End; ");
-            return JsonConvert.DeserializeObject<List<FishingTrip>>(jsonContent, settings);
+            List<FishingTrip> fishingTrips = JsonConvert.DeserializeObject<List<FishingTrip>>(jsonContent, settings);
+            _logger.Info(nameof(GetAllFishingTripObjectsFromJson) + "; End fishingTrips.Count; " + fishingTrips.Count);
+            return fishingTrips;
         }
 
         public FishingTrip ConvertJsonToFishingTripObject(string jsonFishingTrip)
         {
-            // TODO David / Jan this returns a List<string> in FishingTrip.Catches and not List<Catch>
             _logger.Info(nameof(ConvertJsonToFishingTripObject) + "; Start; jsonFishingTrip; " + jsonFishingTrip);
             JsonSerializerSettings settings = new JsonSerializerSettings
                 {ContractResolver = new CustomContractResolver()};
-            _logger.Info(nameof(ConvertJsonToFishingTripObject) + "; End; ");
-            return JsonConvert.DeserializeObject<FishingTrip>(jsonFishingTrip, settings);
+            FishingTrip fishingTrip = JsonConvert.DeserializeObject<FishingTrip>(jsonFishingTrip, settings);
+            _logger.Info(nameof(ConvertJsonToFishingTripObject) + "; End fishingTrip; " + fishingTrip);
+            return fishingTrip;
         }
 
         public string ConvertFishingTripObjectToJson(FishingTrip fishingTripObject)
         {
-            _logger.Info(nameof(ConvertFishingTripObjectToJson) + "; Start and End fishingTripObject; " + fishingTripObject);
-            return JsonConvert.SerializeObject(fishingTripObject);
+            _logger.Info(nameof(ConvertFishingTripObjectToJson) + "; Start fishingTripObject; " + fishingTripObject);
+            string fishingTripString = JsonConvert.SerializeObject(fishingTripObject);
+            _logger.Info(nameof(ConvertFishingTripObjectToJson) + "; End fishingTripString; " + fishingTripString);
+            return fishingTripString;
         }
     }
 }
