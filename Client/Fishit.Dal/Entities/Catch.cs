@@ -5,7 +5,7 @@ namespace Fishit.Dal.Entities
 {
     public class Catch
     {
-        [JsonProperty("_id")] public string CatchId { get; set; } = "0";
+        [JsonProperty("_id")] public string Id { get; set; } = "0";
 
         public FishType FishType { get; set; }
         public DateTime DateTime { get; set; }

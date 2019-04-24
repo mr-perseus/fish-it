@@ -18,11 +18,11 @@ namespace Fishit.Common.Testing
             DateTime = new DateTime(2019, 04, 17),
             FishType = new FishType
             {
-                FishTypeId = "5cb34f29500b0509f4244306",
+                Id = "5cb34f29500b0509f4244306",
                 Name = "Sea Urchin",
                 Description = "A great whatever it is"
             },
-            CatchId = "0",
+            Id = "0",
             Length = 19.2,
             Weight = 15.8
         };
@@ -32,7 +32,7 @@ namespace Fishit.Common.Testing
             DateTime = new DateTime(2017, 12, 03),
             FishType = new FishType
             {
-                FishTypeId = "5cb34f29500b0509f4244306",
+                Id = "5cb34f29500b0509f4244306",
                 Name = "Sea Urchin",
                 Description = "A great whatever it is"
             },

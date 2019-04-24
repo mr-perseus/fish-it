@@ -101,7 +101,7 @@ namespace Fishit.Common
 
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = await client.PutAsync(EndPointUri + "/" + aCatch.CatchId, body))
+                using (HttpResponseMessage response = await client.PutAsync(EndPointUri + "/" + aCatch.Id, body))
                 {
                     if (response.StatusCode != HttpStatusCode.OK)
                         return new Response<Catch>
@@ -128,7 +128,7 @@ namespace Fishit.Common
         {
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = await client.DeleteAsync(EndPointUri + "/" + aCatch.CatchId))
+                using (HttpResponseMessage response = await client.DeleteAsync(EndPointUri + "/" + aCatch.Id))
                 {
                     if (response.StatusCode != HttpStatusCode.OK)
                         return new Response<Catch>
@@ -160,7 +160,9 @@ namespace Fishit.Common
 
         public Catch ParseCatch(string aCatch)
         {
-            return JsonConvert.DeserializeObject<Catch>(aCatch);
+            JsonSerializerSettings settings = new JsonSerializerSettings
+                { ContractResolver = new CustomContractResolver() };
+            return JsonConvert.DeserializeObject<Catch>(aCatch, settings);
         }
 
         public string StringifyCatch(Catch aCatch)
