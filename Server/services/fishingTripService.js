@@ -1,5 +1,10 @@
 const _ = require("lodash")
-const { FishingTrip, fishingTripAttr, validateFishingTrip } = require("../models/FishingTrip")
+const {
+	FishingTrip,
+	fishingTripAttr,
+	fishingTripAttrNoId,
+	validateFishingTrip
+} = require("../models/FishingTrip")
 const getLogger = require("log4js").getLogger
 
 module.exports.getFishingTrips = async (req, res) => {
@@ -44,7 +49,7 @@ module.exports.getFishingTrip = async (req, res) => {
 }
 
 module.exports.createFishingTrip = async (req, res) => {
-	const fishingTrip = _.pick(req.body, fishingTripAttr)
+	const fishingTrip = _.pick(req.body, fishingTripAttrNoId)
 	const { error } = validateFishingTrip(fishingTrip)
 	getLogger().info(
 		`fishingTripService; createFishingTrip; Start; fishingTrip;`,
@@ -61,7 +66,7 @@ module.exports.createFishingTrip = async (req, res) => {
 				`fishingTripService; createFishingTrip; End; fishingTrip; `,
 				fishingTrip
 			)
-			res.send(_.pick(fishingTrip, "_id"))
+			res.send(_.pick(fishingTrip, fishingTripAttr))
 		})
 		.catch((error) => {
 			getLogger().error(
@@ -76,7 +81,7 @@ module.exports.createFishingTrip = async (req, res) => {
 
 module.exports.updateFishingTrip = async (req, res) => {
 	const _id = req.params.id
-	const fishingTrip = _.pick(req.body, fishingTripAttr)
+	const fishingTrip = _.pick(req.body, fishingTripAttrNoId)
 
 	const { error } = validateFishingTrip(fishingTrip)
 	getLogger().info(
@@ -95,7 +100,7 @@ module.exports.updateFishingTrip = async (req, res) => {
 				fishingTrip,
 				"; _id; " + _id
 			)
-			res.send(_.pick(fishingTrip, "_id"))
+			res.send(_.pick(fishingTrip, fishingTripAttr))
 		})
 		.catch((error) => {
 			getLogger().error(
@@ -119,7 +124,7 @@ module.exports.deleteFishingTrip = async (req, res) => {
 				fishingTrip,
 				"; _id; " + _id
 			)
-			res.send(_.pick(fishingTrip, "_id"))
+			res.send(_.pick(fishingTrip, fishingTripAttr))
 		})
 		.catch((error) => {
 			getLogger().error(

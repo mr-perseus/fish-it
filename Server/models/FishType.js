@@ -16,6 +16,7 @@ const fishTypeSchema = new mongoose.Schema({
 const FishType = mongoose.model("FishTypes", fishTypeSchema)
 
 const fishTypeAttr = ["_id", "Name", "Description"]
+const fishTypeAttrNoId = ["Name", "Description"]
 
 const fishTypeJoi = {
 	Name: Joi.string()
@@ -29,5 +30,6 @@ const validateFishType = (f) => Joi.validate(f, fishTypeJoi)
 module.exports = {
 	FishType,
 	fishTypeAttr,
+	fishTypeAttrNoId,
 	validateFishType
 }
