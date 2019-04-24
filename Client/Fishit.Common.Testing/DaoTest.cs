@@ -38,20 +38,6 @@ namespace Fishit.Common.Testing
         };
 
         [Fact]
-        public async void GetFishTypes()
-        {
-            Response<List<FishType>> response = await _fishTypeDao.GetAllItems();
-            Assert.True(response.StatusCode == HttpStatusCode.OK);
-        }
-
-        [Fact]
-        public async void CreateFishTypes()
-        {
-            Response<FishType> response = await _fishTypeDao.CreateItem(_fishType);
-            Assert.True(response.StatusCode == HttpStatusCode.OK);
-        }
-
-        [Fact]
         public async void CreateCatch()
         {
             Response<List<FishType>> fishTypes = await _fishTypeDao.GetAllItems();
@@ -72,6 +58,20 @@ namespace Fishit.Common.Testing
 
             _fishingTrip.Catches.Add(catches.Content[0]);
             Response<FishingTrip> response = await _fishingTripDao.CreateItem(_fishingTrip);
+            Assert.True(response.StatusCode == HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async void CreateFishTypes()
+        {
+            Response<FishType> response = await _fishTypeDao.CreateItem(_fishType);
+            Assert.True(response.StatusCode == HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async void GetFishTypes()
+        {
+            Response<List<FishType>> response = await _fishTypeDao.GetAllItems();
             Assert.True(response.StatusCode == HttpStatusCode.OK);
         }
     }

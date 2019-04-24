@@ -9,10 +9,10 @@ namespace Fishit.BusinessLayer
 {
     public class FishingTripManager
     {
-        private readonly ILogger _logger;
-        private readonly Dao<FishType> _fishTypeDao;
         private readonly Dao<Catch> _catchDao;
         private readonly Dao<FishingTrip> _fishingTripDao;
+        private readonly Dao<FishType> _fishTypeDao;
+        private readonly ILogger _logger;
 
         public FishingTripManager()
         {
@@ -57,7 +57,7 @@ namespace Fishit.BusinessLayer
                     Message = "Unsuccessful get all catches",
                     Content = new List<Catch>()
                 };
-            
+
             return new Response<List<Catch>>
             {
                 StatusCode = catchResponse.StatusCode,

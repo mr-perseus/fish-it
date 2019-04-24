@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -57,7 +56,7 @@ namespace Fishit.Common
 
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = await client.GetAsync(requestUri: _endPointUri + Path.PathSeparator + id))
+                using (HttpResponseMessage response = await client.GetAsync(_endPointUri + Path.PathSeparator + id))
                 {
                     if (response.StatusCode != HttpStatusCode.OK)
                         return new Response<T>
@@ -73,7 +72,7 @@ namespace Fishit.Common
                         {
                             StatusCode = response.StatusCode,
                             Message = "Successful GetAllCatches",
-                            Content = Parse(item: itemContent)
+                            Content = Parse(itemContent)
                         };
                     }
                 }
@@ -118,7 +117,8 @@ namespace Fishit.Common
 
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = await client.PutAsync(_endPointUri + Path.PathSeparator + id, body))
+                using (HttpResponseMessage response =
+                    await client.PutAsync(_endPointUri + Path.PathSeparator + id, body))
                 {
                     if (response.StatusCode != HttpStatusCode.OK)
                         return new Response<T>
@@ -174,14 +174,14 @@ namespace Fishit.Common
         public List<T> ParseList(string items)
         {
             JsonSerializerSettings settings = new JsonSerializerSettings
-                { ContractResolver = new CustomContractResolver() };
+                {ContractResolver = new CustomContractResolver()};
             return JsonConvert.DeserializeObject<List<T>>(items, settings);
         }
 
         public T Parse(string item)
         {
             JsonSerializerSettings settings = new JsonSerializerSettings
-                { ContractResolver = new CustomContractResolver() };
+                {ContractResolver = new CustomContractResolver()};
             return JsonConvert.DeserializeObject<T>(item, settings);
         }
 
