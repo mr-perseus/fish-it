@@ -33,8 +33,8 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
         private async Task SetAllFishingTrips()
         {
-            IEnumerable<FishingTrip> allFishingTrips = await new FishingTripManager().GetAllFishingTrips();
-            _fishingTrips = new ObservableCollection<FishingTrip>(allFishingTrips);
+            Response<List<FishingTrip>> response = await new FishingTripManager().GetAllFishingTrips();
+            _fishingTrips = new ObservableCollection<FishingTrip>(response.Content);
 
             if (FishingTripsListView != null) FishingTripsListView.ItemsSource = _fishingTrips;
         }

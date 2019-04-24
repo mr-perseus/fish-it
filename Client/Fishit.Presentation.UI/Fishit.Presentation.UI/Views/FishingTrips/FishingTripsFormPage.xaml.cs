@@ -35,19 +35,19 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
         private async Task SaveFishingTrip()
         {
-            bool wasSuccessful;
             FishingTripManager manager = new FishingTripManager();
             FishingTrip.PredominantWeather = SelectedWeather;
+            Response<FishingTrip> response;
             if (IsEdit)
             {
-                wasSuccessful = await manager.UpdateFishingTrip(FishingTrip) == HttpStatusCode.OK; 
+                response = await manager.UpdateFishingTrip(FishingTrip);
             }
-                
             else
+            {
+                response = await manager.CreateFishingTrip(FishingTrip);
+            }
 
-                wasSuccessful = await manager.CreateFishingTrip(FishingTrip) == HttpStatusCode.OK;
-
-            if (wasSuccessful)
+            if (response.StatusCode == HttpStatusCode.OK)
                 await DisplayAlert("Fishing Trip", "Saved Successfully", "Ok");
             else
                 await DisplayAlert("Fishing Trip", "Something went wrong, please try again", "Ok");

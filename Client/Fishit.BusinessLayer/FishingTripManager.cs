@@ -9,56 +9,72 @@ namespace Fishit.BusinessLayer
 {
     public class FishingTripManager
     {
-        private readonly CatchDao _catchDao;
         private readonly ILogger _logger;
+        private readonly Dao<FishType> _fishTypeDao;
+        private readonly Dao<Catch> _catchDao;
+        private readonly Dao<FishingTrip> _fishingTripDao;
 
         public FishingTripManager()
         {
             _logger = LogManager.GetLogger(nameof(FishingTripManager));
-            _catchDao = new CatchDao();
+            _fishTypeDao = new Dao<FishType>("fishTypes");
+            _catchDao = new Dao<Catch>("catches");
+            _fishingTripDao = new Dao<FishingTrip>("fishingTrips");
         }
 
-        public async Task<IEnumerable<FishingTrip>> GetAllFishingTrips()
+        public async Task<Response<List<FishingTrip>>> GetAllFishingTrips()
         {
-            Response<List<FishingTrip>> httpResonse = await new FishingTripDao().GetAllFishingTrips();
-            return httpResonse.Content;
+            return await _fishingTripDao.GetAllItems();
         }
 
-        public async Task<FishingTrip> GetFishingTripById(string fishingTripId)
+        public async Task<Response<FishingTrip>> GetFishingTrip(FishingTrip fishingTrip)
         {
-            Response<FishingTrip> httpResponse = await new FishingTripDao().GetFishingTripById(fishingTripId);
-            return httpResponse.Content;
+            return await _fishingTripDao.GetItem(fishingTrip);
         }
 
-        public async Task<HttpStatusCode> CreateFishingTrip(FishingTrip fishingTrip)
+        public async Task<Response<FishingTrip>> CreateFishingTrip(FishingTrip fishingTrip)
         {
-            Response<FishingTrip> httpResponse = await new FishingTripDao().CreateFishingTrip(fishingTrip);
-            return httpResponse.StatusCode;
+            return await _fishingTripDao.CreateItem(fishingTrip);
         }
 
-        //public async Task<FishingTrip> UpdateFishingTrip(FishingTrip fishingTrip)
-        public async Task<HttpStatusCode> UpdateFishingTrip(FishingTrip fishingTrip)
+        public async Task<Response<FishingTrip>> UpdateFishingTrip(FishingTrip fishingTrip)
         {
-            Response<FishingTrip> httpResponse = await new FishingTripDao().UpdateFishingTrip(fishingTrip);
-            return httpResponse.StatusCode;
-            //return new FishingTrip();
+            return await _fishingTripDao.UpdateItem(fishingTrip);
         }
 
-        public async Task<bool> DeleteFishingTrip(string fishingTripId)
+        public async Task<Response<FishingTrip>> DeleteFishingTrip(FishingTrip fishingTrip)
         {
-            await new FishingTripDao().DeleteFishingTrip(fishingTripId);
-            return true;
+            return await _fishingTripDao.DeleteItem(fishingTrip);
+        }
+
+        public async Task<Response<List<Catch>>> GetAllCatches(FishingTrip fishingTrip)
+        {
+            Response<List<Catch>> catchResponse = await _catchDao.GetAllItems();
+            if (catchResponse.StatusCode != HttpStatusCode.OK)
+                return new Response<List<Catch>>
+                {
+                    StatusCode = catchResponse.StatusCode,
+                    Message = "Unsuccessful get all catches",
+                    Content = new List<Catch>()
+                };
+            
+            return new Response<List<Catch>>
+            {
+                StatusCode = catchResponse.StatusCode,
+                Message = "Successful addCatch",
+                Content = catchResponse.Content
+            };
         }
 
         public async Task<Response<FishingTrip>> AddCatch(FishingTrip fishingTrip, Catch aCatch)
         {
-            Response<Catch> catchResponse = await _catchDao.CreateCatch(aCatch);
+            Response<Catch> catchResponse = await _catchDao.CreateItem(aCatch);
             if (catchResponse.StatusCode != HttpStatusCode.OK)
                 return new Response<FishingTrip>
                 {
                     StatusCode = catchResponse.StatusCode,
                     Message = "Unsuccessful addCatch",
-                    Content = new FishingTrip()
+                    Content = fishingTrip
                 };
 
             fishingTrip.Catches.Add(catchResponse.Content);
@@ -70,12 +86,46 @@ namespace Fishit.BusinessLayer
             };
         }
 
-        /*public async Task<FishingTrip> UpdateCatch(FishingTrip fishingTrip, Catch aCatch)
+        public async Task<Response<FishingTrip>> UpdateCatch(FishingTrip fishingTrip, Catch aCatch)
         {
-            Catch bCatch = await new CatchManager().UpdateCatch(aCatch);
-            fishingTrip.Catches.Add(bCatch);
-            //return UpdateFishingTrip(fishingTrip);
-            return fishingTrip;
-        }*/
+            Response<Catch> catchResponse = await _catchDao.UpdateItem(aCatch);
+            if (catchResponse.StatusCode != HttpStatusCode.OK)
+                return new Response<FishingTrip>
+                {
+                    StatusCode = catchResponse.StatusCode,
+                    Message = "Unsuccessful update Catch",
+                    Content = fishingTrip
+                };
+
+            int index = fishingTrip.Catches.IndexOf(aCatch);
+            fishingTrip.Catches[index] = catchResponse.Content;
+            return new Response<FishingTrip>
+            {
+                StatusCode = catchResponse.StatusCode,
+                Message = "Successful update Catch",
+                Content = fishingTrip
+            };
+        }
+
+        public async Task<Response<FishingTrip>> DeleteCatch(FishingTrip fishingTrip, Catch aCatch)
+        {
+            Response<Catch> catchResponse = await _catchDao.DeleteItem(aCatch);
+            if (catchResponse.StatusCode != HttpStatusCode.OK)
+                return new Response<FishingTrip>
+                {
+                    StatusCode = catchResponse.StatusCode,
+                    Message = "Unsuccessful delete Catch",
+                    Content = fishingTrip
+                };
+
+            int index = fishingTrip.Catches.IndexOf(aCatch);
+            fishingTrip.Catches.RemoveAt(index);
+            return new Response<FishingTrip>
+            {
+                StatusCode = catchResponse.StatusCode,
+                Message = "Successful delete Catch",
+                Content = fishingTrip
+            };
+        }
     }
 }
