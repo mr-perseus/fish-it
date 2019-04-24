@@ -20,23 +20,27 @@ namespace Fishit.BusinessLayer
 
         public async Task<IEnumerable<FishingTrip>> GetAllFishingTrips()
         {
-            return await new FishingTripDao().GetAllFishingTrips();
+            Response<List<FishingTrip>> httpResonse = await new FishingTripDao().GetAllFishingTrips();
+            return httpResonse.Content;
         }
 
         public async Task<FishingTrip> GetFishingTripById(string fishingTripId)
         {
-            return await new FishingTripDao().GetFishingTripById(fishingTripId);
+            Response<FishingTrip> httpResponse = await new FishingTripDao().GetFishingTripById(fishingTripId);
+            return httpResponse.Content;
         }
 
-        public async Task<string> CreateFishingTrip(FishingTrip fishingTrip)
+        public async Task<HttpStatusCode> CreateFishingTrip(FishingTrip fishingTrip)
         {
-            return await new FishingTripDao().CreateFishingTrip(fishingTrip);
+            Response<FishingTrip> httpResponse = await new FishingTripDao().CreateFishingTrip(fishingTrip);
+            return httpResponse.StatusCode;
         }
 
         //public async Task<FishingTrip> UpdateFishingTrip(FishingTrip fishingTrip)
-        public async Task<bool> UpdateFishingTrip(FishingTrip fishingTrip)
+        public async Task<HttpStatusCode> UpdateFishingTrip(FishingTrip fishingTrip)
         {
-            return await new FishingTripDao().UpdateFishingTrip(fishingTrip);
+            Response<FishingTrip> httpResponse = await new FishingTripDao().UpdateFishingTrip(fishingTrip);
+            return httpResponse.StatusCode;
             //return new FishingTrip();
         }
 
