@@ -10,6 +10,7 @@ namespace Fishit.Common
             PropertyMappings = new Dictionary<string, string>
             {
                 {"Id", "_id"}
+                //{"CatchesIds", "Catches"},
             };
         }
 
@@ -17,8 +18,7 @@ namespace Fishit.Common
 
         protected override string ResolvePropertyName(string propertyName)
         {
-            string resolvedName = null;
-            bool resolved = PropertyMappings.TryGetValue(propertyName, out resolvedName);
+            bool resolved = PropertyMappings.TryGetValue(propertyName, out string resolvedName);
             return resolved ? resolvedName : base.ResolvePropertyName(propertyName);
         }
     }

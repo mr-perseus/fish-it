@@ -82,11 +82,16 @@ namespace Fishit.Common
                 {
                     string result = streamReader.ReadToEnd();
                     _logger.Info(nameof(CreateFishingTrip) + "; End; " + "createdFishingTripResult; " + result);
-                    FishingTrip fishingTripObject = JsonConvert.DeserializeObject<FishingTrip>(result);
+                    FishingTripIdDto fishingTripObject = JsonConvert.DeserializeObject<FishingTripIdDto>(result);
 
                     return fishingTripObject.Id;
                 }
             });
+        }
+
+        private class FishingTripIdDto
+        {
+            [JsonProperty("_id")] public string Id { get; set; } = "0";
         }
 
         public Task<bool> UpdateFishingTrip(FishingTrip fishingTrip)
@@ -140,7 +145,7 @@ namespace Fishit.Common
 
         public List<FishingTrip> GetAllFishingTripObjectsFromJson(string jsonContent)
         {
-            _logger.Info(nameof(GetAllFishingTripObjectsFromJson) + "; Start; ");
+            _logger.Info(nameof(GetAllFishingTripObjectsFromJson) + "; Start jsonContent; " + jsonContent);
             JsonSerializerSettings settings = new JsonSerializerSettings
                 {ContractResolver = new CustomContractResolver()};
             _logger.Info(nameof(GetAllFishingTripObjectsFromJson) + "; End; ");
@@ -149,7 +154,8 @@ namespace Fishit.Common
 
         public FishingTrip ConvertJsonToFishingTripObject(string jsonFishingTrip)
         {
-            _logger.Info(nameof(ConvertJsonToFishingTripObject) + "; Start; ");
+            // TODO David / Jan this returns a List<string> in FishingTrip.Catches and not List<Catch>
+            _logger.Info(nameof(ConvertJsonToFishingTripObject) + "; Start; jsonFishingTrip; " + jsonFishingTrip);
             JsonSerializerSettings settings = new JsonSerializerSettings
                 {ContractResolver = new CustomContractResolver()};
             _logger.Info(nameof(ConvertJsonToFishingTripObject) + "; End; ");
@@ -158,7 +164,7 @@ namespace Fishit.Common
 
         public string ConvertFishingTripObjectToJson(FishingTrip fishingTripObject)
         {
-            _logger.Info(nameof(ConvertFishingTripObjectToJson) + "; Start and End; ");
+            _logger.Info(nameof(ConvertFishingTripObjectToJson) + "; Start and End fishingTripObject; " + fishingTripObject);
             return JsonConvert.SerializeObject(fishingTripObject);
         }
     }

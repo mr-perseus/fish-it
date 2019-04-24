@@ -10,6 +10,8 @@ namespace Fishit.TestEnvironment
     {
         private static readonly ILogger _logger = LogManager.GetLogger(nameof(TestEnvironmentHelper));
         private const string InitializationError = "Error while re-initializing database entries.";
+        // private static volatile bool _initialized;
+        // private static string _fishingTripId;
 
         private static readonly FishingTrip TestFishingTrip = new FishingTrip
         {
@@ -18,7 +20,7 @@ namespace Fishit.TestEnvironment
             Description = "Neu POST Versuch",
             PredominantWeather = FishingTrip.Weather.Sunny,
             Temperature = 12.5,
-            Catches =
+            /*Catches =
             {
                 new Catch
                 {
@@ -33,13 +35,26 @@ namespace Fishit.TestEnvironment
                     Weight = 100,
                     CatchId = "5cb34f68500b0509f4244307"
                 }
-            }
+            }*/
         };
 
         public static async Task InitTestData(Func<string, Task> function)
         {
             try
             {
+                // TODO Jan
+                /*if (!_initialized)
+                {
+                    _initialized = true;
+                    _fishingTripId = await new FishingTripDao().CreateFishingTrip(TestFishingTrip);
+                }
+
+                while (_fishingTripId == "0")
+                {
+                }
+
+                await function(_fishingTripId);*/
+                
                 string fishingTripId = await new FishingTripDao().CreateFishingTrip(TestFishingTrip);
                 await function(fishingTripId);
 
