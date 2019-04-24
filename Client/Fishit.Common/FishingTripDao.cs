@@ -174,7 +174,7 @@ namespace Fishit.Common
                         return new Response<FishingTrip>
                         {
                             StatusCode = response.StatusCode,
-                            Message = "Unsuccessful Deletion",
+                            Message = "Unsuccessful FishingTrip Deletion",
                             Content = new FishingTrip()
                         };
                     using (HttpContent content = response.Content)
@@ -185,7 +185,7 @@ namespace Fishit.Common
                         return new Response<FishingTrip>
                         {
                             StatusCode = response.StatusCode,
-                            Message = "Successful Deletion",
+                            Message = "Successful FishingTrip Deletion",
                             Content = ConvertJsonToFishingTripObject(deletedFishingTrip)
                         };
                     }
