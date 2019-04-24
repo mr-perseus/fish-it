@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using Fishit.Common;
 using Fishit.Dal.Entities;
@@ -9,10 +10,12 @@ namespace Fishit.BusinessLayer
     public class FishingTripManager
     {
         private readonly ILogger _logger;
+        private readonly CatchDao _catchDao;
 
         public FishingTripManager()
         {
             _logger = LogManager.GetLogger(nameof(FishingTripManager));
+            _catchDao = new CatchDao();
         }
 
         public async Task<IEnumerable<FishingTrip>> GetAllFishingTrips()
@@ -43,13 +46,25 @@ namespace Fishit.BusinessLayer
             return true;
         }
 
-        /*public async Task<FishingTrip> AddCatch(FishingTrip fishingTrip, Catch aCatch)
+        public async Task<Response<FishingTrip>> AddCatch(FishingTrip fishingTrip, Catch aCatch)
         {
-            Catch bCatch = await new CatchManager().CreateCatch(aCatch);
-            fishingTrip.Catches.Add(bCatch);
-            //return UpdateFishingTrip(fishingTrip);
-            return fishingTrip;
-        }*/
+            Response<Catch> catchResponse = await _catchDao.CreateCatch(aCatch);
+            if (catchResponse.StatusCode != HttpStatusCode.OK)
+                return new Response<FishingTrip>
+                {
+                    StatusCode = catchResponse.StatusCode,
+                    Message = "Unsuccessful addCatch",
+                    Content = new FishingTrip()
+                };
+            
+            fishingTrip.Catches.Add(catchResponse.Content);
+            return new Response<FishingTrip>
+            {
+                StatusCode = catchResponse.StatusCode,
+                Message = "Successful addCatch",
+                Content = fishingTrip
+            };
+        }
 
         /*public async Task<FishingTrip> UpdateCatch(FishingTrip fishingTrip, Catch aCatch)
         {
