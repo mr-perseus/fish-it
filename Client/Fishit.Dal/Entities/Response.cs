@@ -1,11 +1,14 @@
-﻿using System.Net;
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Text;
 
 namespace Fishit.Dal.Entities
 {
     public class Response<T>
     {
-        public T Content;
-        public string Message;
-        public HttpStatusCode StatusCode;
+        public HttpStatusCode StatusCode { get; set; }
+        public String Message { get; set; }
+        public T Content { get; set; }
     }
 }
