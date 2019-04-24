@@ -1,5 +1,5 @@
 const _ = require("lodash")
-const { Catch, catchAttr, validateCatch } = require("../models/Catch")
+const { Catch, catchAttr, catchAttrNoId, validateCatch } = require("../models/Catch")
 const getLogger = require("log4js").getLogger
 
 module.exports.getCatches = async (req, res) => {
@@ -31,7 +31,8 @@ module.exports.getCatch = async (req, res) => {
 }
 
 module.exports.createCatch = async (req, res) => {
-	const aCatch = _.pick(req.body, catchAttr)
+	const aCatch = _.pick(req.body, catchAttrNoId)
+	aCatch.FishType = aCatch.FishType._id
 	const { error } = validateCatch(aCatch)
 	getLogger().info(`catchService; createCatch; Start; catch;`, aCatch, "; error; ", error)
 	if (error) return res.status(400).send(error.details[0].message)
@@ -40,7 +41,7 @@ module.exports.createCatch = async (req, res) => {
 		.save()
 		.then((aCatch) => {
 			getLogger().info(`catchService; createcatch; End; catch; `, aCatch)
-			res.send(_.pick(aCatch, "_id"))
+			res.send(_.pick(aCatch, catchAttr))
 		})
 		.catch((error) => {
 			getLogger().error(
@@ -55,7 +56,8 @@ module.exports.createCatch = async (req, res) => {
 
 module.exports.updateCatch = async (req, res) => {
 	const _id = req.params.id
-	const aCatch = _.pick(req.body, catchAttr)
+	const aCatch = _.pick(req.body, catchAttrNoId)
+	aCatch.FishType = aCatch.FishType._id
 
 	const { error } = validateCatch(aCatch)
 	getLogger().info(
@@ -70,7 +72,7 @@ module.exports.updateCatch = async (req, res) => {
 	await Catch.findOneAndUpdate({ _id }, aCatch)
 		.then((aCatch) => {
 			getLogger().info(`catchService; updateCatch; End; catch; `, aCatch, "; _id; " + _id)
-			res.send(_.pick(aCatch, "_id"))
+			res.send(_.pick(aCatch, catchAttr))
 		})
 		.catch((error) => {
 			getLogger().error(
@@ -90,7 +92,7 @@ module.exports.deleteCatch = async (req, res) => {
 	await Catch.findOneAndDelete({ _id })
 		.then((aCatch) => {
 			getLogger().info(`catchService; deleteCatch; End; catch; `, aCatch, "; _id; " + _id)
-			res.send(_.pick(aCatch, "_id"))
+			res.send(_.pick(aCatch, catchAttr))
 		})
 		.catch((error) => {
 			getLogger().error(`catchService; deleteCatch; Error; _id;`, _id, "; error; ", error)
