@@ -20,7 +20,7 @@ namespace Fishit.TestEnvironment
             Description = "Neu POST Versuch",
             PredominantWeather = FishingTrip.Weather.Sunny,
             Temperature = 12.5,
-            /*Catches =
+            Catches =
             {
                 new Catch
                 {
@@ -35,7 +35,7 @@ namespace Fishit.TestEnvironment
                     Weight = 100,
                     CatchId = "5cb34f68500b0509f4244307"
                 }
-            }*/
+            }
         };
 
         public static async Task InitTestData(Func<string, Task> function)
