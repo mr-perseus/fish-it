@@ -15,7 +15,8 @@ namespace Fishit.Common.Testing
         [Fact]
         public async void GetAllFishingTripsAsObjects()
         {
-            List<FishingTrip> allRegisteredFishingTrips = await FishingTripDao.GetAllFishingTrips();
+            Response<List<FishingTrip>> httpResponse = await FishingTripDao.GetAllFishingTrips();
+            List<FishingTrip> allRegisteredFishingTrips = httpResponse.Content;
             Assert.True(allRegisteredFishingTrips.Count > 0);
         }
 
@@ -24,7 +25,8 @@ namespace Fishit.Common.Testing
         {
             await TestEnvironmentHelper.InitTestData(async id =>
             {
-                FishingTrip ft = await FishingTripDao.GetFishingTripById(id);
+                Response<FishingTrip> httpResponse = await FishingTripDao.GetFishingTripById(id);
+                FishingTrip ft = httpResponse.Content;
                 Assert.Equal("Neu POST Versuch", ft.Description);
                 Assert.Equal("Letzte", ft.Location);
                 Assert.Equal(id, ft.Id);
@@ -42,12 +44,13 @@ namespace Fishit.Common.Testing
         {
             await TestEnvironmentHelper.InitTestData(async id =>
             {
-                FishingTrip fishingTrip = await FishingTripDao.GetFishingTripById(id);
+                Response<FishingTrip> httpResponse = await FishingTripDao.GetFishingTripById(id);
+                FishingTrip fishingTrip = httpResponse.Content;
                 fishingTrip.Temperature = 17;
                 await FishingTripDao.UpdateFishingTrip(fishingTrip);
 
                 Assert.Equal(17,
-                    (await FishingTripDao.GetFishingTripById(id)).Temperature);
+                    (await FishingTripDao.GetFishingTripById(id)).Content.Temperature);
             });
         }
     }

@@ -56,10 +56,10 @@ namespace Fishit.TestEnvironment
 
                 await function(_fishingTripId);*/
 
-                string fishingTripId = await new FishingTripDao().CreateFishingTrip(TestFishingTrip);
-                await function(fishingTripId);
+                Response<FishingTrip> response = await new FishingTripDao().CreateFishingTrip(TestFishingTrip);
+                await function(response.Content.Id); //TODO HUZA/Jan
 
-                await new FishingTripDao().DeleteFishingTrip(fishingTripId);
+                await new FishingTripDao().DeleteFishingTrip(response.Content.Id);
             }
             catch (Exception exception)
             {

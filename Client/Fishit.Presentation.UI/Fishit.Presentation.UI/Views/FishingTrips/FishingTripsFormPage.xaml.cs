@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
@@ -38,9 +39,13 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             FishingTripManager manager = new FishingTripManager();
             FishingTrip.PredominantWeather = SelectedWeather;
             if (IsEdit)
-                wasSuccessful = await manager.UpdateFishingTrip(FishingTrip);
+            {
+                wasSuccessful = await manager.UpdateFishingTrip(FishingTrip) == HttpStatusCode.OK; 
+            }
+                
             else
-                wasSuccessful = !string.IsNullOrEmpty(await manager.CreateFishingTrip(FishingTrip));
+
+                wasSuccessful = await manager.CreateFishingTrip(FishingTrip) == HttpStatusCode.OK;
 
             if (wasSuccessful)
                 await DisplayAlert("Fishing Trip", "Saved Successfully", "Ok");
