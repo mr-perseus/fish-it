@@ -42,6 +42,15 @@ const fishingTripAttr = [
 	"Catches"
 ]
 
+const fishingTripAttrNoId = [
+	"PredominantWeather",
+	"Location",
+	"DateTime",
+	"Description",
+	"Temperature",
+	"Catches"
+]
+
 const fishingTripJoi = {
 	PredominantWeather: Joi.number().required(),
 	Location: Joi.string()
@@ -58,5 +67,6 @@ const validateFishingTrip = (fT) => Joi.validate(fT, fishingTripJoi)
 module.exports = {
 	FishingTrip,
 	fishingTripAttr,
+	fishingTripAttrNoId,
 	validateFishingTrip
 }

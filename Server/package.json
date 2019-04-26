@@ -13,20 +13,21 @@
 	"dependencies": {
 		"bcryptjs": "^2.4.3",
 		"body-parser": "^1.18.3",
-		"config": "^3.0.1",
+		"config": "^3.1.0",
 		"express": "^4.16.4",
 		"fs": "0.0.1-security",
 		"joi": "^14.3.1",
 		"jsonwebtoken": "^8.5.0",
 		"lodash": "^4.17.11",
 		"log4js": "^4.1.0",
-		"mongoose": "^5.4.19",
+		"mongoose": "^5.5.2",
 		"node-windows": "^0.1.14",
 		"path": "^0.12.7"
 	},
 	"devDependencies": {
 		"jasmine": "3.4.0",
-		"jasmine-reporters": "2.3.2"
+		"jasmine-reporters": "2.3.2",
+		"request": "^2.88.0"
 	},
 	"scripts": {
 		"start": "node server.js",

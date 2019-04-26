@@ -22,10 +22,11 @@ const catchSchema = new mongoose.Schema({
 const Catch = mongoose.model("Catches", catchSchema)
 
 const catchAttr = ["_id", "FishType", "DateTime", "Length", "Weight"]
+const catchAttrNoId = ["FishType", "DateTime", "Length", "Weight"]
 
 const catchJoi = {
 	FishType: Joi.string(),
-	DateTime: Joi.string().length(16),
+	DateTime: Joi.string(),
 	Length: Joi.number(),
 	Weight: Joi.number()
 }
@@ -35,5 +36,6 @@ const validateCatch = (c) => Joi.validate(c, catchJoi)
 module.exports = {
 	Catch,
 	catchAttr,
+	catchAttrNoId,
 	validateCatch
 }
