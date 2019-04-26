@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Common;
-using Fishit.Dal;
+using System.Threading.Tasks;
+using Fishit.Common;
 using Fishit.Dal.Entities;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+using Fishit.Logging;
 
 namespace Fishit.TestEnvironment
 {
@@ -13,126 +10,61 @@ namespace Fishit.TestEnvironment
     {
         private const string InitializationError = "Error while re-initializing database entries.";
 
-        private static List<FishingTrip> FishingTrips =>
-            new List<FishingTrip>
-            {
-                new FishingTrip {Id = "1", Location = "Zurich"},
-                new FishingTrip {Id = "2", Location = "Wil"},
-                new FishingTrip {Id = "3", Location = "Zurich"},
-                new FishingTrip {Id = "4", Location = "Geneva"}
-            };
+        private static readonly ILogger _logger = LogManager.GetLogger(nameof(TestEnvironmentHelper));
+        // private static volatile bool _initialized;
+        // private static string _fishingTripId;
 
-        public static void InitializeTestData(this FishitContext context)
+        private static readonly FishingTrip TestFishingTrip = new FishingTrip
         {
-            string fishingTripTableName = context.GetTableName<FishingTrip>();
+            Location = "Letzte",
+            DateTime = new DateTime(2019, 04, 16),
+            Description = "Neu POST Versuch",
+            PredominantWeather = FishingTrip.Weather.Sunny,
+            Temperature = 12.5,
+            Catches =
+            {
+                new Catch
+                {
+                    FishType = new FishType
+                    {
+                        Id = "05cb34f29500b0509f4244306",
+                        Name = "Tuna",
+                        Description = "Meeresfisch, mit Sonde gefangen"
+                    },
+                    DateTime = new DateTime(2019, 04, 16, 11, 25, 00),
+                    Length = 50,
+                    Weight = 100,
+                    Id = "5cb34f68500b0509f4244307"
+                }
+            }
+        };
 
+        public static async Task InitTestData(Func<string, Task> function)
+        {
             try
             {
-                context.DeleteAllRecords(fishingTripTableName);
+                // TODO Jan
+                /*if (!_initialized)
+                {
+                    _initialized = true;
+                    _fishingTripId = await new FishingTripDao().CreateFishingTrip(TestFishingTrip);
+                }
 
-                SeedFishingTrip(context, fishingTripTableName);
+                while (_fishingTripId == "0")
+                {
+                }
+
+                await function(_fishingTripId);*/
+
+                Response<FishingTrip> response = await new FishingTripDao().CreateFishingTrip(TestFishingTrip);
+                await function(response.Content.Id); 
+
+                await new FishingTripDao().DeleteFishingTrip(response.Content.Id);
             }
             catch (Exception exception)
             {
                 throw new ApplicationException(InitializationError, exception);
             }
-        }
-
-        private static void SeedFishingTrip(FishitContext context, string fishingTripTableName)
-        {
-            try
-            {
-                // Reset the identity seed (Id's will start again from 1)
-                context.ResetEntitySeed(fishingTripTableName);
-
-                // Temporarily allow insertion of identity columns (Id)
-                context.SetAutoIncrementOnTable(fishingTripTableName, true);
-
-                // Insert test data
-                context.FishingTrips.AddRange(FishingTrips);
-                context.SaveChanges();
-            }
-            finally
-            {
-                // Disable insertion of identity columns (Id)
-                context.SetAutoIncrementOnTable(fishingTripTableName, false);
-            }
-        }
-
-        public static string GetTableName<T>(this DbContext context)
-        {
-            IRelationalEntityTypeAnnotations entityTypeAnnotations = context.Model
-                .FindEntityType(typeof(T))
-                .Relational();
-
-            string schema = entityTypeAnnotations.Schema;
-            string table = entityTypeAnnotations.TableName;
-
-            return string.IsNullOrWhiteSpace(schema)
-                ? $"[{table}]"
-                : $"[{schema}].[{table}]";
-        }
-
-        private static void DeleteAllRecords(this DbContext context, string table)
-        {
-            string statement = $"DELETE FROM {table}";
-            context?.Database?.ExecuteSqlCommand(statement);
-        }
-
-        private static void ResetEntitySeed(this DbContext context, string table)
-        {
-            if (context.TableHasIdentityColumn(table))
-            {
-                string statement = $"DBCC CHECKIDENT('{table}', RESEED, 0)"; // Must be a separate variable
-                context?.Database?.ExecuteSqlCommand(statement);
-            }
-        }
-
-        private static void SetAutoIncrementOnTable(
-            this DbContext context,
-            string table, bool
-                isAutoIncrementOn)
-        {
-            if (context.TableHasIdentityColumn(table))
-            {
-                string statement =
-                    $"SET IDENTITY_INSERT {table} {(isAutoIncrementOn ? "ON" : "OFF")}"; // Must be a separate variable
-                context?.Database?.ExecuteSqlCommand(statement);
-            }
-        }
-
-        private static bool TableHasIdentityColumn(
-            this DbContext context,
-            string table)
-        {
-            bool hasIdentityColumn = false;
-            DbCommand command = context.Database.GetDbConnection().CreateCommand();
-            try
-            {
-                command.CommandText = $"SELECT OBJECTPROPERTY(OBJECT_ID('{table}'), 'TableHasIdentity')";
-                command.CommandType = CommandType.Text;
-
-                if (command.Connection.State != ConnectionState.Open) command.Connection.Open();
-
-                using (DbDataReader reader = command.ExecuteReader())
-                {
-                    if (reader.HasRows)
-                    {
-                        reader.Read();
-                        hasIdentityColumn = reader.GetInt32(0) == 1;
-                    }
-                }
-            }
-            catch
-            {
-                hasIdentityColumn = false;
-            }
-            finally
-            {
-                command?.Dispose();
-            }
-
-            return hasIdentityColumn;
         }
     }
 }

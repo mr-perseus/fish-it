@@ -21,8 +21,7 @@ namespace Fishit.Dal.Entities
         public string Description { get; set; } = "";
         public Weather PredominantWeather { get; set; }
         public double Temperature { get; set; }
-        public List<Catch> Catches { get; set; } = new List<Catch>();
-
+        public IList<Catch> Catches { get; set; } = new List<Catch>();
 
         public override string ToString()
         {

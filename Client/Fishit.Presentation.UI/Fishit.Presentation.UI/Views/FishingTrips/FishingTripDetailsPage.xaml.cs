@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Views.FishingTrips.Catches;
@@ -12,8 +13,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FishingTripDetailsPage : ContentPage
     {
-        public FishingTrip FishingTrip { get; set; }
-
         public FishingTripDetailsPage(FishingTrip fishingTrip)
         {
             FishingTrip = fishingTrip;
@@ -22,6 +21,8 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             NumberOfCatches = catchArrayToList.Count;
             InitializeComponent();
         }
+
+        public FishingTrip FishingTrip { get; set; }
 
         public int NumberOfCatches { get; set; }
         public string Name { get; set; }
@@ -38,15 +39,12 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
         private async void Delete_Clicked(object sender, EventArgs e)
         {
-            bool wasSuccessful = await new FishingTripManager().DeleteFishingTrip(FishingTrip.Id);
-            if (wasSuccessful)
-            {
+            Response<FishingTrip> response = await new FishingTripManager().DeleteFishingTrip(FishingTrip);
+
+            if (response.StatusCode == HttpStatusCode.OK)
                 await DisplayAlert("Fishing Trip", "Deleted Successfully", "Ok");
-            }
             else
-            {
                 await DisplayAlert("Fishing Trip", "Something went wrong, please try again", "Ok");
-            }
         }
     }
 }
