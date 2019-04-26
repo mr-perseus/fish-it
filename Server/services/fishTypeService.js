@@ -1,5 +1,5 @@
 const _ = require("lodash")
-const { FishType, fishTypeAttr, validateFishType } = require("../models/FishType")
+const { FishType, fishTypeAttr, fishTypeAttrNoId, validateFishType } = require("../models/FishType")
 const getLogger = require("log4js").getLogger
 
 module.exports.getFishTypes = async (req, res) => {
@@ -29,19 +29,8 @@ module.exports.getFishType = async (req, res) => {
 		})
 }
 
-module.exports.getFishTypeById = async (_id) => {
-	return await FishType.findOne({ _id })
-		.then((fishType) => {
-			getLogger().info(`fishTypeService; getFish; End; _id;`, _id, "; fishType; ", fishType)
-			return _.pick(fishType, fishTypeAttr)
-		})
-		.catch((error) => {
-			getLogger().error(`fishTypeService; getFish; Error; _id;`, _id, "; error; ", error)
-		})
-}
-
 module.exports.createFishType = async (req, res) => {
-	const fishType = _.pick(req.body, fishTypeAttr)
+	const fishType = _.pick(req.body, fishTypeAttrNoId)
 	const { error } = validateFishType(fishType)
 	getLogger().info(`fishTypeService; createFish; Start; fishType;`, fishType, "; error; ", error)
 	if (error) return res.status(400).send(error.details[0].message)
@@ -65,7 +54,7 @@ module.exports.createFishType = async (req, res) => {
 
 module.exports.updateFishType = async (req, res) => {
 	const _id = req.params.id
-	const fishType = _.pick(req.body, fishTypeAttr)
+	const fishType = _.pick(req.body, fishTypeAttrNoId)
 
 	const { error } = validateFishType(fishType)
 	getLogger().info(
