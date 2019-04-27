@@ -39,7 +39,7 @@ namespace Fishit.TestEnvironment
             }
         };
 
-        public static async Task InitTestData(Func<string, Task> function)
+        public static async Task InitTestData(Func<FishingTrip, Task> function)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace Fishit.TestEnvironment
                 await function(_fishingTripId);*/
 
                 Response<FishingTrip> response = await new Dao<FishingTrip>("fishingTrips").CreateItem(TestFishingTrip);
-                await function(response.Content.Id);
+                await function(response.Content);
 
                 await new Dao<FishingTrip>("fishingTrips").DeleteItem(response.Content);
             }
