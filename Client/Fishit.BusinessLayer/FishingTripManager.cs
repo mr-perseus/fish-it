@@ -49,21 +49,7 @@ namespace Fishit.BusinessLayer
 
         public async Task<Response<List<Catch>>> GetAllCatches(FishingTrip fishingTrip)
         {
-            Response<List<Catch>> catchResponse = await _catchDao.GetAllItems();
-            if (catchResponse.StatusCode != HttpStatusCode.OK)
-                return new Response<List<Catch>>
-                {
-                    StatusCode = catchResponse.StatusCode,
-                    Message = "Unsuccessful get all catches",
-                    Content = new List<Catch>()
-                };
-
-            return new Response<List<Catch>>
-            {
-                StatusCode = catchResponse.StatusCode,
-                Message = "Successful addCatch",
-                Content = catchResponse.Content
-            };
+            return await _catchDao.GetAllItems();
         }
 
         public async Task<Response<FishingTrip>> AddCatch(FishingTrip fishingTrip, Catch aCatch)
