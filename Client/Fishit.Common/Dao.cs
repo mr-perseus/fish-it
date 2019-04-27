@@ -29,15 +29,23 @@ namespace Fishit.Common
                 using (HttpResponseMessage response = await client.GetAsync(_endPointUri))
                 {
                     if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        _logger.Error(nameof(GetAllItems) + "; Error; response; " + response);
+
                         return new Response<List<T>>
                         {
                             StatusCode = response.StatusCode,
                             Message = "Unsuccessful Get All " + typeof(T),
                             Content = new List<T>()
                         };
+                    }
+
                     using (HttpContent content = response.Content)
                     {
                         string itemContent = await content.ReadAsStringAsync();
+                        _logger.Info(nameof(GetAllItems) + "; End; response; " + response + "; itemContent; " +
+                                     itemContent);
+
                         return new Response<List<T>>
                         {
                             StatusCode = response.StatusCode,
@@ -59,15 +67,23 @@ namespace Fishit.Common
                 using (HttpResponseMessage response = await client.GetAsync(_endPointUri + Path.PathSeparator + id))
                 {
                     if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        _logger.Error(nameof(GetItem) + "; Error; response; " + response);
+
                         return new Response<T>
                         {
                             StatusCode = response.StatusCode,
                             Message = "Unsuccessful GetAllCatches",
                             Content = new T()
                         };
+                    }
+
                     using (HttpContent content = response.Content)
                     {
                         string itemContent = await content.ReadAsStringAsync();
+                        _logger.Info(nameof(GetItem) + "; End; response; " + response + "; itemContent; " +
+                                     itemContent);
+
                         return new Response<T>
                         {
                             StatusCode = response.StatusCode,
@@ -89,15 +105,23 @@ namespace Fishit.Common
                 using (HttpResponseMessage response = await client.PostAsync(_endPointUri + "/new", body))
                 {
                     if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        _logger.Error(nameof(CreateItem) + "; Error; response; " + response);
+
                         return new Response<T>
                         {
                             StatusCode = response.StatusCode,
                             Message = "Unsuccessful Get Item",
                             Content = new T()
                         };
+                    }
+
                     using (HttpContent responseContent = response.Content)
                     {
                         string itemContent = await responseContent.ReadAsStringAsync();
+                        _logger.Info(nameof(CreateItem) + "; End; response; " + response + "; itemContent; " +
+                                     itemContent);
+
                         return new Response<T>
                         {
                             StatusCode = response.StatusCode,
@@ -121,15 +145,23 @@ namespace Fishit.Common
                     await client.PutAsync(_endPointUri + Path.PathSeparator + id, body))
                 {
                     if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        _logger.Error(nameof(UpdateItem) + "; Error; response; " + response);
+
                         return new Response<T>
                         {
                             StatusCode = response.StatusCode,
                             Message = "Unsuccessful GetCatch",
                             Content = new T()
                         };
+                    }
+
                     using (HttpContent responseContent = response.Content)
                     {
                         string itemContent = await responseContent.ReadAsStringAsync();
+                        _logger.Info(nameof(UpdateItem) + "; End; response; " + response + "; itemContent; " +
+                                     itemContent);
+
                         return new Response<T>
                         {
                             StatusCode = response.StatusCode,
@@ -151,15 +183,23 @@ namespace Fishit.Common
                 using (HttpResponseMessage response = await client.DeleteAsync(_endPointUri + Path.PathSeparator + id))
                 {
                     if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        _logger.Error(nameof(DeleteItem) + "; Error; response; " + response);
+
                         return new Response<T>
                         {
                             StatusCode = response.StatusCode,
                             Message = "Unsuccessful Delete",
                             Content = new T()
                         };
+                    }
+
                     using (HttpContent responseContent = response.Content)
                     {
                         string itemContent = await responseContent.ReadAsStringAsync();
+                        _logger.Info(nameof(DeleteItem) + "; End; response; " + response + "; itemContent; " +
+                                     itemContent);
+
                         return new Response<T>
                         {
                             StatusCode = response.StatusCode,
