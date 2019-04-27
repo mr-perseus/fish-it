@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Fishit.Common;
 using Fishit.Dal.Entities;
 using Fishit.Logging;
 
@@ -57,7 +56,7 @@ namespace Fishit.TestEnvironment
                 await function(_fishingTripId);*/
 
                 Response<FishingTrip> response = await new FishingTripDao().CreateFishingTrip(TestFishingTrip);
-                await function(response.Content.Id); 
+                await function(response.Content.Id);
 
                 await new FishingTripDao().DeleteFishingTrip(response.Content.Id);
             }

@@ -18,6 +18,7 @@ namespace Fishit.Common.Testing
             Name = "Shark",
             Description = "A really big and funky fish"
         };
+
         private readonly Catch _catch = new Catch
         {
             Id = "0",
@@ -26,6 +27,7 @@ namespace Fishit.Common.Testing
             Length = 19.2,
             Weight = 15.8
         };
+
         private readonly FishingTrip _fishingTrip = new FishingTrip
         {
             Id = "0",

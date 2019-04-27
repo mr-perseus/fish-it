@@ -39,13 +39,9 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             FishingTrip.PredominantWeather = SelectedWeather;
             Response<FishingTrip> response;
             if (IsEdit)
-            {
                 response = await manager.UpdateFishingTrip(FishingTrip);
-            }
             else
-            {
                 response = await manager.CreateFishingTrip(FishingTrip);
-            }
 
             if (response.StatusCode == HttpStatusCode.OK)
                 await DisplayAlert("Fishing Trip", "Saved Successfully", "Ok");

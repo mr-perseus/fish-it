@@ -2,28 +2,28 @@
 
 <resources>
 
-    <style name="MainTheme" parent="MainTheme.Base">
-    </style>
-    <!-- Base theme applied no matter what API -->
-    <style name="MainTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette -->
-        <!-- colorPrimary is used for the default action bar background -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <!-- colorPrimaryDark is used for the status bar -->
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <!-- colorAccent is used as the default value for colorControlActivated
+  <style name="MainTheme" parent="MainTheme.Base">
+  </style>
+  <!-- Base theme applied no matter what API -->
+  <style name="MainTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette -->
+    <!-- colorPrimary is used for the default action bar background -->
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <!-- colorPrimaryDark is used for the status bar -->
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <!-- colorAccent is used as the default value for colorControlActivated
          which is used to tint widgets -->
-        <item name="colorAccent">@color/colorAccent</item>
+    <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="android:windowBackground">@color/colorWindowBackground</item>
-        <!-- You can also set colorControlNormal, colorControlActivated
+    <item name="android:windowBackground">@color/colorWindowBackground</item>
+    <!-- You can also set colorControlNormal, colorControlActivated
          colorControlHighlight and colorSwitchThumbNormal. -->
-        <item name="windowActionModeOverlay">true</item>
+    <item name="windowActionModeOverlay">true</item>
 
-        <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
-    </style>
+    <item name="android:datePickerDialogTheme">@style/AppCompatDialogStyle</item>
+  </style>
 
-    <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
+  <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
+    <item name="colorAccent">@color/colorAccent</item>
+  </style>
 </resources>
