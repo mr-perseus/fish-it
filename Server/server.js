@@ -34,11 +34,11 @@ const logger = require("./utils/log")
 server.use(logger)
 
 server.use("/api/auth", auth)
-server.use("/api/catches", catches)
-server.use("/api/users", users)
+server.use("/api/catch", catches)
+server.use("/api/user", users)
 server.use("/api/friends", friends)
-server.use("/api/fishtypes", fishTypes)
-server.use("/api/fishingtrips", fishingTrips)
+server.use("/api/fishtype", fishTypes)
+server.use("/api/fishingtrip", fishingTrips)
 
 const port = process.env.PORT || config.port
 server.listen(port, (error) => {
