@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
+using Fishit.Presentation.UI.Views.FishingTrips.FishTypes;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -48,13 +49,13 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         private async void Delete_Clicked(object sender, EventArgs e)
         {
             Catch _catch = (sender as MenuItem)?.CommandParameter as Catch;
-            _catches.Remove(_catch);
             
             FishingTripManager manager = new FishingTripManager();
             Response<FishingTrip> response= await manager.DeleteCatch(FishingTrip, _catch);
 
             InformUserHelper<FishingTrip> informer = new InformUserHelper<FishingTrip>(response, this, "Catch has been saved successfully!");
             informer.InformUserOfResponse();
+            await Navigation.PopAsync();
         }
 
         private void Handle_Refreshing(object sender, EventArgs e)
@@ -66,6 +67,11 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         public void DisplayAlertMessage(string title, string message)
         {
             DisplayAlert(title, message, "Ok");
+        }
+
+        private async void BtnManageFishTypes_OnClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new FishtypeListPage());
         }
     }
 }

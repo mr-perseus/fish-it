@@ -50,6 +50,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         {
             await SaveCatch();
             await Navigation.PopAsync();
+            await Navigation.PopAsync();
         }
 
         private void SetBindingContext(FishingTrip fishingTrip, Catch _catch)

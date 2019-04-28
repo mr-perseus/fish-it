@@ -57,6 +57,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         {
             await SaveFishingTrip();
             await Navigation.PopAsync();
+            await Navigation.PopAsync();
         }
 
         private async void ViewCatches_OnClicked(object sender, EventArgs e)

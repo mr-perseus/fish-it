@@ -80,7 +80,10 @@
     <EmbeddedResource Update="Views\FishingTrips\FishingTripsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\FishingTrips\Fishtype\FishtypeListPage.xaml">
+    <EmbeddedResource Update="Views\FishingTrips\FishTypes\FishTypeFormPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\FishingTrips\FishTypes\FishtypeListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\MainPage.xaml">
