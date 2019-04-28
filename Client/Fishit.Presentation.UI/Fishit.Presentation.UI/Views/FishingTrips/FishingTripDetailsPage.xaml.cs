@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
+using Fishit.Presentation.UI.Helpers;
 using Fishit.Presentation.UI.Views.FishingTrips.Catches;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,7 +12,7 @@ using Xamarin.Forms.Xaml;
 namespace Fishit.Presentation.UI.Views.FishingTrips
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class FishingTripDetailsPage : ContentPage
+    public partial class FishingTripDetailsPage : ContentPage, IPageBase
     {
         public FishingTripDetailsPage(FishingTrip fishingTrip)
         {
@@ -41,10 +42,13 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         {
             Response<FishingTrip> response = await new FishingTripManager().DeleteFishingTrip(FishingTrip);
 
-            if (response.StatusCode == HttpStatusCode.OK)
-                await DisplayAlert("Fishing Trip", "Deleted Successfully", "Ok");
-            else
-                await DisplayAlert("Fishing Trip", "Something went wrong, please try again", "Ok");
+            InformUserHelper<FishingTrip> informer = new InformUserHelper<FishingTrip>(response, this, "Fishing trip has been deleted successfully!");
+            informer.InformUserOfResponse();
+        }
+
+        public void DisplayAlertMessage(string title, string message)
+        {
+            DisplayAlert(title, message, "Ok");
         }
     }
 }

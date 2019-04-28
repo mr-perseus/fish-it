@@ -10,7 +10,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
     public partial class CatchesListPage : ContentPage
     {
         private readonly ObservableCollection<Catch> _catches;
-        private readonly FishingTrip FishingTrip;
+        public FishingTrip FishingTrip { get; set; }
 
         public CatchesListPage(FishingTrip fishingTrip)
         {

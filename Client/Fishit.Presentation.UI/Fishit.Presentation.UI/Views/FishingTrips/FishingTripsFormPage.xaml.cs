@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
+using Fishit.Presentation.UI.Helpers;
 using Fishit.Presentation.UI.Views.FishingTrips.Catches;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,7 +13,7 @@ using Xamarin.Forms.Xaml;
 namespace Fishit.Presentation.UI.Views.FishingTrips
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class FishingTripsFormPage : ContentPage
+    public partial class FishingTripsFormPage : ContentPage, IPageBase
     {
         public FishingTripsFormPage() : this(new FishingTrip())
         {
@@ -43,10 +44,8 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             else
                 response = await manager.CreateFishingTrip(FishingTrip);
 
-            if (response.StatusCode == HttpStatusCode.OK)
-                await DisplayAlert("Fishing Trip", "Saved Successfully", "Ok");
-            else
-                await DisplayAlert("Fishing Trip", "Something went wrong, please try again", "Ok");
+            InformUserHelper<FishingTrip> informer = new InformUserHelper<FishingTrip>(response, this, "Fishing trip has been saved successfully!");
+            informer.InformUserOfResponse();
         }
 
         private async void CancelForm_OnClicked(object sender, EventArgs e)
@@ -84,11 +83,16 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             if (!fishingTrip.Id.Equals("0"))
                 IsEdit = true;
             else
-                fishingTrip.DateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
+                FishingTrip.DateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
                     DateTime.Now.Hour, DateTime.Now.Minute, 0);
 
-            Date = fishingTrip.DateTime.Date;
-            Time = fishingTrip.DateTime.TimeOfDay;
+            Date = FishingTrip.DateTime.Date;
+            Time = FishingTrip.DateTime.TimeOfDay;
+        }
+
+        public void DisplayAlertMessage(string title, string message)
+        {
+            DisplayAlert(title, message, "Ok");
         }
     }
 }
