@@ -57,7 +57,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             FishingTrip = fishingTrip;
             Catch = _catch;
             BindingContext = _catch;
-            if (!fishingTrip.Id.Equals("0"))
+            if (!_catch.Id.Equals("0"))
                 IsEdit = true;
             else
                 Catch.DateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
