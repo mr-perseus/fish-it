@@ -64,7 +64,7 @@ namespace Fishit.Common
 
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = await client.GetAsync(_endPointUri + Path.PathSeparator + id))
+                using (HttpResponseMessage response = await client.GetAsync(_endPointUri + Path.DirectorySeparatorChar + id))
                 {
                     if (response.StatusCode != HttpStatusCode.OK)
                     {
@@ -142,7 +142,7 @@ namespace Fishit.Common
             using (HttpClient client = new HttpClient())
             {
                 using (HttpResponseMessage response =
-                    await client.PutAsync(_endPointUri + Path.PathSeparator + id, body))
+                    await client.PutAsync(_endPointUri + Path.DirectorySeparatorChar + id, body))
                 {
                     if (response.StatusCode != HttpStatusCode.OK)
                     {
@@ -180,7 +180,7 @@ namespace Fishit.Common
 
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = await client.DeleteAsync(_endPointUri + Path.PathSeparator + id))
+                using (HttpResponseMessage response = await client.DeleteAsync(_endPointUri + Path.DirectorySeparatorChar + id))
                 {
                     if (response.StatusCode != HttpStatusCode.OK)
                     {
