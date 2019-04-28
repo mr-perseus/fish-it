@@ -56,10 +56,10 @@ namespace Fishit.TestEnvironment
 
                 await function(_fishingTripId);*/
 
-                Response<FishingTrip> response = await new Dao<FishingTrip>("fishingTrips").CreateItem(TestFishingTrip);
+                Response<FishingTrip> response = await new Dao<FishingTrip>().CreateItem(TestFishingTrip);
                 await function(response.Content);
 
-                await new Dao<FishingTrip>("fishingTrips").DeleteItem(response.Content);
+                await new Dao<FishingTrip>().DeleteItem(response.Content);
             }
             catch (Exception exception)
             {

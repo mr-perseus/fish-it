@@ -8,9 +8,9 @@ namespace Fishit.Common.Testing
 {
     public class DaoTest
     {
-        private readonly Dao<Catch> _catchDao = new Dao<Catch>("catches");
-        private readonly Dao<FishType> _fishTypeDao = new Dao<FishType>("fishTypes");
-        private readonly Dao<FishingTrip> _fishingTripDao = new Dao<FishingTrip>("fishingTrips");
+        private readonly Dao<Catch> _catchDao = new Dao<Catch>();
+        private readonly Dao<FishType> _fishTypeDao = new Dao<FishType>();
+        private readonly Dao<FishingTrip> _fishingTripDao = new Dao<FishingTrip>();
 
         private readonly FishType _fishType = new FishType
         {

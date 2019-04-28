@@ -15,10 +15,10 @@ namespace Fishit.Common
         private readonly string _endPointUri = "http://sinv-56038.edu.hsr.ch:40007/api/";
         private readonly ILogger _logger;
 
-        public Dao(string uri)
+        public Dao()
         {
             _logger = LogManager.GetLogger(nameof(Dao<T>));
-            _endPointUri += uri;
+            _endPointUri += typeof(T).Name.ToLower();
         }
 
         public async Task<Response<List<T>>> GetAllItems()

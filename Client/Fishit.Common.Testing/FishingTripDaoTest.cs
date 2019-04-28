@@ -10,7 +10,7 @@ namespace Fishit.Common.Testing
         private Dao<FishingTrip> _fishingTripDao;
 
         private Dao<FishingTrip> FishingTripDao =>
-            _fishingTripDao ?? (_fishingTripDao = new Dao<FishingTrip>("fishingTrips"));
+            _fishingTripDao ?? (_fishingTripDao = new Dao<FishingTrip>());
 
         [Fact]
         public async void GetAllFishingTripsAsObjects()

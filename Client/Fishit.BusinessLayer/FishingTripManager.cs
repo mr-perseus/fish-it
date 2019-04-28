@@ -17,9 +17,9 @@ namespace Fishit.BusinessLayer
         public FishingTripManager()
         {
             _logger = LogManager.GetLogger(nameof(FishingTripManager));
-            _fishTypeDao = new Dao<FishType>("fishTypes");
-            _catchDao = new Dao<Catch>("catches");
-            _fishingTripDao = new Dao<FishingTrip>("fishingTrips");
+            _fishTypeDao = new Dao<FishType>();
+            _catchDao = new Dao<Catch>();
+            _fishingTripDao = new Dao<FishingTrip>();
         }
 
         public async Task<Response<List<FishingTrip>>> GetAllFishingTrips()
