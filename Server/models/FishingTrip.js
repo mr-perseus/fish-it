@@ -57,7 +57,9 @@ const fishingTripJoi = {
 		.max(64)
 		.required(),
 	DateTime: Joi.date().required(),
-	Description: Joi.string().max(1024),
+	Description: Joi.string()
+		.allow("")
+		.max(1024),
 	Temperature: Joi.number(),
 	Catches: Joi.array()
 }
