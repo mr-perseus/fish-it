@@ -113,5 +113,30 @@ namespace Fishit.BusinessLayer
                 Content = fishingTrip
             };
         }
+
+        public async Task<Response<List<FishType>>> GetAllFishTypes()
+        {
+            return await _fishTypeDao.GetAllItems();
+        }
+
+        public async Task<Response<FishType>> GetFishType(FishType fishType)
+        {
+            return await _fishTypeDao.GetItem(fishType);
+        }
+
+        public async Task<Response<FishType>> CreateFishType(FishType fishType)
+        {
+            return await _fishTypeDao.CreateItem(fishType);
+        }
+
+        public async Task<Response<FishType>> UpdateFishType(FishType fishType)
+        {
+            return await _fishTypeDao.UpdateItem(fishType);
+        }
+
+        public async Task<Response<FishType>> DeleteFishType(FishType fishType)
+        {
+            return await _fishTypeDao.DeleteItem(fishType);
+        }
     }
 }
