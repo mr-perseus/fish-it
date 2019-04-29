@@ -85,13 +85,18 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         {
             FishingTrip = fishingTrip;
             Catch = _catch;
-            FishType = Catch.FishType.Name;
             BindingContext = _catch;
             if (!_catch.Id.Equals("0"))
+            {
                 IsEdit = true;
+                FishType = Catch.FishType.Name;
+            }
             else
+            {
                 Catch.DateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
                     DateTime.Now.Hour, DateTime.Now.Minute, 0);
+                FishType = "";
+            }
 
             Date = Catch.DateTime.Date;
             Time = Catch.DateTime.TimeOfDay;
@@ -112,6 +117,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         {
             Response<List<FishType>> response = await new FishingTripManager().GetAllFishTypes();
             FishTypes = new ObservableCollection<FishType>(response.Content);
+            FishTypesAsStrings = new List<string>();
             SetFishTypesAsStrings();
         }
 
