@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
@@ -25,7 +26,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
             DisplayAlert(title, message, "Ok");
         }
 
-        private async void SetFishTypes()
+        private async Task SetFishTypes()
         {
             Response<List<FishType>> response = await new FishingTripManager().GetAllFishTypes();
             _fishtypes = new ObservableCollection<FishType>(response.Content);

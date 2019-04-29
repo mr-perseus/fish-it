@@ -3,7 +3,6 @@ using System.Net;
 using System.Threading.Tasks;
 using Fishit.Common;
 using Fishit.Dal.Entities;
-using Fishit.Logging;
 
 namespace Fishit.BusinessLayer
 {
@@ -12,11 +11,9 @@ namespace Fishit.BusinessLayer
         private readonly Dao<Catch> _catchDao;
         private readonly Dao<FishingTrip> _fishingTripDao;
         private readonly Dao<FishType> _fishTypeDao;
-        private readonly ILogger _logger;
 
         public FishingTripManager()
         {
-            _logger = LogManager.GetLogger(nameof(FishingTripManager));
             _fishTypeDao = new Dao<FishType>();
             _catchDao = new Dao<Catch>();
             _fishingTripDao = new Dao<FishingTrip>();
