@@ -19,7 +19,6 @@ namespace Fishit.Presentation.UI.Helpers
 
         public void InformUserOfResponse()
         {
-            // StackFrame frame = new StackFrame(1);
             int statusCode = (int) Response.StatusCode;
             string statusMessage = Response.StatusCode.ToString();
 
