@@ -26,7 +26,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
             DisplayAlert(title, message, "Ok");
         }
 
-        private async Task SetFishTypes()
+        private async void SetFishTypes()
         {
             Response<List<FishType>> response = await new FishingTripManager().GetAllFishTypes();
             _fishtypes = new ObservableCollection<FishType>(response.Content);
