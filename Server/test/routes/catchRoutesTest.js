@@ -1,25 +1,25 @@
-const jasmine = require("jasmine")
 const Request = require("request")
+const config = require("config")
 
-const EndPointUri = "http://localhost:3801/api/catches"
+const CatchesUri = config.EndPointUri + "catch"
 
 describe("Server", () => {
 	var Server
 	beforeAll(() => (Server = require("../../server")))
 	afterAll(() => Server.close)
 
-	describe("catches - GET ALL", () => {
-		let data = {}
+	describe("Catches - GET ALL", () => {
+		let catches = {}
 		beforeAll((done) => {
-			Request.get(EndPointUri, (err, res, body) => {
-				data.status = res.statusCode
-				data.body = body
+			Request.get(CatchesUri, (err, res, body) => {
+				catches.status = res.statusCode
+				catches.body = body
 				done()
 			})
 		})
 
 		it("- Status 200", async () => {
-			expect(data.status).toBe(200)
+			expect(catches.status).toBe(200)
 		})
 	})
 })
