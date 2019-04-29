@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
@@ -34,6 +33,11 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         public bool IsEdit { get; set; }
         public FishingTrip.Weather SelectedWeather { get; set; }
 
+        public void DisplayAlertMessage(string title, string message)
+        {
+            DisplayAlert(title, message, "Ok");
+        }
+
         private async Task SaveFishingTrip()
         {
             FishingTripManager manager = new FishingTripManager();
@@ -44,7 +48,8 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             else
                 response = await manager.CreateFishingTrip(FishingTrip);
 
-            InformUserHelper<FishingTrip> informer = new InformUserHelper<FishingTrip>(response, this, "Fishing trip has been saved successfully!");
+            InformUserHelper<FishingTrip> informer =
+                new InformUserHelper<FishingTrip>(response, this, "Fishing trip has been saved successfully!");
             informer.InformUserOfResponse();
         }
 
@@ -89,11 +94,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
             Date = FishingTrip.DateTime.Date;
             Time = FishingTrip.DateTime.TimeOfDay;
-        }
-
-        public void DisplayAlertMessage(string title, string message)
-        {
-            DisplayAlert(title, message, "Ok");
         }
     }
 }

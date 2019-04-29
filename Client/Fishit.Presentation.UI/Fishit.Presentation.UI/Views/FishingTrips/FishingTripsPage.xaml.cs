@@ -29,6 +29,11 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             FishingTripsListView.ItemsSource = _fishingTrips;
         }
 
+        public void DisplayAlertMessage(string title, string message)
+        {
+            DisplayAlert(title, message, "Ok");
+        }
+
         private async Task SetAllFishingTrips()
         {
             Response<List<FishingTrip>> response = await new FishingTripManager().GetAllFishingTrips();
@@ -67,7 +72,8 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             FishingTripManager manager = new FishingTripManager();
             Response<FishingTrip> response = await manager.DeleteFishingTrip(fishingTrip);
 
-            InformUserHelper<FishingTrip> informer = new InformUserHelper<FishingTrip>(response, this, "Fishing Trip has been deleted successfully!");
+            InformUserHelper<FishingTrip> informer =
+                new InformUserHelper<FishingTrip>(response, this, "Fishing Trip has been deleted successfully!");
             informer.InformUserOfResponse();
             await SetAllFishingTrips();
         }
@@ -76,11 +82,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         {
             await SetAllFishingTrips();
             FishingTripsListView.EndRefresh();
-        }
-
-        public void DisplayAlertMessage(string title, string message)
-        {
-            DisplayAlert(title, message, "Ok");
         }
     }
 }

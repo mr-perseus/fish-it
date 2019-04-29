@@ -11,8 +11,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CatchFormPage : ContentPage, IPageBase
     {
-        private FishingTrip FishingTrip { get; set; }
-
         public CatchFormPage(FishingTrip fishingTrip) : this(fishingTrip, new Catch())
         {
         }
@@ -23,10 +21,17 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             InitializeComponent();
         }
 
+        private FishingTrip FishingTrip { get; set; }
+
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
         public Catch Catch { get; set; }
         public bool IsEdit { get; set; }
+
+        public void DisplayAlertMessage(string title, string message)
+        {
+            DisplayAlert(title, message, "Ok");
+        }
 
         private async Task SaveCatch()
         {
@@ -37,7 +42,8 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             else
                 response = await manager.AddCatch(FishingTrip, Catch);
 
-            InformUserHelper<FishingTrip> informer = new InformUserHelper<FishingTrip>(response, this, "Catch has been saved successfully!");
+            InformUserHelper<FishingTrip> informer =
+                new InformUserHelper<FishingTrip>(response, this, "Catch has been saved successfully!");
             informer.InformUserOfResponse();
         }
 
@@ -77,10 +83,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
                 Time.Hours,
                 Time.Minutes,
                 0);
-        }
-        public void DisplayAlertMessage(string title, string message)
-        {
-            DisplayAlert(title, message, "Ok");
         }
     }
 }

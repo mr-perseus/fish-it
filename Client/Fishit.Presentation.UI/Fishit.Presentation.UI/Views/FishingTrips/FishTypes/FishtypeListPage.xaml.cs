@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
@@ -12,14 +9,20 @@ using Xamarin.Forms.Xaml;
 
 namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class FishtypeListPage : ContentPage, IPageBase
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class FishtypeListPage : ContentPage, IPageBase
     {
         private ObservableCollection<FishType> _fishtypes;
-		public FishtypeListPage ()
+
+        public FishtypeListPage()
         {
             SetFishTypes();
             InitializeComponent();
+        }
+
+        public void DisplayAlertMessage(string title, string message)
+        {
+            DisplayAlert(title, message, "Ok");
         }
 
         private async void SetFishTypes()
@@ -58,18 +61,14 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
             FishingTripManager manager = new FishingTripManager();
             Response<FishType> response = await manager.DeleteFishType(fishType);
 
-            InformUserHelper<FishType> informer = new InformUserHelper<FishType>(response, this, "Fish type has been deleted successfully.");
+            InformUserHelper<FishType> informer =
+                new InformUserHelper<FishType>(response, this, "Fish type has been deleted successfully.");
             informer.InformUserOfResponse();
         }
 
         private async void BtnAddFishType_OnClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new FishTypeFormPage());
-        }
-
-        public void DisplayAlertMessage(string title, string message)
-        {
-            DisplayAlert(title, message, "Ok");
         }
     }
 }

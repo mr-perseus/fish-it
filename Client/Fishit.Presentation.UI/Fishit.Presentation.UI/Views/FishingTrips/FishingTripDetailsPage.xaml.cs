@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
@@ -28,6 +27,11 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         public int NumberOfCatches { get; set; }
         public string Name { get; set; }
 
+        public void DisplayAlertMessage(string title, string message)
+        {
+            DisplayAlert(title, message, "Ok");
+        }
+
         private async void ViewCatches_OnClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new CatchesListPage(FishingTrip));
@@ -42,14 +46,10 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         {
             Response<FishingTrip> response = await new FishingTripManager().DeleteFishingTrip(FishingTrip);
 
-            InformUserHelper<FishingTrip> informer = new InformUserHelper<FishingTrip>(response, this, "Fishing trip has been deleted successfully!");
+            InformUserHelper<FishingTrip> informer =
+                new InformUserHelper<FishingTrip>(response, this, "Fishing trip has been deleted successfully!");
             informer.InformUserOfResponse();
             await Navigation.PopAsync();
-        }
-
-        public void DisplayAlertMessage(string title, string message)
-        {
-            DisplayAlert(title, message, "Ok");
         }
     }
 }

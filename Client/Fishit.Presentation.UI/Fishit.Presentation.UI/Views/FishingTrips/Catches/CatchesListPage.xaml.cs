@@ -13,7 +13,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
     public partial class CatchesListPage : ContentPage, IPageBase
     {
         private readonly ObservableCollection<Catch> _catches;
-        public FishingTrip FishingTrip { get; set; }
 
         public CatchesListPage(FishingTrip fishingTrip)
         {
@@ -21,6 +20,13 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             _catches = new ObservableCollection<Catch>(fishingTrip.Catches);
             InitializeComponent();
             CatchesListView.ItemsSource = _catches;
+        }
+
+        public FishingTrip FishingTrip { get; set; }
+
+        public void DisplayAlertMessage(string title, string message)
+        {
+            DisplayAlert(title, message, "Ok");
         }
 
         private async void CatchesListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -49,11 +55,12 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         private async void Delete_Clicked(object sender, EventArgs e)
         {
             Catch _catch = (sender as MenuItem)?.CommandParameter as Catch;
-            
-            FishingTripManager manager = new FishingTripManager();
-            Response<FishingTrip> response= await manager.DeleteCatch(FishingTrip, _catch);
 
-            InformUserHelper<FishingTrip> informer = new InformUserHelper<FishingTrip>(response, this, "Catch has been saved successfully!");
+            FishingTripManager manager = new FishingTripManager();
+            Response<FishingTrip> response = await manager.DeleteCatch(FishingTrip, _catch);
+
+            InformUserHelper<FishingTrip> informer =
+                new InformUserHelper<FishingTrip>(response, this, "Catch has been saved successfully!");
             informer.InformUserOfResponse();
             await Navigation.PopAsync();
         }
@@ -62,11 +69,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         {
             CatchesListView.ItemsSource = _catches;
             CatchesListView.EndRefresh();
-        }
-
-        public void DisplayAlertMessage(string title, string message)
-        {
-            DisplayAlert(title, message, "Ok");
         }
 
         private async void BtnManageFishTypes_OnClicked(object sender, EventArgs e)

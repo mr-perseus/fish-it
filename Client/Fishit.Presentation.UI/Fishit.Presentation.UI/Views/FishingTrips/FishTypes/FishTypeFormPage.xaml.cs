@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Android.Content;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
@@ -12,8 +8,8 @@ using Xamarin.Forms.Xaml;
 
 namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class FishTypeFormPage : ContentPage, IPageBase
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class FishTypeFormPage : ContentPage, IPageBase
     {
         private FishType _fishType;
         private bool _isEdit;
@@ -22,20 +18,22 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
         {
         }
 
-		public FishTypeFormPage (FishType fishType)
+        public FishTypeFormPage(FishType fishType)
         {
             SetBindingContext(fishType);
-			InitializeComponent ();
-		}
+            InitializeComponent();
+        }
+
+        public void DisplayAlertMessage(string title, string message)
+        {
+            DisplayAlert(title, message, "Ok");
+        }
 
         private void SetBindingContext(FishType fishType)
         {
             _fishType = fishType;
             BindingContext = _fishType;
-            if (!_fishType.Id.Equals("0"))
-            {
-                _isEdit = true;
-            }
+            if (!_fishType.Id.Equals("0")) _isEdit = true;
         }
 
         private async Task SaveFishType()
@@ -43,15 +41,12 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
             FishingTripManager manager = new FishingTripManager();
             Response<FishType> response;
             if (_isEdit)
-            {
                 response = await manager.UpdateFishType(_fishType);
-            }
             else
-            {
                 response = await manager.CreateFishType(_fishType);
-            }
 
-            InformUserHelper<FishType> informer = new InformUserHelper<FishType>(response, this, "FishType has been saved successfully!");
+            InformUserHelper<FishType> informer =
+                new InformUserHelper<FishType>(response, this, "FishType has been saved successfully!");
             informer.InformUserOfResponse();
         }
 
@@ -64,11 +59,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
         {
             await SaveFishType();
             await Navigation.PopAsync();
-        }
-
-        public void DisplayAlertMessage(string title, string message)
-        {
-            DisplayAlert(title, message, "Ok");
         }
     }
 }
