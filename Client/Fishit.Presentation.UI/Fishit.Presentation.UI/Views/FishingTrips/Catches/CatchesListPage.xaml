@@ -38,6 +38,8 @@
             </ListView.ItemTemplate>
         </ListView>
 
+        <Button Text="Manage Fish Types" Clicked="BtnManageFishTypes_OnClicked" Margin="20,20"
+                Style="{StaticResource ButtonStyle}" />
         <Button Text="Add Catch" Clicked="BtnAddCatch_OnClicked" Margin="20,20" Style="{StaticResource ButtonStyle}" />
     </StackLayout>
 </ContentPage>

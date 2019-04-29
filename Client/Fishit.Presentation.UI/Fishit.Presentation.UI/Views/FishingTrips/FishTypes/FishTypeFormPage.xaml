@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Fishit.Presentation.UI.Views.FishingTrips.FishTypes.FishTypeFormPage"
+             Title="FishType">
+    <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Padding="20">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+
+            </Grid.ColumnDefinitions>
+
+            <Label Text="Name:" Grid.Row="0" Grid.Column="0" />
+            <Entry Grid.Row="0" Grid.Column="1" Text="{Binding Name}" />
+            <Label Text="Description:" Grid.Row="1" Grid.Column="0" />
+            <Entry Grid.Row="1" Grid.Column="1" Text="{Binding Description}" />
+        </Grid>
+
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Cancel" Clicked="BtnCancel_OnClicked" Style="{StaticResource ButtonStyle}" />
+            <Button Text="Save" Clicked="BtnSaveFishType_OnClicked" Style="{StaticResource ButtonStyle}"
+                    HorizontalOptions="EndAndExpand" />
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

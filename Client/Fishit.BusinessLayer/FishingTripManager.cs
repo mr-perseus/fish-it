@@ -3,7 +3,6 @@ using System.Net;
 using System.Threading.Tasks;
 using Fishit.Common;
 using Fishit.Dal.Entities;
-using Fishit.Logging;
 
 namespace Fishit.BusinessLayer
 {
@@ -12,14 +11,12 @@ namespace Fishit.BusinessLayer
         private readonly Dao<Catch> _catchDao;
         private readonly Dao<FishingTrip> _fishingTripDao;
         private readonly Dao<FishType> _fishTypeDao;
-        private readonly ILogger _logger;
 
         public FishingTripManager()
         {
-            _logger = LogManager.GetLogger(nameof(FishingTripManager));
-            _fishTypeDao = new Dao<FishType>("fishTypes");
-            _catchDao = new Dao<Catch>("catches");
-            _fishingTripDao = new Dao<FishingTrip>("fishingTrips");
+            _fishTypeDao = new Dao<FishType>();
+            _catchDao = new Dao<Catch>();
+            _fishingTripDao = new Dao<FishingTrip>();
         }
 
         public async Task<Response<List<FishingTrip>>> GetAllFishingTrips()
@@ -49,21 +46,7 @@ namespace Fishit.BusinessLayer
 
         public async Task<Response<List<Catch>>> GetAllCatches(FishingTrip fishingTrip)
         {
-            Response<List<Catch>> catchResponse = await _catchDao.GetAllItems();
-            if (catchResponse.StatusCode != HttpStatusCode.OK)
-                return new Response<List<Catch>>
-                {
-                    StatusCode = catchResponse.StatusCode,
-                    Message = "Unsuccessful get all catches",
-                    Content = new List<Catch>()
-                };
-
-            return new Response<List<Catch>>
-            {
-                StatusCode = catchResponse.StatusCode,
-                Message = "Successful addCatch",
-                Content = catchResponse.Content
-            };
+            return await _catchDao.GetAllItems();
         }
 
         public async Task<Response<FishingTrip>> AddCatch(FishingTrip fishingTrip, Catch aCatch)
@@ -126,6 +109,31 @@ namespace Fishit.BusinessLayer
                 Message = "Successful delete Catch",
                 Content = fishingTrip
             };
+        }
+
+        public async Task<Response<List<FishType>>> GetAllFishTypes()
+        {
+            return await _fishTypeDao.GetAllItems();
+        }
+
+        public async Task<Response<FishType>> GetFishType(FishType fishType)
+        {
+            return await _fishTypeDao.GetItem(fishType);
+        }
+
+        public async Task<Response<FishType>> CreateFishType(FishType fishType)
+        {
+            return await _fishTypeDao.CreateItem(fishType);
+        }
+
+        public async Task<Response<FishType>> UpdateFishType(FishType fishType)
+        {
+            return await _fishTypeDao.UpdateItem(fishType);
+        }
+
+        public async Task<Response<FishType>> DeleteFishType(FishType fishType)
+        {
+            return await _fishTypeDao.DeleteItem(fishType);
         }
     }
 }

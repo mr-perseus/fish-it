@@ -8,9 +8,9 @@ namespace Fishit.Common.Testing
 {
     public class DaoTest
     {
-        private readonly Dao<Catch> _catchDao = new Dao<Catch>("catches");
-        private readonly Dao<FishType> _fishTypeDao = new Dao<FishType>("fishTypes");
-        private readonly Dao<FishingTrip> _fishingTripDao = new Dao<FishingTrip>("fishingTrips");
+        private readonly Dao<Catch> _catchDao = new Dao<Catch>();
+        private readonly Dao<FishType> _fishTypeDao = new Dao<FishType>();
+        private readonly Dao<FishingTrip> _fishingTripDao = new Dao<FishingTrip>();
 
         private readonly FishType _fishType = new FishType
         {
@@ -18,6 +18,7 @@ namespace Fishit.Common.Testing
             Name = "Shark",
             Description = "A really big and funky fish"
         };
+
         private readonly Catch _catch = new Catch
         {
             Id = "0",
@@ -26,6 +27,7 @@ namespace Fishit.Common.Testing
             Length = 19.2,
             Weight = 15.8
         };
+
         private readonly FishingTrip _fishingTrip = new FishingTrip
         {
             Id = "0",
