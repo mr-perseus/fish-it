@@ -61,6 +61,7 @@ namespace Fishit.BusinessLayer
                 };
 
             fishingTrip.Catches.Add(catchResponse.Content);
+            await UpdateFishingTrip(fishingTrip);
             return new Response<FishingTrip>
             {
                 StatusCode = catchResponse.StatusCode,

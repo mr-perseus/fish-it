@@ -28,7 +28,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         }
 
         private FishingTrip FishingTrip { get; set; }
-
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
         public Catch Catch { get; set; }
@@ -50,6 +49,8 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
                 response = await manager.UpdateCatch(FishingTrip, Catch);
             else
                 response = await manager.AddCatch(FishingTrip, Catch);
+
+
 
             InformUserHelper<FishingTrip> informer =
                 new InformUserHelper<FishingTrip>(response, this, "Catch has been saved successfully!");
@@ -137,6 +138,11 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
                     FishTypesAsStrings.Where(x => x.ToLower().StartsWith(FishTypeAutoComplete.Text.ToLower())).ToList();
                 FishTypeAutoComplete.ItemsSource = filteredList;
             }
+        }
+
+        private void FishTypeAutoComplete_OnSuggestionChosen(object sender, AutoSuggestBoxSuggestionChosenEventArgs e)
+        {
+            FishType = (string)e.SelectedItem;
         }
     }
 }

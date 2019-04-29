@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
@@ -12,12 +13,12 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CatchesListPage : ContentPage, IPageBase
     {
-        private readonly ObservableCollection<Catch> _catches;
+        private ObservableCollection<Catch> _catches;
 
         public CatchesListPage(FishingTrip fishingTrip)
         {
             FishingTrip = fishingTrip;
-            _catches = new ObservableCollection<Catch>(fishingTrip.Catches);
+            SetCatches();
             InitializeComponent();
             CatchesListView.ItemsSource = _catches;
         }
@@ -69,6 +70,11 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         {
             CatchesListView.ItemsSource = _catches;
             CatchesListView.EndRefresh();
+        }
+
+        private void SetCatches()
+        {
+            _catches = new ObservableCollection<Catch>(FishingTrip.Catches);
         }
 
         private async void BtnManageFishTypes_OnClicked(object sender, EventArgs e)
