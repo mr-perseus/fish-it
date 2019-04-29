@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
+using dotMorten.Xamarin.Forms;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+
 
 namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 {
@@ -17,6 +22,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 
         public CatchFormPage(FishingTrip fishingTrip, Catch _catch)
         {
+            SetFishTypes();
             SetBindingContext(fishingTrip, _catch);
             InitializeComponent();
         }
@@ -27,6 +33,9 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         public TimeSpan Time { get; set; }
         public Catch Catch { get; set; }
         public bool IsEdit { get; set; }
+        public ObservableCollection<FishType> FishTypes { get; set; }
+        public List<string> FishTypesAsStrings { get; set; }
+        public string FishType { get; set; }
 
         public void DisplayAlertMessage(string title, string message)
         {
@@ -54,15 +63,29 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 
         private async void SaveCatch_OnClicked(object sender, EventArgs e)
         {
+            Catch.FishType = GetFishType();
             await SaveCatch();
             await Navigation.PopAsync();
             await Navigation.PopAsync();
+        }
+
+        private FishType GetFishType()
+        {
+            foreach (FishType fishType in FishTypes)
+            {
+                if (fishType.Name.Equals(FishType))
+                {
+                    return fishType;
+                }
+            }
+            return new FishType();
         }
 
         private void SetBindingContext(FishingTrip fishingTrip, Catch _catch)
         {
             FishingTrip = fishingTrip;
             Catch = _catch;
+            FishType = Catch.FishType.Name;
             BindingContext = _catch;
             if (!_catch.Id.Equals("0"))
                 IsEdit = true;
@@ -83,6 +106,31 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
                 Time.Hours,
                 Time.Minutes,
                 0);
+        }
+
+        private async void SetFishTypes()
+        {
+            Response<List<FishType>> response = await new FishingTripManager().GetAllFishTypes();
+            FishTypes = new ObservableCollection<FishType>(response.Content);
+            SetFishTypesAsStrings();
+        }
+
+        private void SetFishTypesAsStrings()
+        {
+            foreach (FishType fishType in FishTypes)
+            {
+                FishTypesAsStrings.Add(fishType.Name);
+            }
+        }
+
+        private void FishTypeAutoComplete_OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs e)
+        {
+            if (e.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            {
+                List<string> filteredList =
+                    FishTypesAsStrings.Where(x => x.ToLower().StartsWith(FishTypeAutoComplete.Text.ToLower())).ToList();
+                FishTypeAutoComplete.ItemsSource = filteredList;
+            }
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:widget="clr-namespace:Android.Widget;assembly=Mono.Android"
+             xmlns:forms="clr-namespace:dotMorten.Xamarin.Forms;assembly=dotMorten.Xamarin.Forms.AutoSuggestBox"
              x:Class="Fishit.Presentation.UI.Views.FishingTrips.Catches.CatchFormPage"
              x:Name="This"
              Title="Catch">
@@ -25,7 +27,7 @@
             </Grid.ColumnDefinitions>
 
             <Label Text="FishType:" Grid.Row="0" Grid.Column="0" />
-            <Entry Grid.Row="0" Grid.Column="1" BindingContext="{Binding FishType}" Text="{Binding Name}" />
+            <forms:AutoSuggestBox Grid.Row="0" Grid.Column="1" BindingContext="{x:Reference This}" Text="{Binding FishType}" x:Name="FishTypeAutoComplete" TextChanged="FishTypeAutoComplete_OnTextChanged" />
             <Label Text="Length:" Grid.Row="1" Grid.Column="0" />
             <Entry Grid.Row="1" Grid.Column="1" Text="{Binding Length}" />
             <Label Text="Weight" Grid.Row="2" Grid.Column="0" />
