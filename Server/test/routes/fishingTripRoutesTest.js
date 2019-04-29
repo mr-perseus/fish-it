@@ -1,25 +1,26 @@
-const jasmine = require("jasmine")
 const Request = require("request")
+const config = require("config")
 
-const EndPointUri = "http://localhost:3801/api/fishingtrips"
+const FishingTripsUri = config.EndPointUri + "fishingtrip"
 
 describe("Server", () => {
 	var Server
 	beforeAll(() => (Server = require("../../server")))
 	afterAll(() => Server.close)
 
-	describe("fishingTrips - GET ALL", () => {
-		let data = {}
+	describe("FishingTrips - GET ALL", () => {
+		let fishingtrips = {}
+
 		beforeAll((done) => {
-			Request.get(EndPointUri, (err, res, body) => {
-				data.status = res.statusCode
-				data.body = body
+			Request.get(FishingTripsUri, (err, res, body) => {
+				fishingtrips.status = res.statusCode
+				fishingtrips.body = body
 				done()
 			})
 		})
 
 		it("- Status 200", async () => {
-			expect(data.status).toBe(200)
+			expect(fishingtrips.status).toBe(200)
 		})
 	})
 })

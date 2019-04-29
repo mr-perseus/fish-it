@@ -1,7 +1,7 @@
-const jasmine = require("jasmine")
 const Request = require("request")
+const config = require("config")
 
-const EndPointUri = "http://localhost:3801/api/fishtypes"
+const FishTypesUri = config.EndPointUri + "fishtype"
 
 describe("Server", () => {
 	var Server
@@ -11,7 +11,7 @@ describe("Server", () => {
 	describe("fishTypes - GET ALL", () => {
 		let data = {}
 		beforeAll((done) => {
-			Request.get(EndPointUri, (err, res, body) => {
+			Request.get(FishTypesUri, (err, res, body) => {
 				data.status = res.statusCode
 				data.body = body
 				done()
