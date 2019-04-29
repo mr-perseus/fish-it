@@ -24,8 +24,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             InitializeComponent();
         }
 
-        public IList<FishingTrip.Weather> WeatherOptions =>
-            Enum.GetValues(typeof(FishingTrip.Weather)).Cast<FishingTrip.Weather>().ToList();
+        public IEnumerable<FishingTrip.Weather> WeatherOptions => GetWeatherOptions();
 
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
@@ -51,6 +50,11 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             InformUserHelper<FishingTrip> informer =
                 new InformUserHelper<FishingTrip>(response, this, "Fishing trip has been saved successfully!");
             informer.InformUserOfResponse();
+        }
+
+        private IEnumerable<FishingTrip.Weather> GetWeatherOptions()
+        {
+            return Enum.GetValues(typeof(FishingTrip.Weather)).Cast<FishingTrip.Weather>().ToList();
         }
 
         private async void CancelForm_OnClicked(object sender, EventArgs e)
