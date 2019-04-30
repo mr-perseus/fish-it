@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Fishit.Dal.Entities;
+﻿using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Views;
 
 namespace Fishit.Presentation.UI.Helpers
