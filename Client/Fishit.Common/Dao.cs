@@ -12,7 +12,7 @@ namespace Fishit.Common
 {
     public class Dao<T> where T : new()
     {
-        private readonly string _endPointUri = "http://sinv-56038.edu.hsr.ch:40007/api/";
+        private readonly string _endPointUri = Properties.Resources.EndPointUri;
         private readonly ILogger _logger;
 
         public Dao()
@@ -103,7 +103,7 @@ namespace Fishit.Common
 
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = await client.PostAsync(_endPointUri + "/new", body))
+                using (HttpResponseMessage response = await client.PostAsync(_endPointUri + Properties.Resources.CreateNew, body))
                 {
                     if (response.StatusCode != HttpStatusCode.OK)
                     {
