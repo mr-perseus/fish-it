@@ -10,7 +10,6 @@ using Fishit.Presentation.UI.Helpers;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-
 namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -50,8 +49,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             else
                 response = await manager.AddCatch(FishingTrip, Catch);
 
-
-
             InformUserHelper<FishingTrip> informer =
                 new InformUserHelper<FishingTrip>(response, this, "Catch has been saved successfully!");
             informer.InformUserOfResponse();
@@ -73,12 +70,8 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         private FishType GetFishType()
         {
             foreach (FishType fishType in FishTypes)
-            {
                 if (fishType.Name.Equals(FishType))
-                {
                     return fishType;
-                }
-            }
             return new FishType();
         }
 
@@ -124,10 +117,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 
         private void SetFishTypesAsStrings()
         {
-            foreach (FishType fishType in FishTypes)
-            {
-                FishTypesAsStrings.Add(fishType.Name);
-            }
+            foreach (FishType fishType in FishTypes) FishTypesAsStrings.Add(fishType.Name);
         }
 
         private void FishTypeAutoComplete_OnTextChanged(object sender, AutoSuggestBoxTextChangedEventArgs e)
@@ -142,7 +132,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 
         private void FishTypeAutoComplete_OnSuggestionChosen(object sender, AutoSuggestBoxSuggestionChosenEventArgs e)
         {
-            FishType = (string)e.SelectedItem;
+            FishType = (string) e.SelectedItem;
         }
     }
 }
