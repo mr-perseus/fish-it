@@ -24,6 +24,11 @@ namespace Fishit.BusinessLayer
             return await _fishingTripDao.GetAllItems();
         }
 
+        public async Task<Response<FishingTrip>> GetFishingTripById(string id)
+        {
+            return await _fishingTripDao.GetItemById(id);
+        }
+
         public async Task<Response<FishingTrip>> GetFishingTrip(FishingTrip fishingTrip)
         {
             return await _fishingTripDao.GetItem(fishingTrip);
