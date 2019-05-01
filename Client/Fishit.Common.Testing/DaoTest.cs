@@ -15,30 +15,75 @@ namespace Fishit.Common.Testing
         private readonly FishType _fishType = new FishType
         {
             Id = "0",
-            Name = "Shark",
-            Description = "A really big and funky fish"
+            Name = "Browntrout",
+            Description = "Salmonid with red and black points on it"
         };
 
         private readonly Catch _catch = new Catch
         {
             Id = "0",
-            DateTime = new DateTime(2019, 04, 17),
+            DateTime = new DateTime(2019, 05, 01),
             FishType = new FishType(),
-            Length = 19.2,
-            Weight = 15.8
+            Length = 35,
+            Weight = 200
         };
 
         private readonly FishingTrip _fishingTrip = new FishingTrip
         {
             Id = "0",
-            Location = "Obersee",
+            Location = "Lai da Palpougna",
             DateTime = new DateTime(2019, 05, 01),
             Catches = new List<Catch>(),
-            Description = "What a wonderful Trip.",
-            PredominantWeather = FishingTrip.Weather.Overcast,
-            Temperature = 18.7
+            Description = "Groundfishing and Livigno-System",
+            PredominantWeather = FishingTrip.Weather.Sunny,
+            Temperature = 13
         };
 
+        //CRUD Fishtype Section START
+        [Fact]
+        public async void CreateFishType()
+        {
+            Response<FishType> response = await _fishTypeDao.CreateItem(_fishType);
+            Assert.True(response.StatusCode == HttpStatusCode.OK);
+            // in der Response wird im Body nur die generierte _id mitgeschickt, weshalb kein Content geparst werden und verglichen werden kann. Assert.True(_fishType.Name == response.Content.Name);
+            await _fishTypeDao.DeleteItem(response.Content); //hier zum schluss trotzdem noch Assert.True bez. Response machen? 
+        }
+
+        [Fact]
+        public async void GetFishTypes()
+        {
+            Response<List<FishType>> response = await _fishTypeDao.GetAllItems();
+            Assert.True(response.StatusCode == HttpStatusCode.OK);
+        }
+
+        [Fact]
+        public async void GetFishTypeById()
+        {
+            Response<FishType> response = await _fishTypeDao.CreateItem(_fishType);
+            Response<FishType> selectedFishtype = await _fishTypeDao.GetItemById(response.Content.Id);
+            Assert.True(selectedFishtype.Content.Name == "Browntrout");
+        }
+
+        [Fact]
+        public async void UpdateFishType()
+        {
+            _fishType.Name = "Rainbowtrout";
+            Response<FishType> response = await _fishTypeDao.UpdateItem(_fishType);
+            Assert.True(response.StatusCode == HttpStatusCode.OK);
+            Assert.True(_fishType.Name == response.Content.Name);
+        }
+
+        [Fact]
+        public async void DeleteFishType()
+        {
+            Response<FishType> response = await _fishTypeDao.CreateItem(_fishType);
+            Response<FishType> responseDelete = await _fishTypeDao.DeleteItem(response.Content);
+            Assert.True(responseDelete.StatusCode == HttpStatusCode.OK);
+        }
+
+        //CRUD Fishtype Section END
+
+        //CRUD Catch Section START
         [Fact]
         public async void CreateCatch()
         {
@@ -46,10 +91,24 @@ namespace Fishit.Common.Testing
             Assert.True(fishTypes.StatusCode == HttpStatusCode.OK);
             Assert.True(fishTypes.Content.Count > 0);
 
-            _catch.FishType = fishTypes.Content[0];
+            _catch.FishType = fishTypes.Content[11];
             Response<Catch> response = await _catchDao.CreateItem(_catch);
             Assert.True(response.StatusCode == HttpStatusCode.OK);
+
+            Response<Catch> responseDeleteCatch = await _catchDao.DeleteItem(response.Content);
+            Assert.True(responseDeleteCatch.StatusCode == HttpStatusCode.OK);
         }
+
+        [Fact]
+        public async void GetCatches()
+        {
+            Response<List<Catch>> allCatchesResponse = await _catchDao.GetAllItems();
+            Assert.True(allCatchesResponse.StatusCode == HttpStatusCode.OK);
+            allCatchesResponse.Content.Count 
+
+        }
+
+        //CRUD Catch Section START
 
         [Fact]
         public async void CreateFishingTrip()
@@ -60,20 +119,6 @@ namespace Fishit.Common.Testing
 
             _fishingTrip.Catches.Add(catches.Content[0]);
             Response<FishingTrip> response = await _fishingTripDao.CreateItem(_fishingTrip);
-            Assert.True(response.StatusCode == HttpStatusCode.OK);
-        }
-
-        [Fact]
-        public async void CreateFishTypes()
-        {
-            Response<FishType> response = await _fishTypeDao.CreateItem(_fishType);
-            Assert.True(response.StatusCode == HttpStatusCode.OK);
-        }
-
-        [Fact]
-        public async void GetFishTypes()
-        {
-            Response<List<FishType>> response = await _fishTypeDao.GetAllItems();
             Assert.True(response.StatusCode == HttpStatusCode.OK);
         }
     }

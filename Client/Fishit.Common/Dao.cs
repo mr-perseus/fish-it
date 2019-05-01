@@ -96,6 +96,44 @@ namespace Fishit.Common
             }
         }
 
+        public async Task<Response<T>> GetItemById(string id)
+        {
+            _logger.Info(nameof(GetItem) + "; Start; " + "id; " + id);
+
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpResponseMessage response =
+                    await client.GetAsync(_endPointUri + Path.DirectorySeparatorChar + id))
+                {
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        _logger.Error(nameof(GetItem) + "; Error; response; " + response);
+
+                        return new Response<T>
+                        {
+                            StatusCode = response.StatusCode,
+                            Message = "Unsuccessful GetAllCatches",
+                            Content = new T()
+                        };
+                    }
+
+                    using (HttpContent content = response.Content)
+                    {
+                        string itemContent = await content.ReadAsStringAsync();
+                        _logger.Info(nameof(GetItem) + "; End; response; " + response + "; itemContent; " +
+                                     itemContent);
+
+                        return new Response<T>
+                        {
+                            StatusCode = response.StatusCode,
+                            Message = "Successful GetAllCatches",
+                            Content = Parse(itemContent)
+                        };
+                    }
+                }
+            }
+        }
+
         public async Task<Response<T>> CreateItem(T item)
         {
             _logger.Info(nameof(CreateItem) + "; Start; " + "item; " + item);
