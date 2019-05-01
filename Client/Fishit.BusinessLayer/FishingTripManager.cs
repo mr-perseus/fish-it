@@ -53,12 +53,14 @@ namespace Fishit.BusinessLayer
         {
             Response<Catch> catchResponse = await _catchDao.CreateItem(aCatch);
             if (catchResponse.StatusCode != HttpStatusCode.OK)
+            {
                 return new Response<FishingTrip>
                 {
                     StatusCode = catchResponse.StatusCode,
                     Message = "Unsuccessful addCatch",
                     Content = fishingTrip
                 };
+            }
 
             fishingTrip.Catches.Add(catchResponse.Content);
             await UpdateFishingTrip(fishingTrip);
@@ -74,12 +76,14 @@ namespace Fishit.BusinessLayer
         {
             Response<Catch> catchResponse = await _catchDao.UpdateItem(aCatch);
             if (catchResponse.StatusCode != HttpStatusCode.OK)
+            {
                 return new Response<FishingTrip>
                 {
                     StatusCode = catchResponse.StatusCode,
                     Message = "Unsuccessful update Catch",
                     Content = fishingTrip
                 };
+            }
 
             int index = fishingTrip.Catches.IndexOf(aCatch);
             fishingTrip.Catches[index] = catchResponse.Content;
@@ -95,12 +99,14 @@ namespace Fishit.BusinessLayer
         {
             Response<Catch> catchResponse = await _catchDao.DeleteItem(aCatch);
             if (catchResponse.StatusCode != HttpStatusCode.OK)
+            {
                 return new Response<FishingTrip>
                 {
                     StatusCode = catchResponse.StatusCode,
                     Message = "Unsuccessful delete Catch",
                     Content = fishingTrip
                 };
+            }
 
             int index = fishingTrip.Catches.IndexOf(aCatch);
             fishingTrip.Catches.RemoveAt(index);

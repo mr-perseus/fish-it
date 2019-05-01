@@ -33,7 +33,10 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
         {
             _fishType = fishType;
             BindingContext = _fishType;
-            if (!_fishType.Id.Equals("0")) _isEdit = true;
+            if (!_fishType.Id.Equals("0"))
+            {
+                _isEdit = true;
+            }
         }
 
         private async Task SaveFishType()
@@ -41,9 +44,13 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
             FishingTripManager manager = new FishingTripManager();
             Response<FishType> response;
             if (_isEdit)
+            {
                 response = await manager.UpdateFishType(_fishType);
+            }
             else
+            {
                 response = await manager.CreateFishType(_fishType);
+            }
 
             InformUserHelper<FishType> informer =
                 new InformUserHelper<FishType>(response, this, "FishType has been saved successfully!");

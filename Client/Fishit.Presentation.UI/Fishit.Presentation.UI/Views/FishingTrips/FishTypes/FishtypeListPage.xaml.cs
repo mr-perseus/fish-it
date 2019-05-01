@@ -30,13 +30,18 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
             Response<List<FishType>> response = await new FishingTripManager().GetAllFishTypes();
             _fishtypes = new ObservableCollection<FishType>(response.Content);
 
-            if (FishtypeListView != null) FishtypeListView.ItemsSource = _fishtypes;
+            if (FishtypeListView != null)
+            {
+                FishtypeListView.ItemsSource = _fishtypes;
+            }
         }
 
         private async void FishtypeListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null)
+            {
                 return;
+            }
 
             FishType fishType = e.SelectedItem as FishType;
             await Navigation.PushAsync(new FishTypeFormPage(fishType));

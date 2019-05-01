@@ -43,9 +43,13 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             FishingTrip.PredominantWeather = SelectedWeather;
             Response<FishingTrip> response;
             if (IsEdit)
+            {
                 response = await manager.UpdateFishingTrip(FishingTrip);
+            }
             else
+            {
                 response = await manager.CreateFishingTrip(FishingTrip);
+            }
 
             InformUserHelper<FishingTrip> informer =
                 new InformUserHelper<FishingTrip>(response, this, "Fishing trip has been saved successfully!");
@@ -91,10 +95,14 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             BindingContext = fishingTrip;
             SelectedWeather = fishingTrip.PredominantWeather;
             if (!fishingTrip.Id.Equals("0"))
+            {
                 IsEdit = true;
+            }
             else
+            {
                 FishingTrip.DateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
                     DateTime.Now.Hour, DateTime.Now.Minute, 0);
+            }
 
             Date = FishingTrip.DateTime.Date;
             Time = FishingTrip.DateTime.TimeOfDay;

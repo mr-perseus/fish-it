@@ -25,7 +25,9 @@ namespace Fishit.Logging
         public void Error(object message)
         {
             if (_logLevel > LogLevel.Error)
+            {
                 return;
+            }
 
             Console.WriteLine(LogLineFormat, _loggerName, LogLevel.Error.ToString(), message);
         }
@@ -33,7 +35,9 @@ namespace Fishit.Logging
         public void Error(object message, Exception exception)
         {
             if (_logLevel > LogLevel.Error)
+            {
                 return;
+            }
 
             Console.WriteLine(LogLineFormat, _loggerName, LogLevel.Error.ToString(), message);
             Console.WriteLine(exception);
@@ -42,7 +46,9 @@ namespace Fishit.Logging
         public void Warn(object message)
         {
             if (_logLevel > LogLevel.Warn)
+            {
                 return;
+            }
 
             Console.WriteLine(LogLineFormat, _loggerName, LogLevel.Warn.ToString(), message);
         }
@@ -50,7 +56,9 @@ namespace Fishit.Logging
         public void Warn(object message, Exception exception)
         {
             if (_logLevel > LogLevel.Warn)
+            {
                 return;
+            }
 
             Console.WriteLine(LogLineFormat, _loggerName, LogLevel.Warn.ToString(), message);
             Console.WriteLine(exception);
@@ -59,7 +67,9 @@ namespace Fishit.Logging
         public void Info(object message)
         {
             if (_logLevel > LogLevel.Info)
+            {
                 return;
+            }
 
             Console.WriteLine(LogLineFormat, _loggerName, LogLevel.Info.ToString(), message);
         }
@@ -67,7 +77,9 @@ namespace Fishit.Logging
         public void Info(object message, Exception exception)
         {
             if (_logLevel > LogLevel.Info)
+            {
                 return;
+            }
 
             Console.WriteLine(LogLineFormat, _loggerName, LogLevel.Info.ToString(), message);
             Console.WriteLine(exception);
@@ -76,7 +88,9 @@ namespace Fishit.Logging
         public void Debug(object message)
         {
             if (_logLevel > LogLevel.Debug)
+            {
                 return;
+            }
 
             Console.WriteLine(LogLineFormat, _loggerName, LogLevel.Debug.ToString(), message);
         }
@@ -84,7 +98,9 @@ namespace Fishit.Logging
         public void Debug(object message, Exception exception)
         {
             if (_logLevel > LogLevel.Debug)
+            {
                 return;
+            }
 
             Console.WriteLine(LogLineFormat, _loggerName, LogLevel.Debug.ToString(), message);
             Console.WriteLine(exception);

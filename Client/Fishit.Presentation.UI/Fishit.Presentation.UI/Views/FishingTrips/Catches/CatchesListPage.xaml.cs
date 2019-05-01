@@ -32,7 +32,9 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         private async void CatchesListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null)
+            {
                 return;
+            }
 
             Catch _catch = e.SelectedItem as Catch;
             Console.WriteLine(_catch);

@@ -20,8 +20,10 @@ namespace Fishit.Dal
             _logger.Debug(nameof(OnConfiguring) + "; Start");
 
             if (!optionsBuilder.IsConfigured)
+            {
                 optionsBuilder
                     .UseSqlite("Data Source=fishit.db");
+            }
 
             _logger.Debug(nameof(OnConfiguring) + "; End");
         }

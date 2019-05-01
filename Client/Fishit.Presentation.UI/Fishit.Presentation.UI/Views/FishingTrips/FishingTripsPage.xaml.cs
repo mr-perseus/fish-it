@@ -39,13 +39,18 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             Response<List<FishingTrip>> response = await new FishingTripManager().GetAllFishingTrips();
             _fishingTrips = new ObservableCollection<FishingTrip>(response.Content);
 
-            if (FishingTripsListView != null) FishingTripsListView.ItemsSource = _fishingTrips;
+            if (FishingTripsListView != null)
+            {
+                FishingTripsListView.ItemsSource = _fishingTrips;
+            }
         }
 
         private async void TripsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null)
+            {
                 return;
+            }
 
             FishingTrip fishingTrip = e.SelectedItem as FishingTrip;
             await Navigation.PushAsync(new FishingTripDetailsPage(fishingTrip));

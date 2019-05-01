@@ -22,11 +22,17 @@ namespace Fishit.Presentation.UI.Helpers
             string statusMessage = Response.StatusCode.ToString();
 
             if (statusCode >= 400 && statusCode < 500)
+            {
                 DisplayErrorMessage("Client", statusCode, statusMessage, Response.Message);
+            }
             else if (statusCode > 500)
+            {
                 DisplayErrorMessage("Server", statusCode, statusMessage, Response.Message);
+            }
             else
+            {
                 Page.DisplayAlertMessage("Success", SuccessMessage);
+            }
         }
 
         private void DisplayErrorMessage(string type, int statusCode, string statusMessage, string responseMessage)

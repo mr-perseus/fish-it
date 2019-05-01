@@ -25,7 +25,9 @@ namespace Fishit.Logging
         private static void Configure()
         {
             if (LoggerProvider == null || _configured)
+            {
                 return;
+            }
 
             LoggerProvider.Configure();
             _configured = true;

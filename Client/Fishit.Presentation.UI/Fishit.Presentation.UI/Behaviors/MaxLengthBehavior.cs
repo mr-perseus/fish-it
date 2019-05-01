@@ -20,7 +20,10 @@ namespace Fishit.Presentation.UI.Behaviors
 
         private void bindable_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (e.NewTextValue.Length >= MaxLength) ((Entry) sender).Text = e.NewTextValue.Substring(0, MaxLength);
+            if (e.NewTextValue.Length >= MaxLength)
+            {
+                ((Entry) sender).Text = e.NewTextValue.Substring(0, MaxLength);
+            }
         }
 
         protected override void OnDetachingFrom(Entry bindable)

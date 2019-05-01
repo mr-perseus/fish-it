@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Fishit.Common.Properties;
 using Fishit.Dal.Entities;
 using Fishit.Logging;
 using Newtonsoft.Json;
@@ -12,7 +13,7 @@ namespace Fishit.Common
 {
     public class Dao<T> where T : new()
     {
-        private readonly string _endPointUri = Properties.Resources.EndPointUri;
+        private readonly string _endPointUri = Resources.EndPointUri;
         private readonly ILogger _logger;
 
         public Dao()
@@ -141,7 +142,7 @@ namespace Fishit.Common
 
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = await client.PostAsync(_endPointUri + Properties.Resources.CreateNew, body))
+                using (HttpResponseMessage response = await client.PostAsync(_endPointUri + Resources.CreateNew, body))
                 {
                     if (response.StatusCode != HttpStatusCode.OK)
                     {
