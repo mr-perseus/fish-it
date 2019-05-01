@@ -104,6 +104,7 @@ namespace Fishit.BusinessLayer
 
             int index = fishingTrip.Catches.IndexOf(aCatch);
             fishingTrip.Catches.RemoveAt(index);
+            await UpdateFishingTrip(fishingTrip);
             return new Response<FishingTrip>
             {
                 StatusCode = catchResponse.StatusCode,
