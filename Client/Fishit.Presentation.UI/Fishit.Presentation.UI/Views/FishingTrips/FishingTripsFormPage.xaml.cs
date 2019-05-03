@@ -71,12 +71,12 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
             if (CallerFishingTripsPage != null)
             {
-                CallerFishingTripsPage.ReloadFishingTrips();
+                await CallerFishingTripsPage.ReloadFishingTrips();
             }
 
             if (CallerFishingTripDetailsPage != null)
             {
-                CallerFishingTripDetailsPage.RefreshData(response.Content);
+                await CallerFishingTripDetailsPage.RefreshData(response.Content);
             }
         }
 

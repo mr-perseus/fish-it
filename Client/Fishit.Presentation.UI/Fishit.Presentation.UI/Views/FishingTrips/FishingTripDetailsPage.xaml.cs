@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
@@ -16,7 +17,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         public FishingTripDetailsPage(FishingTripsPage caller, FishingTrip fishingTrip)
         {
             Caller = caller;
-            RefreshData(fishingTrip);
+            SetBindingContext(fishingTrip);
             InitializeComponent();
         }
 
@@ -36,13 +37,18 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             await Navigation.PushAsync(new CatchesListPage(FishingTrip));
         }
 
-        public void RefreshData(FishingTrip fishingTrip)
+        private void SetBindingContext(FishingTrip fishingTrip)
         {
             FishingTrip = fishingTrip;
             BindingContext = fishingTrip;
             List<Catch> catchArrayToList = fishingTrip.Catches.ToList();
             NumberOfCatches = catchArrayToList.Count;
-            Caller.ReloadFishingTrips();
+        }
+
+        public async Task RefreshData(FishingTrip fishingTrip)
+        {
+            SetBindingContext(fishingTrip);
+            await Caller.ReloadFishingTrips();
         }
 
         private async void Edit_Clicked(object sender, EventArgs e)
@@ -58,7 +64,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
                 new InformUserHelper<FishingTrip>(response, this);
             informer.InformUserOfResponse("Fishing trip has been deleted successfully!");
 
-            Caller.ReloadFishingTrips();
+            await Caller.ReloadFishingTrips();
             await Navigation.PopAsync();
         }
     }
