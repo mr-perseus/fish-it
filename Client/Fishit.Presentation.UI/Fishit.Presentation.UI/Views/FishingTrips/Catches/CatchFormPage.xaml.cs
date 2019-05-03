@@ -132,7 +132,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
                 0);
         }
 
-        private async Task SetFishTypes()
+        public async Task SetFishTypes()
         {
             Response<List<FishType>> response = await new FishingTripManager().GetAllFishTypes();
 
@@ -171,6 +171,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 
         private async void AddFishType_OnClicked(object sender, EventArgs e)
         {
+            await Navigation.PushAsync(new FishTypeFormPage(this, FishTypeAutoComplete.Text));
         }
     }
 }

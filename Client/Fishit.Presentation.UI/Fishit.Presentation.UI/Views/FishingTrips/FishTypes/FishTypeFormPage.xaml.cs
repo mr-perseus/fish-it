@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
+using Fishit.Presentation.UI.Views.FishingTrips.Catches;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -13,17 +14,33 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
     {
         private FishType _fishType;
         private bool _isEdit;
-        public FishTypeListPage Caller { get; set; }
+        public FishTypeListPage CallerFishTypeListPage { get; set; }
+        public CatchFormPage CallerCatchFormPage { get; set; }
 
-        public FishTypeFormPage(FishTypeListPage caller) : this(caller, new FishType())
+        public FishTypeFormPage(object caller) : this(caller, new FishType())
+        {
+        }
+        public FishTypeFormPage(object caller, string name) : this(caller, new FishType() {Name = name})
         {
         }
 
-        public FishTypeFormPage(FishTypeListPage caller, FishType fishType)
+        public FishTypeFormPage(object caller, FishType fishType)
         {
-            Caller = caller;
+            SetCaller(caller);
             SetBindingContext(fishType);
             InitializeComponent();
+        }
+
+        private void SetCaller(object caller)
+        {
+            if (caller.GetType() == typeof(FishTypeListPage))
+            {
+                CallerFishTypeListPage = (FishTypeListPage)caller;
+            }
+            else if (caller.GetType() == typeof(CatchFormPage))
+            {
+                CallerCatchFormPage = (CatchFormPage)caller;
+            }
         }
 
         public void DisplayAlertMessage(string title, string message)
@@ -58,7 +75,15 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
                 new InformUserHelper<FishType>(response, this);
             informer.InformUserOfResponse("FishType has been saved successfully!");
 
-            await Caller.ReloadFishTypes();
+            if (CallerCatchFormPage != null)
+            {
+                await CallerCatchFormPage.SetFishTypes();
+            }
+
+            if (CallerFishTypeListPage != null)
+            {
+                await CallerFishTypeListPage.ReloadFishTypes();
+            }
         }
 
         private async void BtnCancel_OnClicked(object sender, EventArgs e)

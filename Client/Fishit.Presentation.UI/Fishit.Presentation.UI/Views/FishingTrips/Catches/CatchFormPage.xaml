@@ -1,6 +1,7 @@
 ﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:forms="clr-namespace:dotMorten.Xamarin.Forms;assembly=dotMorten.Xamarin.Forms.AutoSuggestBox"
+             xmlns:local="clr-namespace:Fishit.Presentation.UI.MarkupExtensions"
              x:Class="Fishit.Presentation.UI.Views.FishingTrips.Catches.CatchFormPage"
              x:Name="This"
              Title="Catch">
@@ -28,12 +29,18 @@
             <Label Text="FishType:" Grid.Row="0" Grid.Column="0" />
             <StackLayout Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
                 <forms:AutoSuggestBox BindingContext="{x:Reference This}"
-                                      Text="{Binding FishType}" x:Name="FishTypeAutoComplete"
+                                      Text="{Binding FishType}"
+                                      x:Name="FishTypeAutoComplete"
                                       TextChanged="FishTypeAutoComplete_OnTextChanged"
-                                      SuggestionChosen="FishTypeAutoComplete_OnSuggestionChosen" />
-                <Button Text="Add" Clicked="AddFishType_OnClicked" Style="{StaticResource ButtonStyle}" />
+                                      SuggestionChosen="FishTypeAutoComplete_OnSuggestionChosen"
+                                      HorizontalOptions="FillAndExpand" />
+                <Image Source="{local:EmbeddedImage Fishit.Presentation.UI.Images.add.png}" HeightRequest="50" WidthRequest="50">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="AddFishType_OnClicked" />
+                    </Image.GestureRecognizers>
+                </Image>
             </StackLayout>
-            
+
             <Label Text="Length:" Grid.Row="1" Grid.Column="0" />
             <Entry Grid.Row="1" Grid.Column="1" Text="{Binding Length}" />
             <Label Text="Weight" Grid.Row="2" Grid.Column="0" />
