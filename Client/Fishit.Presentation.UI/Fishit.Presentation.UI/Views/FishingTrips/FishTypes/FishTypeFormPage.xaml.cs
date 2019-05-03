@@ -58,7 +58,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
                 new InformUserHelper<FishType>(response, this);
             informer.InformUserOfResponse("FishType has been saved successfully!");
 
-            Caller.ReloadFishTypes();
+            await Caller.ReloadFishTypes();
         }
 
         private async void BtnCancel_OnClicked(object sender, EventArgs e)

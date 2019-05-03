@@ -26,10 +26,14 @@
             </Grid.ColumnDefinitions>
 
             <Label Text="FishType:" Grid.Row="0" Grid.Column="0" />
-            <forms:AutoSuggestBox Grid.Row="0" Grid.Column="1" BindingContext="{x:Reference This}"
-                                  Text="{Binding FishType}" x:Name="FishTypeAutoComplete"
-                                  TextChanged="FishTypeAutoComplete_OnTextChanged"
-                                  SuggestionChosen="FishTypeAutoComplete_OnSuggestionChosen" />
+            <StackLayout Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                <forms:AutoSuggestBox BindingContext="{x:Reference This}"
+                                      Text="{Binding FishType}" x:Name="FishTypeAutoComplete"
+                                      TextChanged="FishTypeAutoComplete_OnTextChanged"
+                                      SuggestionChosen="FishTypeAutoComplete_OnSuggestionChosen" />
+                <Button Text="Add" Clicked="AddFishType_OnClicked" Style="{StaticResource ButtonStyle}" />
+            </StackLayout>
+            
             <Label Text="Length:" Grid.Row="1" Grid.Column="0" />
             <Entry Grid.Row="1" Grid.Column="1" Text="{Binding Length}" />
             <Label Text="Weight" Grid.Row="2" Grid.Column="0" />

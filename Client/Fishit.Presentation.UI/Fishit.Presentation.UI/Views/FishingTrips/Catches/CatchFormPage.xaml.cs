@@ -8,6 +8,7 @@ using dotMorten.Xamarin.Forms;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
+using Fishit.Presentation.UI.Views.FishingTrips.FishTypes;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -166,6 +167,10 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         private void FishTypeAutoComplete_OnSuggestionChosen(object sender, AutoSuggestBoxSuggestionChosenEventArgs e)
         {
             FishType = (string) e.SelectedItem;
+        }
+
+        private async void AddFishType_OnClicked(object sender, EventArgs e)
+        {
         }
     }
 }

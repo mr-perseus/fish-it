@@ -27,7 +27,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             DisplayAlert(title, message, "Ok");
         }
 
-        public async void ReloadFishingTrips()
+        public async Task ReloadFishingTrips()
         {
             Response<List<FishingTrip>> response = await new FishingTripManager().GetAllFishingTrips();
             _fishingTrips = new ObservableCollection<FishingTrip>(response.Content);
@@ -76,12 +76,12 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             InformUserHelper<FishingTrip> informer =
                 new InformUserHelper<FishingTrip>(response, this);
             informer.InformUserOfResponse("Fishing Trip has been deleted successfully!");
-            ReloadFishingTrips();
+            await ReloadFishingTrips();
         }
 
-        private void Handle_Refreshing(object sender, EventArgs e)
+        private async void Handle_Refreshing(object sender, EventArgs e)
         {
-            ReloadFishingTrips();
+            await ReloadFishingTrips();
             FishingTripsListView.EndRefresh();
         }
     }
