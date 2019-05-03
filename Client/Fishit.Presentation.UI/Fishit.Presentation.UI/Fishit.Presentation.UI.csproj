@@ -47,6 +47,9 @@
     <Compile Update="Views\FishingTrips\FishingTripsFormPage.xaml.cs">
       <DependentUpon>FishingTripsFormPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\FishingTrips\FishTypes\FishTypeListPage.xaml.cs">
+      <DependentUpon>FishTypeListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\SplashScreenPage.xaml.cs">
       <DependentUpon>SplashScreenPage.xaml</DependentUpon>
     </Compile>
@@ -83,7 +86,7 @@
     <EmbeddedResource Update="Views\FishingTrips\FishTypes\FishTypeFormPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\FishingTrips\FishTypes\FishtypeListPage.xaml">
+    <EmbeddedResource Update="Views\FishingTrips\FishTypes\FishTypeListPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\MainPage.xaml">

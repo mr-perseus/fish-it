@@ -15,16 +15,11 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
     {
         private ObservableCollection<FishingTrip> _fishingTrips;
 
-        public FishingTripsPage()
+        public FishingTripsPage(List<FishingTrip> fishingTrips)
         {
-            ReloadFishingTrips();
+            _fishingTrips = new ObservableCollection<FishingTrip>(fishingTrips);
             InitializeComponent();
-        }
-
-        public FishingTripsPage(string location)
-        {
-            ReloadFishingTrips();
-            InitializeComponent();
+            FishingTripsListView.ItemsSource = _fishingTrips;
         }
 
         public void DisplayAlertMessage(string title, string message)

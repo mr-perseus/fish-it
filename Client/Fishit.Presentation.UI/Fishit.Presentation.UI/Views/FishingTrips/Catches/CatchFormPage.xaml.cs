@@ -16,16 +16,28 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CatchFormPage : ContentPage, IPageBase
     {
-        public CatchFormPage(CatchesListPage caller, FishingTrip fishingTrip) : this(caller, fishingTrip, new Catch())
-        {
-        }
-
         public CatchFormPage(CatchesListPage caller, FishingTrip fishingTrip, Catch _catch)
         {
             Caller = caller;
-            SetFishTypes();
             SetBindingContext(fishingTrip, _catch);
             InitializeComponent();
+        }
+
+        public static Task<CatchFormPage> CreateAsync(CatchesListPage caller, FishingTrip fishingTrip)
+        {
+            return CreateAsync(caller, fishingTrip, new Catch());
+        }
+
+        public static Task<CatchFormPage> CreateAsync(CatchesListPage caller, FishingTrip fishingTrip, Catch _catch)
+        {
+            CatchFormPage instance = new CatchFormPage(caller, fishingTrip, _catch);
+            return instance.InitializeAsync();
+        }
+
+        private async Task<CatchFormPage> InitializeAsync()
+        {
+            await SetFishTypes();
+            return this;
         }
 
         private FishingTrip FishingTrip { get; set; }
@@ -119,10 +131,16 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
                 0);
         }
 
-        private async void SetFishTypes()
+        private async Task SetFishTypes()
         {
             Response<List<FishType>> response = await new FishingTripManager().GetAllFishTypes();
+
+            InformUserHelper<List<FishType>> informer = 
+                new InformUserHelper<List<FishType>>(response, this);
+            informer.InformUserOfResponse();
+
             FishTypes = new ObservableCollection<FishType>(response.Content);
+
             FishTypesAsStrings = new List<string>();
             SetFishTypesAsStrings();
         }

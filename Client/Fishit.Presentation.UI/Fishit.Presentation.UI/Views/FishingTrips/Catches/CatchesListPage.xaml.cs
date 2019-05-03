@@ -38,7 +38,8 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 
             Catch _catch = e.SelectedItem as Catch;
             Console.WriteLine(_catch);
-            await Navigation.PushAsync(new CatchFormPage(this, FishingTrip, _catch));
+            CatchFormPage catchFormPage = await CatchFormPage.CreateAsync(this, FishingTrip, _catch);
+            await Navigation.PushAsync(catchFormPage);
             CatchesListView.SelectedItem = null;
         }
 
@@ -46,12 +47,14 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         {
             Catch _catch = (sender as MenuItem)?.CommandParameter as Catch;
             Console.Write(_catch);
-            await Navigation.PushAsync(new CatchFormPage(this, FishingTrip, _catch));
+            CatchFormPage catchFormPage = await CatchFormPage.CreateAsync(this, FishingTrip, _catch);
+            await Navigation.PushAsync(catchFormPage);
         }
 
         private async void BtnAddCatch_OnClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new CatchFormPage(this, FishingTrip));
+            CatchFormPage catchFormPage = await CatchFormPage.CreateAsync(this, FishingTrip);
+            await Navigation.PushAsync(catchFormPage);
         }
 
         private async void Delete_Clicked(object sender, EventArgs e)
@@ -63,13 +66,14 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 
             InformUserHelper<FishingTrip> informer =
                 new InformUserHelper<FishingTrip>(response, this);
-            informer.InformUserOfResponse("Catch has been saved successfully!");
-            await Navigation.PopAsync();
+            informer.InformUserOfResponse("Catch has been deleted successfully!");
+
+            await ReloadFishingTrip();
         }
 
-        private void Handle_Refreshing(object sender, EventArgs e)
+        private async void Handle_Refreshing(object sender, EventArgs e)
         {
-            ReloadFishingTrip();
+            await ReloadFishingTrip();
             RefreshList(FishingTrip);
             CatchesListView.EndRefresh();
         }
@@ -86,7 +90,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             CatchesListView.ItemsSource = _catches;
         }
 
-        private async void ReloadFishingTrip()
+        private async Task ReloadFishingTrip()
         {
             FishingTripManager manager = new FishingTripManager();
             Response<FishingTrip> response = await manager.GetFishingTripById(FishingTrip.Id);
@@ -96,12 +100,13 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 
             informer.InformUserOfResponse();
 
-            FishingTrip = response.Content;
+            RefreshList(response.Content);
         }
 
         private async void BtnManageFishTypes_OnClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new FishtypeListPage());
+            FishTypeListPage fishTypeListPage = await FishTypeListPage.CreateAsync();
+            await Navigation.PushAsync(fishTypeListPage);
         }
     }
 }

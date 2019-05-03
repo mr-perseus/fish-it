@@ -13,13 +13,13 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
     {
         private FishType _fishType;
         private bool _isEdit;
-        public FishtypeListPage Caller { get; set; }
+        public FishTypeListPage Caller { get; set; }
 
-        public FishTypeFormPage(FishtypeListPage caller) : this(caller, new FishType())
+        public FishTypeFormPage(FishTypeListPage caller) : this(caller, new FishType())
         {
         }
 
-        public FishTypeFormPage(FishtypeListPage caller, FishType fishType)
+        public FishTypeFormPage(FishTypeListPage caller, FishType fishType)
         {
             Caller = caller;
             SetBindingContext(fishType);

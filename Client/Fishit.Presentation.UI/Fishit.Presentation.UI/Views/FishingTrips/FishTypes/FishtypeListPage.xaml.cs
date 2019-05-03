@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
@@ -10,14 +11,25 @@ using Xamarin.Forms.Xaml;
 namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class FishtypeListPage : ContentPage, IPageBase
+    public partial class FishTypeListPage : ContentPage, IPageBase
     {
         private ObservableCollection<FishType> _fishtypes;
 
-        public FishtypeListPage()
+        public FishTypeListPage()
         {
-            ReloadFishTypes();
             InitializeComponent();
+        }
+
+        public static Task<FishTypeListPage> CreateAsync()
+        {
+            FishTypeListPage instance = new FishTypeListPage();
+            return instance.InitializeAsync();
+        }
+
+        private async Task<FishTypeListPage> InitializeAsync()
+        {
+            await ReloadFishTypes();
+            return this;
         }
 
         public void DisplayAlertMessage(string title, string message)
@@ -25,7 +37,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
             DisplayAlert(title, message, "Ok");
         }
 
-        public async void ReloadFishTypes()
+        public async Task ReloadFishTypes()
         {
             Response<List<FishType>> response = await new FishingTripManager().GetAllFishTypes();
             _fishtypes = new ObservableCollection<FishType>(response.Content);
@@ -34,10 +46,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
                 new InformUserHelper<List<FishType>>(response, this);
             informer.InformUserOfResponse();
 
-            if (FishtypeListView != null)
-            {
-                FishtypeListView.ItemsSource = _fishtypes;
-            }
+            FishtypeListView.ItemsSource = _fishtypes;
         }
 
         private async void FishtypeListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -52,9 +61,9 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
             FishtypeListView.SelectedItem = null;
         }
 
-        private void Handle_Refreshing(object sender, EventArgs e)
+        private async void Handle_Refreshing(object sender, EventArgs e)
         {
-            ReloadFishTypes();
+            await ReloadFishTypes();
             FishtypeListView.EndRefresh();
         }
 
@@ -73,6 +82,8 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
             InformUserHelper<FishType> informer =
                 new InformUserHelper<FishType>(response, this);
             informer.InformUserOfResponse("Fish type has been deleted successfully.");
+
+            await ReloadFishTypes();
         }
 
         private async void BtnAddFishType_OnClicked(object sender, EventArgs e)

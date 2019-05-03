@@ -9,9 +9,5 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
-    android:TabbedPage.ToolbarPlacement="Bottom"
-    x:Class="Fishit.Presentation.UI.Views.MainPage">
-    <map:MapPage />
-    <fishingTrips:FishingTripsPage />
-    <account:AccountPage />
+    x:Class="Fishit.Presentation.UI.Views.MainPage" >
 </TabbedPage>

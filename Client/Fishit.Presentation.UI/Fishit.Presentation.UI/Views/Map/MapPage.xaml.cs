@@ -22,21 +22,5 @@ namespace Fishit.Presentation.UI.Views.Map
         {
             _locations = new ObservableCollection<string> {"Zurichsee", "Bodensee", "Genfersee"};
         }
-
-        private async void MapListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            if (e.SelectedItem == null)
-            {
-                return;
-            }
-
-            string location = (string) e.SelectedItem;
-            if (location != null)
-            {
-                await Navigation.PushAsync(new FishingTripsPage(location));
-            }
-
-            MapListView.SelectedItem = null;
-        }
     }
 }
