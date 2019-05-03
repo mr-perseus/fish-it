@@ -5,18 +5,21 @@ namespace Fishit.Presentation.UI.Helpers
 {
     public class InformUserHelper<T>
     {
-        public InformUserHelper(Response<T> response, IPageBase page, string successMessage)
+        public InformUserHelper(Response<T> response, IPageBase page)
         {
             Response = response;
             Page = page;
-            SuccessMessage = successMessage;
         }
 
         public Response<T> Response { get; set; }
         public IPageBase Page { get; set; }
-        public string SuccessMessage { get; set; }
 
         public void InformUserOfResponse()
+        {
+            InformUserOfResponse("");
+        }
+
+        public void InformUserOfResponse(string successMessage)
         {
             int statusCode = (int) Response.StatusCode;
             string statusMessage = Response.StatusCode.ToString();
@@ -25,13 +28,13 @@ namespace Fishit.Presentation.UI.Helpers
             {
                 DisplayErrorMessage("Client", statusCode, statusMessage, Response.Message);
             }
-            else if (statusCode > 500)
+            if (statusCode > 500)
             {
                 DisplayErrorMessage("Server", statusCode, statusMessage, Response.Message);
             }
-            else
+            if (statusCode < 400 && !successMessage.Equals(""))
             {
-                Page.DisplayAlertMessage("Success", SuccessMessage);
+                Page.DisplayAlertMessage("Success", successMessage);
             }
         }
 

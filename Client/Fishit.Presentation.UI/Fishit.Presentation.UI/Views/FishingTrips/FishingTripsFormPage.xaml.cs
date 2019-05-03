@@ -14,12 +14,13 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FishingTripsFormPage : ContentPage, IPageBase
     {
-        public FishingTripsFormPage() : this(new FishingTrip())
+        public FishingTripsFormPage(FishingTripsPage caller) : this(caller, new FishingTrip())
         {
         }
 
-        public FishingTripsFormPage(FishingTrip fishingTrip)
+        public FishingTripsFormPage(object caller, FishingTrip fishingTrip)
         {
+            SetCaller(caller);
             SetBindingContext(fishingTrip);
             InitializeComponent();
         }
@@ -31,10 +32,23 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         private FishingTrip FishingTrip { get; set; }
         public bool IsEdit { get; set; }
         public FishingTrip.Weather SelectedWeather { get; set; }
+        public FishingTripDetailsPage CallerFishingTripDetailsPage { get; set; }
+        public FishingTripsPage CallerFishingTripsPage { get; set; }
 
         public void DisplayAlertMessage(string title, string message)
         {
             DisplayAlert(title, message, "Ok");
+        }
+
+        private void SetCaller(object caller)
+        {
+            if (caller.GetType() == typeof(FishingTripsPage))
+            {
+                CallerFishingTripsPage = (FishingTripsPage) caller;
+            } else if (caller.GetType() == typeof(FishingTripDetailsPage))
+            {
+                CallerFishingTripDetailsPage = (FishingTripDetailsPage) caller;
+            }
         }
 
         private async Task SaveFishingTrip()
@@ -52,8 +66,18 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             }
 
             InformUserHelper<FishingTrip> informer =
-                new InformUserHelper<FishingTrip>(response, this, "Fishing trip has been saved successfully!");
-            informer.InformUserOfResponse();
+                new InformUserHelper<FishingTrip>(response, this);
+            informer.InformUserOfResponse("Fishing trip has been saved successfully!");
+
+            if (CallerFishingTripsPage != null)
+            {
+                CallerFishingTripsPage.ReloadFishingTrips();
+            }
+
+            if (CallerFishingTripDetailsPage != null)
+            {
+                CallerFishingTripDetailsPage.RefreshData(response.Content);
+            }
         }
 
         private IEnumerable<FishingTrip.Weather> GetWeatherOptions()

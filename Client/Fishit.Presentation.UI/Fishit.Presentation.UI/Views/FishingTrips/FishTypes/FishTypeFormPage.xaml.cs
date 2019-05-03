@@ -13,13 +13,15 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
     {
         private FishType _fishType;
         private bool _isEdit;
+        public FishtypeListPage Caller { get; set; }
 
-        public FishTypeFormPage() : this(new FishType())
+        public FishTypeFormPage(FishtypeListPage caller) : this(caller, new FishType())
         {
         }
 
-        public FishTypeFormPage(FishType fishType)
+        public FishTypeFormPage(FishtypeListPage caller, FishType fishType)
         {
+            Caller = caller;
             SetBindingContext(fishType);
             InitializeComponent();
         }
@@ -53,8 +55,10 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
             }
 
             InformUserHelper<FishType> informer =
-                new InformUserHelper<FishType>(response, this, "FishType has been saved successfully!");
-            informer.InformUserOfResponse();
+                new InformUserHelper<FishType>(response, this);
+            informer.InformUserOfResponse("FishType has been saved successfully!");
+
+            Caller.ReloadFishTypes();
         }
 
         private async void BtnCancel_OnClicked(object sender, EventArgs e)

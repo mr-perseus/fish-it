@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Android.Telecom;
 using dotMorten.Xamarin.Forms;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
@@ -15,12 +16,13 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CatchFormPage : ContentPage, IPageBase
     {
-        public CatchFormPage(FishingTrip fishingTrip) : this(fishingTrip, new Catch())
+        public CatchFormPage(CatchesListPage caller, FishingTrip fishingTrip) : this(caller, fishingTrip, new Catch())
         {
         }
 
-        public CatchFormPage(FishingTrip fishingTrip, Catch _catch)
+        public CatchFormPage(CatchesListPage caller, FishingTrip fishingTrip, Catch _catch)
         {
+            Caller = caller;
             SetFishTypes();
             SetBindingContext(fishingTrip, _catch);
             InitializeComponent();
@@ -34,6 +36,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         public ObservableCollection<FishType> FishTypes { get; set; }
         public List<string> FishTypesAsStrings { get; set; }
         public string FishType { get; set; }
+        public CatchesListPage Caller { get; set; }
 
         public void DisplayAlertMessage(string title, string message)
         {
@@ -54,8 +57,9 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             }
 
             InformUserHelper<FishingTrip> informer =
-                new InformUserHelper<FishingTrip>(response, this, "Catch has been saved successfully!");
-            informer.InformUserOfResponse();
+                new InformUserHelper<FishingTrip>(response, this);
+            informer.InformUserOfResponse("Catch has been saved successfully!");
+            Caller.RefreshList(response.Content);
         }
 
         private async void BtnCancel_OnClicked(object sender, EventArgs e)
@@ -67,7 +71,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         {
             Catch.FishType = GetFishType();
             await SaveCatch();
-            await Navigation.PopAsync();
             await Navigation.PopAsync();
         }
 

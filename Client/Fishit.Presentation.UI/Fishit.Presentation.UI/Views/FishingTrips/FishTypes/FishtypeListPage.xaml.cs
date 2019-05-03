@@ -16,7 +16,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
 
         public FishtypeListPage()
         {
-            SetFishTypes();
+            ReloadFishTypes();
             InitializeComponent();
         }
 
@@ -25,10 +25,14 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
             DisplayAlert(title, message, "Ok");
         }
 
-        private async void SetFishTypes()
+        public async void ReloadFishTypes()
         {
             Response<List<FishType>> response = await new FishingTripManager().GetAllFishTypes();
             _fishtypes = new ObservableCollection<FishType>(response.Content);
+
+            InformUserHelper<List<FishType>> informer =
+                new InformUserHelper<List<FishType>>(response, this);
+            informer.InformUserOfResponse();
 
             if (FishtypeListView != null)
             {
@@ -44,20 +48,20 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
             }
 
             FishType fishType = e.SelectedItem as FishType;
-            await Navigation.PushAsync(new FishTypeFormPage(fishType));
+            await Navigation.PushAsync(new FishTypeFormPage(this, fishType));
             FishtypeListView.SelectedItem = null;
         }
 
         private void Handle_Refreshing(object sender, EventArgs e)
         {
-            SetFishTypes();
+            ReloadFishTypes();
             FishtypeListView.EndRefresh();
         }
 
         private async void Edit_Clicked(object sender, EventArgs e)
         {
             FishType fishType = (sender as MenuItem)?.CommandParameter as FishType;
-            await Navigation.PushAsync(new FishTypeFormPage(fishType));
+            await Navigation.PushAsync(new FishTypeFormPage(this, fishType));
         }
 
         private async void Delete_Clicked(object sender, EventArgs e)
@@ -67,13 +71,13 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
             Response<FishType> response = await manager.DeleteFishType(fishType);
 
             InformUserHelper<FishType> informer =
-                new InformUserHelper<FishType>(response, this, "Fish type has been deleted successfully.");
-            informer.InformUserOfResponse();
+                new InformUserHelper<FishType>(response, this);
+            informer.InformUserOfResponse("Fish type has been deleted successfully.");
         }
 
         private async void BtnAddFishType_OnClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new FishTypeFormPage());
+            await Navigation.PushAsync(new FishTypeFormPage(this));
         }
     }
 }

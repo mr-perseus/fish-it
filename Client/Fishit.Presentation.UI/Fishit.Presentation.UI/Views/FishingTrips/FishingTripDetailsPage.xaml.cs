@@ -13,12 +13,10 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FishingTripDetailsPage : ContentPage, IPageBase
     {
-        public FishingTripDetailsPage(FishingTrip fishingTrip)
+        public FishingTripDetailsPage(FishingTripsPage caller, FishingTrip fishingTrip)
         {
-            FishingTrip = fishingTrip;
-            BindingContext = fishingTrip;
-            List<Catch> catchArrayToList = fishingTrip.Catches.ToList();
-            NumberOfCatches = catchArrayToList.Count;
+            Caller = caller;
+            RefreshData(fishingTrip);
             InitializeComponent();
         }
 
@@ -26,6 +24,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
         public int NumberOfCatches { get; set; }
         public string Name { get; set; }
+        public FishingTripsPage Caller { get; set; }
 
         public void DisplayAlertMessage(string title, string message)
         {
@@ -37,9 +36,18 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             await Navigation.PushAsync(new CatchesListPage(FishingTrip));
         }
 
+        public void RefreshData(FishingTrip fishingTrip)
+        {
+            FishingTrip = fishingTrip;
+            BindingContext = fishingTrip;
+            List<Catch> catchArrayToList = fishingTrip.Catches.ToList();
+            NumberOfCatches = catchArrayToList.Count;
+            Caller.ReloadFishingTrips();
+        }
+
         private async void Edit_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new FishingTripsFormPage(FishingTrip));
+            await Navigation.PushAsync(new FishingTripsFormPage(this, FishingTrip));
         }
 
         private async void Delete_Clicked(object sender, EventArgs e)
@@ -47,8 +55,10 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             Response<FishingTrip> response = await new FishingTripManager().DeleteFishingTrip(FishingTrip);
 
             InformUserHelper<FishingTrip> informer =
-                new InformUserHelper<FishingTrip>(response, this, "Fishing trip has been deleted successfully!");
-            informer.InformUserOfResponse();
+                new InformUserHelper<FishingTrip>(response, this);
+            informer.InformUserOfResponse("Fishing trip has been deleted successfully!");
+
+            Caller.ReloadFishingTrips();
             await Navigation.PopAsync();
         }
     }
