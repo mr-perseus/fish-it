@@ -32,7 +32,7 @@ namespace Fishit.Presentation.UI.Helpers
             {
                 DisplayErrorMessage("Server", statusCode, statusMessage, Response.Message);
             }
-            if (statusCode < 400 && !successMessage.Equals(""))
+            if (statusCode < 400 && !string.IsNullOrEmpty(successMessage))
             {
                 Page.DisplayAlertMessage("Success", successMessage);
             }

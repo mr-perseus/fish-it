@@ -94,6 +94,8 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             InformUserHelper<FishingTrip> informer = 
                 new InformUserHelper<FishingTrip>(response, this);
 
+            informer.InformUserOfResponse();
+
             FishingTrip = response.Content;
         }
 
