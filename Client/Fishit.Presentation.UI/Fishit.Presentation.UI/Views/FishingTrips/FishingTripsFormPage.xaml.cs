@@ -45,7 +45,8 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             if (caller.GetType() == typeof(FishingTripsPage))
             {
                 CallerFishingTripsPage = (FishingTripsPage) caller;
-            } else if (caller.GetType() == typeof(FishingTripDetailsPage))
+            }
+            else if (caller.GetType() == typeof(FishingTripDetailsPage))
             {
                 CallerFishingTripDetailsPage = (FishingTripDetailsPage) caller;
             }

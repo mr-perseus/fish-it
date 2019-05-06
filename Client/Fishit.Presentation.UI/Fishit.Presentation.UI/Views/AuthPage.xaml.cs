@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
@@ -14,10 +13,16 @@ namespace Fishit.Presentation.UI.Views
     public partial class AuthPage : ContentPage, IPageBase
     {
         private List<FishingTrip> _fishingTrips;
+
         public AuthPage()
         {
             _fishingTrips = new List<FishingTrip>();
             InitializeComponent();
+        }
+
+        public void DisplayAlertMessage(string title, string message)
+        {
+            DisplayAlert(title, message, "Ok");
         }
 
         private async void Login_OnClicked(object sender, EventArgs e)
@@ -40,11 +45,6 @@ namespace Fishit.Presentation.UI.Views
                 new InformUserHelper<List<FishingTrip>>(response, this);
 
             informer.InformUserOfResponse();
-        }
-
-        public void DisplayAlertMessage(string title, string message)
-        {
-            DisplayAlert(title, message, "Ok");
         }
     }
 }

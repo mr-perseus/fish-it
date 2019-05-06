@@ -28,10 +28,12 @@ namespace Fishit.Presentation.UI.Helpers
             {
                 DisplayErrorMessage("Client", statusCode, statusMessage, Response.Message);
             }
+
             if (statusCode > 500)
             {
                 DisplayErrorMessage("Server", statusCode, statusMessage, Response.Message);
             }
+
             if (statusCode < 400 && !string.IsNullOrEmpty(successMessage))
             {
                 Page.DisplayAlertMessage("Success", successMessage);

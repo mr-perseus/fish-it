@@ -14,13 +14,12 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
     {
         private FishType _fishType;
         private bool _isEdit;
-        public FishTypeListPage CallerFishTypeListPage { get; set; }
-        public CatchFormPage CallerCatchFormPage { get; set; }
 
         public FishTypeFormPage(object caller) : this(caller, new FishType())
         {
         }
-        public FishTypeFormPage(object caller, string name) : this(caller, new FishType() {Name = name})
+
+        public FishTypeFormPage(object caller, string name) : this(caller, new FishType {Name = name})
         {
         }
 
@@ -31,21 +30,24 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
             InitializeComponent();
         }
 
-        private void SetCaller(object caller)
-        {
-            if (caller.GetType() == typeof(FishTypeListPage))
-            {
-                CallerFishTypeListPage = (FishTypeListPage)caller;
-            }
-            else if (caller.GetType() == typeof(CatchFormPage))
-            {
-                CallerCatchFormPage = (CatchFormPage)caller;
-            }
-        }
+        public FishTypeListPage CallerFishTypeListPage { get; set; }
+        public CatchFormPage CallerCatchFormPage { get; set; }
 
         public void DisplayAlertMessage(string title, string message)
         {
             DisplayAlert(title, message, "Ok");
+        }
+
+        private void SetCaller(object caller)
+        {
+            if (caller.GetType() == typeof(FishTypeListPage))
+            {
+                CallerFishTypeListPage = (FishTypeListPage) caller;
+            }
+            else if (caller.GetType() == typeof(CatchFormPage))
+            {
+                CallerCatchFormPage = (CatchFormPage) caller;
+            }
         }
 
         private void SetBindingContext(FishType fishType)

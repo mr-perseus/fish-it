@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using Fishit.Presentation.UI.Views.FishingTrips;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

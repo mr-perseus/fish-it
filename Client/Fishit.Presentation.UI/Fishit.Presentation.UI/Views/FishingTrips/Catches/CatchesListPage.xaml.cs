@@ -95,7 +95,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             FishingTripManager manager = new FishingTripManager();
             Response<FishingTrip> response = await manager.GetFishingTripById(FishingTrip.Id);
 
-            InformUserHelper<FishingTrip> informer = 
+            InformUserHelper<FishingTrip> informer =
                 new InformUserHelper<FishingTrip>(response, this);
 
             informer.InformUserOfResponse();

@@ -20,6 +20,11 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
             InitializeComponent();
         }
 
+        public void DisplayAlertMessage(string title, string message)
+        {
+            DisplayAlert(title, message, "Ok");
+        }
+
         public static Task<FishTypeListPage> CreateAsync()
         {
             FishTypeListPage instance = new FishTypeListPage();
@@ -30,11 +35,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
         {
             await ReloadFishTypes();
             return this;
-        }
-
-        public void DisplayAlertMessage(string title, string message)
-        {
-            DisplayAlert(title, message, "Ok");
         }
 
         public async Task ReloadFishTypes()

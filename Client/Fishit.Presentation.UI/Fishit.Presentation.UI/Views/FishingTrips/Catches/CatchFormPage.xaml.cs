@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Android.Telecom;
 using dotMorten.Xamarin.Forms;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
@@ -24,6 +23,21 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             InitializeComponent();
         }
 
+        private FishingTrip FishingTrip { get; set; }
+        public DateTime Date { get; set; }
+        public TimeSpan Time { get; set; }
+        public Catch Catch { get; set; }
+        public bool IsEdit { get; set; }
+        public ObservableCollection<FishType> FishTypes { get; set; }
+        public List<string> FishTypesAsStrings { get; set; }
+        public string FishType { get; set; }
+        public CatchesListPage Caller { get; set; }
+
+        public void DisplayAlertMessage(string title, string message)
+        {
+            DisplayAlert(title, message, "Ok");
+        }
+
         public static Task<CatchFormPage> CreateAsync(CatchesListPage caller, FishingTrip fishingTrip)
         {
             return CreateAsync(caller, fishingTrip, new Catch());
@@ -39,21 +53,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         {
             await SetFishTypes();
             return this;
-        }
-
-        private FishingTrip FishingTrip { get; set; }
-        public DateTime Date { get; set; }
-        public TimeSpan Time { get; set; }
-        public Catch Catch { get; set; }
-        public bool IsEdit { get; set; }
-        public ObservableCollection<FishType> FishTypes { get; set; }
-        public List<string> FishTypesAsStrings { get; set; }
-        public string FishType { get; set; }
-        public CatchesListPage Caller { get; set; }
-
-        public void DisplayAlertMessage(string title, string message)
-        {
-            DisplayAlert(title, message, "Ok");
         }
 
         private async Task SaveCatch()
@@ -136,7 +135,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         {
             Response<List<FishType>> response = await new FishingTripManager().GetAllFishTypes();
 
-            InformUserHelper<List<FishType>> informer = 
+            InformUserHelper<List<FishType>> informer =
                 new InformUserHelper<List<FishType>>(response, this);
             informer.InformUserOfResponse();
 

@@ -34,7 +34,8 @@
                                       TextChanged="FishTypeAutoComplete_OnTextChanged"
                                       SuggestionChosen="FishTypeAutoComplete_OnSuggestionChosen"
                                       HorizontalOptions="FillAndExpand" />
-                <Image Source="{local:EmbeddedImage Fishit.Presentation.UI.Images.add.png}" HeightRequest="50" WidthRequest="50">
+                <Image Source="{local:EmbeddedImage Fishit.Presentation.UI.Images.add.png}" HeightRequest="50"
+                       WidthRequest="50">
                     <Image.GestureRecognizers>
                         <TapGestureRecognizer Tapped="AddFishType_OnClicked" />
                     </Image.GestureRecognizers>

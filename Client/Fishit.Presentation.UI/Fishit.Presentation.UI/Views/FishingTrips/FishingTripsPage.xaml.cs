@@ -32,7 +32,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             Response<List<FishingTrip>> response = await new FishingTripManager().GetAllFishingTrips();
             _fishingTrips = new ObservableCollection<FishingTrip>(response.Content);
 
-            InformUserHelper<List<FishingTrip>> informer = 
+            InformUserHelper<List<FishingTrip>> informer =
                 new InformUserHelper<List<FishingTrip>>(response, this);
 
             informer.InformUserOfResponse();
