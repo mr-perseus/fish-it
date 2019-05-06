@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
+using Fishit.Presentation.UI.Views.FishingTrips.Catches;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,26 +15,49 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
         private FishType _fishType;
         private bool _isEdit;
 
-        public FishTypeFormPage() : this(new FishType())
+        public FishTypeFormPage(object caller) : this(caller, new FishType())
         {
         }
 
-        public FishTypeFormPage(FishType fishType)
+        public FishTypeFormPage(object caller, string name) : this(caller, new FishType {Name = name})
         {
+        }
+
+        public FishTypeFormPage(object caller, FishType fishType)
+        {
+            SetCaller(caller);
             SetBindingContext(fishType);
             InitializeComponent();
         }
+
+        public FishTypeListPage CallerFishTypeListPage { get; set; }
+        public CatchFormPage CallerCatchFormPage { get; set; }
 
         public void DisplayAlertMessage(string title, string message)
         {
             DisplayAlert(title, message, "Ok");
         }
 
+        private void SetCaller(object caller)
+        {
+            if (caller.GetType() == typeof(FishTypeListPage))
+            {
+                CallerFishTypeListPage = (FishTypeListPage) caller;
+            }
+            else if (caller.GetType() == typeof(CatchFormPage))
+            {
+                CallerCatchFormPage = (CatchFormPage) caller;
+            }
+        }
+
         private void SetBindingContext(FishType fishType)
         {
             _fishType = fishType;
             BindingContext = _fishType;
-            if (!_fishType.Id.Equals("0")) _isEdit = true;
+            if (!_fishType.Id.Equals("0"))
+            {
+                _isEdit = true;
+            }
         }
 
         private async Task SaveFishType()
@@ -41,13 +65,27 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
             FishingTripManager manager = new FishingTripManager();
             Response<FishType> response;
             if (_isEdit)
+            {
                 response = await manager.UpdateFishType(_fishType);
+            }
             else
+            {
                 response = await manager.CreateFishType(_fishType);
+            }
 
             InformUserHelper<FishType> informer =
-                new InformUserHelper<FishType>(response, this, "FishType has been saved successfully!");
-            informer.InformUserOfResponse();
+                new InformUserHelper<FishType>(response, this);
+            informer.InformUserOfResponse("FishType has been saved successfully!");
+
+            if (CallerCatchFormPage != null)
+            {
+                await CallerCatchFormPage.SetFishTypes();
+            }
+
+            if (CallerFishTypeListPage != null)
+            {
+                await CallerFishTypeListPage.ReloadFishTypes();
+            }
         }
 
         private async void BtnCancel_OnClicked(object sender, EventArgs e)

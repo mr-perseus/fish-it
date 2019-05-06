@@ -13,7 +13,9 @@ namespace Fishit.Presentation.UI.MarkupExtensions
         public object ProvideValue(IServiceProvider serviceProvider)
         {
             if (string.IsNullOrWhiteSpace(ResourceId))
+            {
                 return null;
+            }
 
             return ImageSource.FromResource(ResourceId);
         }

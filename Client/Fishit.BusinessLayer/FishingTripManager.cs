@@ -24,6 +24,11 @@ namespace Fishit.BusinessLayer
             return await _fishingTripDao.GetAllItems();
         }
 
+        public async Task<Response<FishingTrip>> GetFishingTripById(string id)
+        {
+            return await _fishingTripDao.GetItemById(id);
+        }
+
         public async Task<Response<FishingTrip>> GetFishingTrip(FishingTrip fishingTrip)
         {
             return await _fishingTripDao.GetItem(fishingTrip);
@@ -53,14 +58,17 @@ namespace Fishit.BusinessLayer
         {
             Response<Catch> catchResponse = await _catchDao.CreateItem(aCatch);
             if (catchResponse.StatusCode != HttpStatusCode.OK)
+            {
                 return new Response<FishingTrip>
                 {
                     StatusCode = catchResponse.StatusCode,
                     Message = "Unsuccessful addCatch",
                     Content = fishingTrip
                 };
+            }
 
             fishingTrip.Catches.Add(catchResponse.Content);
+            await UpdateFishingTrip(fishingTrip);
             return new Response<FishingTrip>
             {
                 StatusCode = catchResponse.StatusCode,
@@ -73,15 +81,18 @@ namespace Fishit.BusinessLayer
         {
             Response<Catch> catchResponse = await _catchDao.UpdateItem(aCatch);
             if (catchResponse.StatusCode != HttpStatusCode.OK)
+            {
                 return new Response<FishingTrip>
                 {
                     StatusCode = catchResponse.StatusCode,
                     Message = "Unsuccessful update Catch",
                     Content = fishingTrip
                 };
+            }
 
             int index = fishingTrip.Catches.IndexOf(aCatch);
             fishingTrip.Catches[index] = catchResponse.Content;
+            await UpdateFishingTrip(fishingTrip);
             return new Response<FishingTrip>
             {
                 StatusCode = catchResponse.StatusCode,
@@ -94,15 +105,18 @@ namespace Fishit.BusinessLayer
         {
             Response<Catch> catchResponse = await _catchDao.DeleteItem(aCatch);
             if (catchResponse.StatusCode != HttpStatusCode.OK)
+            {
                 return new Response<FishingTrip>
                 {
                     StatusCode = catchResponse.StatusCode,
                     Message = "Unsuccessful delete Catch",
                     Content = fishingTrip
                 };
+            }
 
             int index = fishingTrip.Catches.IndexOf(aCatch);
             fishingTrip.Catches.RemoveAt(index);
+            await UpdateFishingTrip(fishingTrip);
             return new Response<FishingTrip>
             {
                 StatusCode = catchResponse.StatusCode,

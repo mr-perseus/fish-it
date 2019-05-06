@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Fishit.Common.Properties;
 using Fishit.Dal.Entities;
 using Fishit.Logging;
 using Newtonsoft.Json;
@@ -12,7 +13,7 @@ namespace Fishit.Common
 {
     public class Dao<T> where T : new()
     {
-        private readonly string _endPointUri = "http://sinv-56038.edu.hsr.ch:40007/api/";
+        private readonly string _endPointUri = Resources.EndPointUri;
         private readonly ILogger _logger;
 
         public Dao()
@@ -96,6 +97,44 @@ namespace Fishit.Common
             }
         }
 
+        public async Task<Response<T>> GetItemById(string id)
+        {
+            _logger.Info(nameof(GetItem) + "; Start; " + "id; " + id);
+
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpResponseMessage response =
+                    await client.GetAsync(_endPointUri + Path.DirectorySeparatorChar + id))
+                {
+                    if (response.StatusCode != HttpStatusCode.OK)
+                    {
+                        _logger.Error(nameof(GetItem) + "; Error; response; " + response);
+
+                        return new Response<T>
+                        {
+                            StatusCode = response.StatusCode,
+                            Message = "Unsuccessful GetAllCatches",
+                            Content = new T()
+                        };
+                    }
+
+                    using (HttpContent content = response.Content)
+                    {
+                        string itemContent = await content.ReadAsStringAsync();
+                        _logger.Info(nameof(GetItem) + "; End; response; " + response + "; itemContent; " +
+                                     itemContent);
+
+                        return new Response<T>
+                        {
+                            StatusCode = response.StatusCode,
+                            Message = "Successful GetAllCatches",
+                            Content = Parse(itemContent)
+                        };
+                    }
+                }
+            }
+        }
+
         public async Task<Response<T>> CreateItem(T item)
         {
             _logger.Info(nameof(CreateItem) + "; Start; " + "item; " + item);
@@ -103,7 +142,7 @@ namespace Fishit.Common
 
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = await client.PostAsync(_endPointUri + "/new", body))
+                using (HttpResponseMessage response = await client.PostAsync(_endPointUri + Resources.CreateNew, body))
                 {
                     if (response.StatusCode != HttpStatusCode.OK)
                     {

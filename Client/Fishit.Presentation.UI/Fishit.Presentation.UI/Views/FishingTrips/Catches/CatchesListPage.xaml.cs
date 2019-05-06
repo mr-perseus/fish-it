@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
@@ -12,12 +13,11 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CatchesListPage : ContentPage, IPageBase
     {
-        private readonly ObservableCollection<Catch> _catches;
+        private ObservableCollection<Catch> _catches;
 
         public CatchesListPage(FishingTrip fishingTrip)
         {
-            FishingTrip = fishingTrip;
-            _catches = new ObservableCollection<Catch>(fishingTrip.Catches);
+            SetBindingContext(fishingTrip);
             InitializeComponent();
             CatchesListView.ItemsSource = _catches;
         }
@@ -32,11 +32,14 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         private async void CatchesListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null)
+            {
                 return;
+            }
 
             Catch _catch = e.SelectedItem as Catch;
             Console.WriteLine(_catch);
-            await Navigation.PushAsync(new CatchFormPage(FishingTrip, _catch));
+            CatchFormPage catchFormPage = await CatchFormPage.CreateAsync(this, FishingTrip, _catch);
+            await Navigation.PushAsync(catchFormPage);
             CatchesListView.SelectedItem = null;
         }
 
@@ -44,12 +47,14 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         {
             Catch _catch = (sender as MenuItem)?.CommandParameter as Catch;
             Console.Write(_catch);
-            await Navigation.PushAsync(new CatchFormPage(FishingTrip, _catch));
+            CatchFormPage catchFormPage = await CatchFormPage.CreateAsync(this, FishingTrip, _catch);
+            await Navigation.PushAsync(catchFormPage);
         }
 
         private async void BtnAddCatch_OnClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new CatchFormPage(FishingTrip));
+            CatchFormPage catchFormPage = await CatchFormPage.CreateAsync(this, FishingTrip);
+            await Navigation.PushAsync(catchFormPage);
         }
 
         private async void Delete_Clicked(object sender, EventArgs e)
@@ -60,20 +65,48 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             Response<FishingTrip> response = await manager.DeleteCatch(FishingTrip, _catch);
 
             InformUserHelper<FishingTrip> informer =
-                new InformUserHelper<FishingTrip>(response, this, "Catch has been saved successfully!");
-            informer.InformUserOfResponse();
-            await Navigation.PopAsync();
+                new InformUserHelper<FishingTrip>(response, this);
+            informer.InformUserOfResponse("Catch has been deleted successfully!");
+
+            await ReloadFishingTrip();
         }
 
-        private void Handle_Refreshing(object sender, EventArgs e)
+        private async void Handle_Refreshing(object sender, EventArgs e)
         {
-            CatchesListView.ItemsSource = _catches;
+            await ReloadFishingTrip();
+            RefreshList(FishingTrip);
             CatchesListView.EndRefresh();
+        }
+
+        private void SetBindingContext(FishingTrip fishingTrip)
+        {
+            FishingTrip = fishingTrip;
+            _catches = new ObservableCollection<Catch>(FishingTrip.Catches);
+        }
+
+        public void RefreshList(FishingTrip fishingTrip)
+        {
+            SetBindingContext(fishingTrip);
+            CatchesListView.ItemsSource = _catches;
+        }
+
+        private async Task ReloadFishingTrip()
+        {
+            FishingTripManager manager = new FishingTripManager();
+            Response<FishingTrip> response = await manager.GetFishingTripById(FishingTrip.Id);
+
+            InformUserHelper<FishingTrip> informer =
+                new InformUserHelper<FishingTrip>(response, this);
+
+            informer.InformUserOfResponse();
+
+            RefreshList(response.Content);
         }
 
         private async void BtnManageFishTypes_OnClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new FishtypeListPage());
+            FishTypeListPage fishTypeListPage = await FishTypeListPage.CreateAsync();
+            await Navigation.PushAsync(fishTypeListPage);
         }
     }
 }

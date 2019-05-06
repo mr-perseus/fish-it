@@ -15,17 +15,10 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
     {
         private ObservableCollection<FishingTrip> _fishingTrips;
 
-        public FishingTripsPage()
+        public FishingTripsPage(List<FishingTrip> fishingTrips)
         {
-            SetAllFishingTrips();
+            _fishingTrips = new ObservableCollection<FishingTrip>(fishingTrips);
             InitializeComponent();
-        }
-
-        public FishingTripsPage(string location)
-        {
-            SetAllFishingTrips();
-            InitializeComponent();
-
             FishingTripsListView.ItemsSource = _fishingTrips;
         }
 
@@ -34,36 +27,44 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             DisplayAlert(title, message, "Ok");
         }
 
-        private async Task SetAllFishingTrips()
+        public async Task ReloadFishingTrips()
         {
             Response<List<FishingTrip>> response = await new FishingTripManager().GetAllFishingTrips();
             _fishingTrips = new ObservableCollection<FishingTrip>(response.Content);
 
-            if (FishingTripsListView != null) FishingTripsListView.ItemsSource = _fishingTrips;
+            InformUserHelper<List<FishingTrip>> informer =
+                new InformUserHelper<List<FishingTrip>>(response, this);
+
+            informer.InformUserOfResponse();
+
+            if (FishingTripsListView != null)
+            {
+                FishingTripsListView.ItemsSource = _fishingTrips;
+            }
         }
 
         private async void TripsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null)
+            {
                 return;
+            }
 
             FishingTrip fishingTrip = e.SelectedItem as FishingTrip;
-            await Navigation.PushAsync(new FishingTripDetailsPage(fishingTrip));
+            await Navigation.PushAsync(new FishingTripDetailsPage(this, fishingTrip));
             FishingTripsListView.SelectedItem = null;
         }
 
         private async void AddTrip_OnClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new FishingTripsFormPage());
-            await SetAllFishingTrips();
+            await Navigation.PushAsync(new FishingTripsFormPage(this));
         }
 
         private async void Edit_Clicked(object sender, EventArgs e)
         {
             FishingTrip fishingTrip = (sender as MenuItem)?.CommandParameter as FishingTrip;
             Console.Write(fishingTrip);
-            await Navigation.PushAsync(new FishingTripsFormPage(fishingTrip));
-            await SetAllFishingTrips();
+            await Navigation.PushAsync(new FishingTripsFormPage(this, fishingTrip));
         }
 
         private async void Delete_Clicked(object sender, EventArgs e)
@@ -73,14 +74,14 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             Response<FishingTrip> response = await manager.DeleteFishingTrip(fishingTrip);
 
             InformUserHelper<FishingTrip> informer =
-                new InformUserHelper<FishingTrip>(response, this, "Fishing Trip has been deleted successfully!");
-            informer.InformUserOfResponse();
-            await SetAllFishingTrips();
+                new InformUserHelper<FishingTrip>(response, this);
+            informer.InformUserOfResponse("Fishing Trip has been deleted successfully!");
+            await ReloadFishingTrips();
         }
 
         private async void Handle_Refreshing(object sender, EventArgs e)
         {
-            await SetAllFishingTrips();
+            await ReloadFishingTrips();
             FishingTripsListView.EndRefresh();
         }
     }
