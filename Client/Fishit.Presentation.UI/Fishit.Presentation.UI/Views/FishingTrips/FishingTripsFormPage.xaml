@@ -9,6 +9,9 @@
              x:Name="This">
     <ContentPage.Content>
         <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Padding="20">
+            <StackLayout.Behaviors>
+                <behaviors:ValidationBehavior x:Name="form" />
+            </StackLayout.Behaviors>
             <StackLayout Orientation="Horizontal">
                 <DatePicker BindingContext="{x:Reference This}" x:Name="FishingTripDatePicker"
                             HorizontalOptions="FillAndExpand" Format="D" DateSelected="Refresh_DateTime"
@@ -32,8 +35,9 @@
                 <Label Grid.Column="0" Grid.Row="0" Text="Location:" VerticalOptions="Center" />
                 <Entry Grid.Column="1" Grid.Row="0" Text="{Binding Location}">
                     <Entry.Behaviors>
-                        <behaviors:ValidationBehavior PropertyName="Text">
+                        <behaviors:ValidationBehavior Group="{x:Reference form}" PropertyName="Text">
                             <behaviors:ValidationBehavior.Validators>
+                                <validators:RequiredValidator />
                                 <validators:FormatValidator
                                 Message="Please enter a valid location"
                                 Format="^([A-Za-z]|Ä|Ö|Ü|ä|ö|ü|-| )*$" />
@@ -56,7 +60,7 @@
                 <StackLayout Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
                     <Entry Text="{Binding Temperature}" HorizontalOptions="FillAndExpand">
                         <Entry.Behaviors>
-                            <behaviors:ValidationBehavior PropertyName="Text">
+                            <behaviors:ValidationBehavior Group="{x:Reference form}" PropertyName="Text">
                                 <behaviors:ValidationBehavior.Validators>
                                     <validators:RequiredValidator />
                                     <validators:FormatValidator
@@ -75,22 +79,7 @@
 
             <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
                 <Button Text="Cancel" Clicked="CancelForm_OnClicked" Style="{StaticResource ButtonStyle}" />
-                <Button HorizontalOptions="EndAndExpand" Text="Save" Clicked="SaveFishingTrip_OnClicked"
-                        IsEnabled="True" Style="{StaticResource ButtonStyle}">
-                    <Button.Triggers>
-                        <MultiTrigger TargetType="Button">
-                            <MultiTrigger.Conditions>
-                                <BindingCondition
-                                    Binding="{Binding Source={x:Reference LocationBehavior}, Path=IsValid}"
-                                    Value="true" />
-                                <BindingCondition
-                                    Binding="{Binding Source={x:Reference TemperatureBehavior}, Path=IsValid}"
-                                    Value="true" />
-                            </MultiTrigger.Conditions>
-                            <Setter Property="IsEnabled" Value="True" />
-                        </MultiTrigger>
-                    </Button.Triggers>
-                </Button>
+                <Button HorizontalOptions="EndAndExpand" Text="Save" Clicked="SaveFishingTrip_OnClicked" IsEnabled="{Binding Source={x:Reference form}}" Style="{StaticResource ButtonStyle}" />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

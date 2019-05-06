@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Fishit.Presentation.UI.FormValidation.Behaviors;
+using Java.IO;
 using Xamarin.Forms;
 
 namespace Fishit.Presentation.UI.FormValidation.Errors

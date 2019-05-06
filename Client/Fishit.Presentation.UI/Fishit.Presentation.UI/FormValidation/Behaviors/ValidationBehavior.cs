@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Text;
 using Fishit.Presentation.UI.FormValidation.Errors;
 using Fishit.Presentation.UI.FormValidation.Validators;
+using Java.Security;
 using Xamarin.Forms;
 
 namespace Fishit.Presentation.UI.FormValidation.Behaviors
@@ -15,6 +16,7 @@ namespace Fishit.Presentation.UI.FormValidation.Behaviors
         View _view;
         public string PropertyName { get; set; }
         public ObservableCollection<IValidator> Validators { get; set; } = new ObservableCollection<IValidator>();
+        public ValidationGroupBehavior Group { get; set; }
 
         public bool Validate()
         {
@@ -52,6 +54,11 @@ namespace Fishit.Presentation.UI.FormValidation.Behaviors
             _view = bindable as View;
             _view.PropertyChanged += OnPropertyChanged;
             _view.Unfocused += OnUnFocused;
+
+            if (Group != null)
+            {
+                Group.Add(this);
+            }
         }
 
         protected override void OnDetachingFrom(BindableObject bindable)
@@ -60,10 +67,20 @@ namespace Fishit.Presentation.UI.FormValidation.Behaviors
 
             _view.PropertyChanged -= OnPropertyChanged;
             _view.Unfocused -= OnUnFocused;
+
+            if (Group != null)
+            {
+                Group.Remove(this);
+            }
         }
         void OnUnFocused(object sender, FocusEventArgs e)
         {
             Validate();
+
+            if (Group != null)
+            {
+                Group.Update();
+            }
         }
 
         void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
