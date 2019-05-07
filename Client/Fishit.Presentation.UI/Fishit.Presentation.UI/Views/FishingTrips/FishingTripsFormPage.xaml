@@ -10,7 +10,7 @@
     <ContentPage.Content>
         <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Padding="20">
             <StackLayout.Behaviors>
-                <behaviors:ValidationBehavior x:Name="form" />
+                <validators:ValidationGroupBehavior x:Name="form" />
             </StackLayout.Behaviors>
             <StackLayout Orientation="Horizontal">
                 <DatePicker BindingContext="{x:Reference This}" x:Name="FishingTripDatePicker"
