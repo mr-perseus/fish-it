@@ -22,7 +22,9 @@ const fishTypeJoi = {
 	Name: Joi.string()
 		.max(64)
 		.required(),
-	Description: Joi.string().max(1024)
+	Description: Joi.string()
+		.allow("")
+		.max(1024)
 }
 
 const validateFishType = (f) => Joi.validate(f, fishTypeJoi)

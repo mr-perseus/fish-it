@@ -41,7 +41,7 @@ module.exports.createCatch = async (req, res) => {
 		.save()
 		.then((aCatch) => {
 			getLogger().info(`catchService; createcatch; End; catch; `, aCatch)
-			res.send(_.pick(aCatch, "_id"))
+			res.send(_.pick(aCatch, catchAttr))
 		})
 		.catch((error) => {
 			getLogger().error(
@@ -72,7 +72,7 @@ module.exports.updateCatch = async (req, res) => {
 	await Catch.findOneAndUpdate({ _id }, aCatch)
 		.then((aCatch) => {
 			getLogger().info(`catchService; updateCatch; End; catch; `, aCatch, "; _id; " + _id)
-			res.send(_.pick(aCatch, "_id"))
+			res.send(_.pick(aCatch, catchAttr))
 		})
 		.catch((error) => {
 			getLogger().error(
@@ -92,7 +92,7 @@ module.exports.deleteCatch = async (req, res) => {
 	await Catch.findOneAndDelete({ _id })
 		.then((aCatch) => {
 			getLogger().info(`catchService; deleteCatch; End; catch; `, aCatch, "; _id; " + _id)
-			res.send(_.pick(aCatch, "_id"))
+			res.send(_.pick(aCatch, catchAttr))
 		})
 		.catch((error) => {
 			getLogger().error(`catchService; deleteCatch; Error; _id;`, _id, "; error; ", error)
