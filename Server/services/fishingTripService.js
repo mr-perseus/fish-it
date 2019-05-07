@@ -66,7 +66,7 @@ module.exports.createFishingTrip = async (req, res) => {
 				`fishingTripService; createFishingTrip; End; fishingTrip; `,
 				fishingTrip
 			)
-			res.send(_.pick(fishingTrip, "_id"))
+			res.send(_.pick(fishingTrip, fishingTripAttr))
 		})
 		.catch((error) => {
 			getLogger().error(
@@ -100,7 +100,7 @@ module.exports.updateFishingTrip = async (req, res) => {
 				fishingTrip,
 				"; _id; " + _id
 			)
-			res.send(_.pick(fishingTrip, "_id"))
+			res.send(_.pick(fishingTrip, fishingTripAttr))
 		})
 		.catch((error) => {
 			getLogger().error(
@@ -124,7 +124,7 @@ module.exports.deleteFishingTrip = async (req, res) => {
 				fishingTrip,
 				"; _id; " + _id
 			)
-			res.send(_.pick(fishingTrip, "_id"))
+			res.send(_.pick(fishingTrip, fishingTripAttr))
 		})
 		.catch((error) => {
 			getLogger().error(
