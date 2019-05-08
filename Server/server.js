@@ -33,6 +33,13 @@ server.use(bodyParser.urlencoded({ extended: true }))
 const logger = require("./utils/log")
 server.use(logger)
 
+server.use("/api/test/auth", auth)
+server.use("/api/test/catch", catches)
+server.use("/api/test/user", users)
+server.use("/api/test/friends", friends)
+server.use("/api/test/fishtype", fishTypes)
+server.use("/api/test/fishingtrip", fishingTrips)
+
 server.use("/api/auth", auth)
 server.use("/api/catch", catches)
 server.use("/api/user", users)

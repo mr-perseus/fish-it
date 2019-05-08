@@ -1,13 +1,15 @@
 const _ = require("lodash")
 const {
-	FishingTrip,
+	fishingTripSchema,
 	fishingTripAttr,
 	fishingTripAttrNoId,
 	validateFishingTrip
 } = require("../models/FishingTrip")
+const { getModel } = require("./services")
 const getLogger = require("log4js").getLogger
 
 module.exports.getFishingTrips = async (req, res) => {
+	const FishingTrip = getModel(req.originalUrl, "FishingTrips", fishingTripSchema)
 	await FishingTrip.find()
 		.populate({ path: "Catches", populate: { path: "FishType" } })
 		.then((fishingTrips) => {
@@ -24,6 +26,7 @@ module.exports.getFishingTrips = async (req, res) => {
 }
 
 module.exports.getFishingTrip = async (req, res) => {
+	const FishingTrip = getModel(req.originalUrl, "FishingTrips", fishingTripSchema)
 	const _id = req.params.id
 
 	await FishingTrip.findOne({ _id })
@@ -49,6 +52,7 @@ module.exports.getFishingTrip = async (req, res) => {
 }
 
 module.exports.createFishingTrip = async (req, res) => {
+	const FishingTrip = getModel(req.originalUrl, "FishingTrips", fishingTripSchema)
 	const fishingTrip = _.pick(req.body, fishingTripAttrNoId)
 	const { error } = validateFishingTrip(fishingTrip)
 	getLogger().info(
@@ -80,6 +84,7 @@ module.exports.createFishingTrip = async (req, res) => {
 }
 
 module.exports.updateFishingTrip = async (req, res) => {
+	const FishingTrip = getModel(req.originalUrl, "FishingTrips", fishingTripSchema)
 	const _id = req.params.id
 	const fishingTrip = _.pick(req.body, fishingTripAttrNoId)
 
@@ -120,6 +125,7 @@ module.exports.updateFishingTrip = async (req, res) => {
 }
 
 module.exports.deleteFishingTrip = async (req, res) => {
+	const FishingTrip = getModel(req.originalUrl, "FishingTrips", fishingTripSchema)
 	const _id = req.params.id
 
 	await FishingTrip.findOneAndDelete({ _id })
