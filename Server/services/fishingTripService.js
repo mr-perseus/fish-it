@@ -66,7 +66,7 @@ module.exports.createFishingTrip = async (req, res) => {
 				`fishingTripService; createFishingTrip; End; fishingTrip; `,
 				fishingTrip
 			)
-			res.send(_.pick(fishingTrip, fishingTripAttr))
+			res.send({ ..._.pick(fishingTrip, fishingTripAttr), Catches: req.body.Catches })
 		})
 		.catch((error) => {
 			getLogger().error(
@@ -94,13 +94,18 @@ module.exports.updateFishingTrip = async (req, res) => {
 	if (error) return res.status(400).send(error.details[0].message)
 
 	await FishingTrip.findOneAndUpdate({ _id }, fishingTrip)
+		.populate({ path: "Catches", populate: { path: "FishType" } })
 		.then((fishingTrip) => {
 			getLogger().info(
 				`fishingTripService; updateFishingTrip; End; fishingTrip; `,
 				fishingTrip,
 				"; _id; " + _id
 			)
-			res.send(_.pick(fishingTrip, fishingTripAttr))
+			res.send({
+				..._.pick(req.body, fishingTripAttr),
+				Catches: fishingTrip.Catches,
+				_id: _id
+			})
 		})
 		.catch((error) => {
 			getLogger().error(
@@ -118,6 +123,7 @@ module.exports.deleteFishingTrip = async (req, res) => {
 	const _id = req.params.id
 
 	await FishingTrip.findOneAndDelete({ _id })
+		.populate({ path: "Catches", populate: { path: "FishType" } })
 		.then((fishingTrip) => {
 			getLogger().info(
 				`fishingTripService; deleteFishingTrip; End; fishingTrip; `,

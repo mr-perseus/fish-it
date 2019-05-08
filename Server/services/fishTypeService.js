@@ -73,7 +73,7 @@ module.exports.updateFishType = async (req, res) => {
 				fishType,
 				"; _id; " + _id
 			)
-			res.send(_.pick(fishType, fishTypeAttr))
+			res.send({ ..._.pick(req.body, fishTypeAttr), _id: _id })
 		})
 		.catch((error) => {
 			getLogger().error(
