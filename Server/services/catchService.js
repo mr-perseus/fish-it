@@ -41,7 +41,7 @@ module.exports.createCatch = async (req, res) => {
 		.save()
 		.then((aCatch) => {
 			getLogger().info(`catchService; createcatch; End; catch; `, aCatch)
-			res.send(_.pick(aCatch, catchAttr))
+			res.send({ ..._.pick(aCatch, catchAttr), FishType: req.body.FishType })
 		})
 		.catch((error) => {
 			getLogger().error(
@@ -70,14 +70,15 @@ module.exports.updateCatch = async (req, res) => {
 	if (error) return res.status(400).send(error.details[0].message)
 
 	await Catch.findOneAndUpdate({ _id }, aCatch)
+		.populate("FishType")
 		.then((aCatch) => {
 			getLogger().info(`catchService; updateCatch; End; catch; `, aCatch, "; _id; " + _id)
-			res.send(_.pick(aCatch, catchAttr))
+			res.send({ ..._.pick(req.body, catchAttr), FishType: aCatch.FishType, _id: _id })
 		})
 		.catch((error) => {
 			getLogger().error(
 				`catchService; updateCatch; Error; catch;`,
-				vatch,
+				aCatch,
 				"; _id; " + _id,
 				"; error; ",
 				error
@@ -90,6 +91,7 @@ module.exports.deleteCatch = async (req, res) => {
 	const _id = req.params.id
 
 	await Catch.findOneAndDelete({ _id })
+		.populate("FishType")
 		.then((aCatch) => {
 			getLogger().info(`catchService; deleteCatch; End; catch; `, aCatch, "; _id; " + _id)
 			res.send(_.pick(aCatch, catchAttr))
