@@ -1,8 +1,10 @@
 const _ = require("lodash")
-const { Catch, catchAttr, catchAttrNoId, validateCatch } = require("../models/Catch")
+const { catchSchema, catchAttr, catchAttrNoId, validateCatch } = require("../models/Catch")
+const { getModel } = require("./services")
 const getLogger = require("log4js").getLogger
 
 module.exports.getCatches = async (req, res) => {
+	const Catch = getModel(req.originalUrl, "Catches", catchSchema)
 	await Catch.find()
 		.populate("FishType")
 		.then((catches) => {
@@ -16,6 +18,7 @@ module.exports.getCatches = async (req, res) => {
 }
 
 module.exports.getCatch = async (req, res) => {
+	const Catch = getModel(req.originalUrl, "Catches", catchSchema)
 	const _id = req.params.id
 
 	await Catch.findOne({ _id })
@@ -31,6 +34,7 @@ module.exports.getCatch = async (req, res) => {
 }
 
 module.exports.createCatch = async (req, res) => {
+	const Catch = getModel(req.originalUrl, "Catches", catchSchema)
 	const aCatch = _.pick(req.body, catchAttrNoId)
 	aCatch.FishType = aCatch.FishType._id
 	const { error } = validateCatch(aCatch)
@@ -55,6 +59,7 @@ module.exports.createCatch = async (req, res) => {
 }
 
 module.exports.updateCatch = async (req, res) => {
+	const Catch = getModel(req.originalUrl, "Catches", catchSchema)
 	const _id = req.params.id
 	const aCatch = _.pick(req.body, catchAttrNoId)
 	aCatch.FishType = aCatch.FishType._id
@@ -88,6 +93,7 @@ module.exports.updateCatch = async (req, res) => {
 }
 
 module.exports.deleteCatch = async (req, res) => {
+	const Catch = getModel(req.originalUrl, "Catches", catchSchema)
 	const _id = req.params.id
 
 	await Catch.findOneAndDelete({ _id })

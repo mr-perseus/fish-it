@@ -1,8 +1,15 @@
 const _ = require("lodash")
-const { FishType, fishTypeAttr, fishTypeAttrNoId, validateFishType } = require("../models/FishType")
+const {
+	fishTypeSchema,
+	fishTypeAttr,
+	fishTypeAttrNoId,
+	validateFishType
+} = require("../models/FishType")
+const { getModel } = require("./services")
 const getLogger = require("log4js").getLogger
 
 module.exports.getFishTypes = async (req, res) => {
+	const FishType = getModel(req.originalUrl, "FishTypes", fishTypeSchema)
 	await FishType.find()
 		.then((fishTypes) => {
 			getLogger().info(`fishTypeService; getFishTypes; End; fishType;`, fishTypes)
@@ -16,6 +23,7 @@ module.exports.getFishTypes = async (req, res) => {
 }
 
 module.exports.getFishType = async (req, res) => {
+	const FishType = getModel(req.originalUrl, "FishTypes", fishTypeSchema)
 	const _id = req.params.id
 
 	await FishType.findOne({ _id })
@@ -30,6 +38,7 @@ module.exports.getFishType = async (req, res) => {
 }
 
 module.exports.createFishType = async (req, res) => {
+	const FishType = getModel(req.originalUrl, "FishTypes", fishTypeSchema)
 	const fishType = _.pick(req.body, fishTypeAttrNoId)
 	const { error } = validateFishType(fishType)
 	getLogger().info(`fishTypeService; createFish; Start; fishType;`, fishType, "; error; ", error)
@@ -53,6 +62,7 @@ module.exports.createFishType = async (req, res) => {
 }
 
 module.exports.updateFishType = async (req, res) => {
+	const FishType = getModel(req.originalUrl, "FishTypes", fishTypeSchema)
 	const _id = req.params.id
 	const fishType = _.pick(req.body, fishTypeAttrNoId)
 
@@ -88,6 +98,7 @@ module.exports.updateFishType = async (req, res) => {
 }
 
 module.exports.deleteFishType = async (req, res) => {
+	const FishType = getModel(req.originalUrl, "FishTypes", fishTypeSchema)
 	const _id = req.params.id
 
 	await FishType.findOneAndDelete({ _id })

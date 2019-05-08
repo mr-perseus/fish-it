@@ -30,7 +30,7 @@ const fishingTripSchema = new mongoose.Schema({
 	]
 })
 
-const FishingTrip = mongoose.model("FishingTrips", fishingTripSchema)
+// const FishingTrip = mongoose.model(config.models.default.FishingTrips, fishingTripSchema)
 
 const fishingTripAttr = [
 	"_id",
@@ -67,7 +67,7 @@ const fishingTripJoi = {
 const validateFishingTrip = (fT) => Joi.validate(fT, fishingTripJoi)
 
 module.exports = {
-	FishingTrip,
+	fishingTripSchema,
 	fishingTripAttr,
 	fishingTripAttrNoId,
 	validateFishingTrip
