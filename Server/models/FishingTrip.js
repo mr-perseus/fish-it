@@ -31,7 +31,7 @@ const fishingTripSchema = new mongoose.Schema({
 })
 
 mongoose.model("FishingTrips", fishingTripSchema)
-mongoose.model("FishingTripsTest", fishingTripSchema)
+mongoose.model("FishingTripsTests", fishingTripSchema)
 
 const fishingTripAttr = [
 	"_id",

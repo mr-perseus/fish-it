@@ -14,7 +14,7 @@ const fishTypeSchema = new mongoose.Schema({
 })
 
 mongoose.model("FishTypes", fishTypeSchema)
-mongoose.model("FishTypesTest", fishTypeSchema)
+mongoose.model("FishTypesTests", fishTypeSchema)
 
 const fishTypeAttr = ["_id", "Name", "Description"]
 const fishTypeAttrNoId = ["Name", "Description"]
