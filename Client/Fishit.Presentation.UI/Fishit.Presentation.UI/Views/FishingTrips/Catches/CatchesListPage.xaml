@@ -24,7 +24,7 @@
                                     <Label Text="{Binding Weight}" />
                                     <Label Text="kg" />
                                     <Label Text="{Binding Length}" HorizontalOptions="EndAndExpand" />
-                                    <Label Text="m" />
+                                    <Label Text="cm" />
                                 </StackLayout>
                             </StackLayout>
                         </StackLayout>

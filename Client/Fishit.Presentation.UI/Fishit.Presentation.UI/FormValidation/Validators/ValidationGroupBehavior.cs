@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Fishit.Presentation.UI.FormValidation.Behaviors;
 using Xamarin.Forms;
 
@@ -8,16 +6,23 @@ namespace Fishit.Presentation.UI.FormValidation.Validators
 {
     public class ValidationGroupBehavior : Behavior<View>
     {
-        private IList<ValidationBehavior> _validationBehaviors;
-        public static readonly BindableProperty IsValidProperty = 
+        public static readonly BindableProperty IsValidProperty =
             BindableProperty.Create("IsValid",
-                                    typeof(bool),
-                                    typeof(ValidationBehavior),
-                                    false);
+                typeof(bool),
+                typeof(ValidationBehavior),
+                false);
+
+        private readonly IList<ValidationBehavior> _validationBehaviors;
 
         public ValidationGroupBehavior()
         {
             _validationBehaviors = new List<ValidationBehavior>();
+        }
+
+        public bool IsValid
+        {
+            get => (bool) GetValue(IsValidProperty);
+            set => SetValue(IsValidProperty, value);
         }
 
         public void Add(ValidationBehavior validationBehavior)
@@ -40,12 +45,6 @@ namespace Fishit.Presentation.UI.FormValidation.Validators
             }
 
             IsValid = isValid;
-        }
-
-        public bool IsValid
-        {
-            get { return (bool) GetValue(IsValidProperty); }
-            set { SetValue(IsValidProperty, value); }
         }
     }
 }

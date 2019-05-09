@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace Fishit.Presentation.UI.FormValidation.Validators
 {
     public class FormatValidator : IValidator
     {
-        public string Message { get; set; } = "Invalid format";
         public string Format { get; set; }
+        public string Message { get; set; } = "Invalid format";
 
         public bool Check(string value)
         {
@@ -18,10 +15,8 @@ namespace Fishit.Presentation.UI.FormValidation.Validators
 
                 return format.IsMatch(value);
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
     }
 }

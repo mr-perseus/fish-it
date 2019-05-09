@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Text;
 using Fishit.Presentation.UI.FormValidation.Errors;
 using Fishit.Presentation.UI.FormValidation.Validators;
-using Java.Security;
 using Xamarin.Forms;
 
 namespace Fishit.Presentation.UI.FormValidation.Behaviors
 {
     public class ValidationBehavior : Behavior<View>
     {
-        IErrorStyle _style = new BasicErrorStyle();
-        View _view;
+        private readonly IErrorStyle _style = new BasicErrorStyle();
+        private View _view;
         public string PropertyName { get; set; }
         public ObservableCollection<IValidator> Validators { get; set; } = new ObservableCollection<IValidator>();
         public ValidationGroupBehavior Group { get; set; }
@@ -44,6 +40,7 @@ namespace Fishit.Presentation.UI.FormValidation.Behaviors
 
                 return false;
             }
+
             _style.RemoveError(RowView);
             return true;
         }
@@ -57,6 +54,7 @@ namespace Fishit.Presentation.UI.FormValidation.Behaviors
             {
                 RowView = _view;
             }
+
             _view.PropertyChanged += OnPropertyChanged;
             _view.Unfocused += OnUnFocused;
 
@@ -78,7 +76,8 @@ namespace Fishit.Presentation.UI.FormValidation.Behaviors
                 Group.Remove(this);
             }
         }
-        void OnUnFocused(object sender, FocusEventArgs e)
+
+        private void OnUnFocused(object sender, FocusEventArgs e)
         {
             Validate();
 
@@ -88,7 +87,7 @@ namespace Fishit.Presentation.UI.FormValidation.Behaviors
             }
         }
 
-        void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == PropertyName)
             {

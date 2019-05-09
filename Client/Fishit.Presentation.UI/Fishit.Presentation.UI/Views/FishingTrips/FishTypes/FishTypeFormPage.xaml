@@ -7,6 +7,9 @@
              x:Class="Fishit.Presentation.UI.Views.FishingTrips.FishTypes.FishTypeFormPage"
              Title="FishType">
     <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Padding="20">
+        <StackLayout.Behaviors>
+            <validators:ValidationGroupBehavior x:Name="form" />
+        </StackLayout.Behaviors>
         <Entry Text="{Binding Name}" Placeholder="Name">
             <Entry.Behaviors>
                 <behaviors:ValidationBehavior Group="{x:Reference form}" PropertyName="Text">
@@ -24,7 +27,7 @@
         <StackLayout Orientation="Horizontal">
             <Button Text="Cancel" Clicked="BtnCancel_OnClicked" Style="{StaticResource ButtonStyle}" />
             <Button Text="Save" Clicked="BtnSaveFishType_OnClicked" Style="{StaticResource ButtonStyle}"
-                    HorizontalOptions="EndAndExpand" />
+                    IsEnabled="{Binding Source={x:Reference form}, Path=IsValid}" HorizontalOptions="EndAndExpand" />
         </StackLayout>
     </StackLayout>
 </ContentPage>

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Fishit.Presentation.UI.FormValidation.Behaviors;
-using Java.IO;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace Fishit.Presentation.UI.FormValidation.Errors
 {
@@ -28,6 +23,7 @@ namespace Fishit.Presentation.UI.FormValidation.Errors
                     return;
                 }
             }
+
             // Add new label if none exists
             layout.Children.Insert(viewIndex + 1, new Label
             {

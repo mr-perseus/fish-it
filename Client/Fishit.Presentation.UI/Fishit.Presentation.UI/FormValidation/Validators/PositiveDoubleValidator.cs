@@ -1,25 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Fishit.Presentation.UI.FormValidation.Validators
 {
     public class PositiveDoubleValidator : IValidator
     {
-        public string Message { get; set; }
         public int MaxValue { get; set; }
         public string MaxValueMessage { get; set; }
+        public string Message { get; set; }
 
         public bool Check(string value)
         {
-            if (String.IsNullOrEmpty(value))
+            if (string.IsNullOrEmpty(value))
             {
                 return true;
             }
 
             try
             {
-                double.TryParse(value, out double number);
+                double number = Convert.ToDouble(value);
                 if (number < MaxValue)
                 {
                     Message = "Number must be bigger than zero.";

@@ -39,17 +39,19 @@
                 </StackLayout>
             </ScrollView>
 
-            <Picker BindingContext="{x:Reference This}" x:Name="WeatherPicker" Title="Weather" ItemsSource="{Binding WeatherOptions}" SelectedItem="{Binding SelectedWeather}" />
+            <Picker BindingContext="{x:Reference This}" x:Name="WeatherPicker" Title="Weather"
+                    ItemsSource="{Binding WeatherOptions}" SelectedItem="{Binding SelectedWeather}" />
 
             <StackLayout Orientation="Horizontal" x:Name="RowTemperature">
                 <Entry Text="{Binding Temperature}" HorizontalOptions="FillAndExpand">
                     <Entry.Behaviors>
-                        <behaviors:ValidationBehavior Group="{x:Reference form}" PropertyName="Text" RowView="{x:Reference RowTemperature}">
+                        <behaviors:ValidationBehavior Group="{x:Reference form}" PropertyName="Text"
+                                                      RowView="{x:Reference RowTemperature}">
                             <behaviors:ValidationBehavior.Validators>
                                 <validators:RequiredValidator />
                                 <validators:FormatValidator
-                                        Message="Please enter a valid temperature"
-                                        Format="^-?([0-9]|([1-9][0-9]))(\.[0-9])?$" />
+                                    Message="Please enter a valid temperature"
+                                    Format="^-?([0-9]|([1-9][0-9]))(\.[0-9])?$" />
                             </behaviors:ValidationBehavior.Validators>
                         </behaviors:ValidationBehavior>
                     </Entry.Behaviors>
@@ -62,7 +64,9 @@
 
             <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
                 <Button Text="Cancel" Clicked="CancelForm_OnClicked" Style="{StaticResource ButtonStyle}" />
-                <Button HorizontalOptions="EndAndExpand" Text="Save" Clicked="SaveFishingTrip_OnClicked" IsEnabled="{Binding Source={x:Reference form}, Path=IsValid}" Style="{StaticResource ButtonStyle}" />
+                <Button HorizontalOptions="EndAndExpand" Text="Save" Clicked="SaveFishingTrip_OnClicked"
+                        IsEnabled="{Binding Source={x:Reference form}, Path=IsValid}"
+                        Style="{StaticResource ButtonStyle}" />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

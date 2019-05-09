@@ -13,8 +13,8 @@
             <validators:ValidationGroupBehavior x:Name="form" />
         </StackLayout.Behaviors>
         <TimePicker BindingContext="{x:Reference This}" x:Name="FishingTripTimePicker"
-                        HorizontalOptions="EndAndExpand"
-                        PropertyChanged="Refresh_DateTime" Time="{Binding Time}" />
+                    HorizontalOptions="EndAndExpand"
+                    PropertyChanged="Refresh_DateTime" Time="{Binding Time}" />
 
         <StackLayout Orientation="Horizontal" x:Name="RowFishType">
             <forms:AutoSuggestBox BindingContext="{x:Reference This}"
@@ -25,7 +25,8 @@
                                   SuggestionChosen="FishTypeAutoComplete_OnSuggestionChosen"
                                   HorizontalOptions="FillAndExpand">
                 <forms:AutoSuggestBox.Behaviors>
-                    <behaviors:ValidationBehavior Group="{x:Reference form}" PropertyName="Text" RowView="{x:Reference RowFishType}">
+                    <behaviors:ValidationBehavior Group="{x:Reference form}" PropertyName="Text"
+                                                  RowView="{x:Reference RowFishType}">
                         <behaviors:ValidationBehavior.Validators>
                             <validators:RequiredValidator />
                         </behaviors:ValidationBehavior.Validators>
@@ -34,7 +35,7 @@
             </forms:AutoSuggestBox>
 
             <Image Source="{local:EmbeddedImage Fishit.Presentation.UI.Images.add.png}" HeightRequest="50"
-                       WidthRequest="50">
+                   WidthRequest="50">
                 <Image.GestureRecognizers>
                     <TapGestureRecognizer Tapped="AddFishType_OnClicked" />
                 </Image.GestureRecognizers>
@@ -42,13 +43,15 @@
         </StackLayout>
 
         <StackLayout Orientation="Horizontal" x:Name="RowLength">
-            <Entry BindingContext="{x:Reference This}" Text="{Binding Length}" Placeholder="Length" HorizontalOptions="FillAndExpand">
+            <Entry BindingContext="{x:Reference This}" Text="{Binding Length}" Placeholder="Length"
+                   HorizontalOptions="FillAndExpand">
                 <Entry.Behaviors>
-                    <behaviors:ValidationBehavior Group="{x:Reference form}" PropertyName="Text" RowView="{x:Reference RowLength}">
+                    <behaviors:ValidationBehavior Group="{x:Reference form}" PropertyName="Text"
+                                                  RowView="{x:Reference RowLength}">
                         <behaviors:ValidationBehavior.Validators>
                             <validators:PositiveDoubleValidator
                                 MaxValue="50000"
-                                MaxValueMessage="That number seems a little fishy..."/>
+                                MaxValueMessage="That number seems a little fishy..." />
                         </behaviors:ValidationBehavior.Validators>
                     </behaviors:ValidationBehavior>
                 </Entry.Behaviors>
@@ -57,13 +60,15 @@
         </StackLayout>
 
         <StackLayout Orientation="Horizontal" x:Name="RowWeight">
-            <Entry BindingContext="{x:Reference This}" Text="{Binding Weight}" Placeholder="Weight" HorizontalOptions="FillAndExpand">
+            <Entry BindingContext="{x:Reference This}" Text="{Binding Weight}" Placeholder="Weight"
+                   HorizontalOptions="FillAndExpand">
                 <Entry.Behaviors>
-                    <behaviors:ValidationBehavior Group="{x:Reference form}" PropertyName="Text" RowView="{x:Reference RowWeight}">
+                    <behaviors:ValidationBehavior Group="{x:Reference form}" PropertyName="Text"
+                                                  RowView="{x:Reference RowWeight}">
                         <behaviors:ValidationBehavior.Validators>
-                            <validators:PositiveDoubleValidator 
+                            <validators:PositiveDoubleValidator
                                 MaxValue="200000"
-                                MaxValueMessage="I think your scale is broken..."/>
+                                MaxValueMessage="I think your scale is broken..." />
                         </behaviors:ValidationBehavior.Validators>
                     </behaviors:ValidationBehavior>
                 </Entry.Behaviors>
@@ -73,7 +78,8 @@
 
         <StackLayout Orientation="Horizontal">
             <Button Text="Cancel" Clicked="BtnCancel_OnClicked" Style="{StaticResource ButtonStyle}" />
-            <Button Text="Save" Clicked="SaveCatch_OnClicked" IsEnabled="{Binding Source={x:Reference form}, Path=IsValid}" Style="{StaticResource ButtonStyle}"
+            <Button Text="Save" Clicked="SaveCatch_OnClicked"
+                    IsEnabled="{Binding Source={x:Reference form}, Path=IsValid}" Style="{StaticResource ButtonStyle}"
                     HorizontalOptions="EndAndExpand" />
         </StackLayout>
     </StackLayout>
