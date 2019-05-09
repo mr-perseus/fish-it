@@ -32,6 +32,8 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         public List<string> FishTypesAsStrings { get; set; }
         public string FishType { get; set; }
         public CatchesListPage Caller { get; set; }
+        public string Length { get; set; }
+        public string Weight { get; set; }
 
         public void DisplayAlertMessage(string title, string message)
         {
@@ -81,9 +83,18 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 
         private async void SaveCatch_OnClicked(object sender, EventArgs e)
         {
-            Catch.FishType = GetFishType();
+            WriteValuesToObject();
             await SaveCatch();
             await Navigation.PopAsync();
+        }
+
+        private void WriteValuesToObject()
+        {
+            Catch.FishType = GetFishType();
+            double.TryParse(Length, out double length);
+            double.TryParse(Weight, out double weight);
+            Catch.Length = length;
+            Catch.Weight = weight;
         }
 
         private FishType GetFishType()
@@ -104,16 +115,26 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             FishingTrip = fishingTrip;
             Catch = _catch;
             BindingContext = _catch;
-            if (!_catch.Id.Equals("0"))
-            {
-                IsEdit = true;
-                FishType = Catch.FishType.Name;
-            }
-            else
+            if (_catch.Id.Equals("0"))
             {
                 Catch.DateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
                     DateTime.Now.Hour, DateTime.Now.Minute, 0);
                 FishType = "";
+            }
+            else
+            {
+                IsEdit = true;
+                FishType = Catch.FishType.Name;
+            }
+
+            if (Catch.Length > 0)
+            {
+                Length = Catch.Length.ToString("G");
+            }
+
+            if (Catch.Weight > 0)
+            {
+                Weight = Catch.Weight.ToString("G");
             }
 
             Date = Catch.DateTime.Date;

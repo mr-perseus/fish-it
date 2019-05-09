@@ -2,12 +2,16 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:behaviors="clr-namespace:Fishit.Presentation.UI.Behaviors"
              x:Class="Fishit.Presentation.UI.Views.FishingTrips.FishingTripsFormPage"
+             xmlns:validators="clr-namespace:Fishit.Presentation.UI.FormValidation.Validators"
+             xmlns:behaviors="clr-namespace:Fishit.Presentation.UI.FormValidation.Behaviors"
              Title="Fishing Trip"
              x:Name="This">
     <ContentPage.Content>
         <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Padding="20">
+            <StackLayout.Behaviors>
+                <validators:ValidationGroupBehavior x:Name="form" />
+            </StackLayout.Behaviors>
             <StackLayout Orientation="Horizontal">
                 <DatePicker BindingContext="{x:Reference This}" x:Name="FishingTripDatePicker"
                             HorizontalOptions="FillAndExpand" Format="D" DateSelected="Refresh_DateTime"
@@ -15,70 +19,50 @@
                 <TimePicker BindingContext="{x:Reference This}" x:Name="FishingTripTimePicker" HorizontalOptions="End"
                             PropertyChanged="Refresh_DateTime" Time="{Binding Time}" />
             </StackLayout>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+            <Entry Text="{Binding Location}" Placeholder="Location">
+                <Entry.Behaviors>
+                    <behaviors:ValidationBehavior Group="{x:Reference form}" PropertyName="Text">
+                        <behaviors:ValidationBehavior.Validators>
+                            <validators:RequiredValidator />
+                            <validators:FormatValidator
+                                Message="Please enter a valid location"
+                                Format="^([A-Za-z]|Ä|Ö|Ü|ä|ö|ü|-| )*$" />
+                        </behaviors:ValidationBehavior.Validators>
+                    </behaviors:ValidationBehavior>
+                </Entry.Behaviors>
+            </Entry>
 
-                <Label Grid.Column="0" Grid.Row="0" Text="Location:" VerticalOptions="Center" />
-                <Entry Grid.Column="1" Grid.Row="0" Text="{Binding Location}">
+            <ScrollView>
+                <StackLayout Spacing="10" VerticalOptions="FillAndExpand" Orientation="Vertical">
+                    <Editor Text="{Binding Description}" Placeholder="Description" HeightRequest="150" />
+                </StackLayout>
+            </ScrollView>
+
+            <Picker BindingContext="{x:Reference This}" x:Name="WeatherPicker" Title="Weather" ItemsSource="{Binding WeatherOptions}" SelectedItem="{Binding SelectedWeather}" />
+
+            <StackLayout Orientation="Horizontal" x:Name="RowTemperature">
+                <Entry Text="{Binding Temperature}" HorizontalOptions="FillAndExpand">
                     <Entry.Behaviors>
-                        <behaviors:LocationBehavior x:Name="LocationBehavior" />
-                        <behaviors:MaxLengthBehavior MaxLength="20" />
+                        <behaviors:ValidationBehavior Group="{x:Reference form}" PropertyName="Text" RowView="{x:Reference RowTemperature}">
+                            <behaviors:ValidationBehavior.Validators>
+                                <validators:RequiredValidator />
+                                <validators:FormatValidator
+                                        Message="Please enter a valid temperature"
+                                        Format="^-?([0-9]|([1-9][0-9]))(\.[0-9])?$" />
+                            </behaviors:ValidationBehavior.Validators>
+                        </behaviors:ValidationBehavior>
                     </Entry.Behaviors>
                 </Entry>
-                <Label Grid.Column="0" Grid.Row="1" Text="Description:" VerticalOptions="Center" />
-                <ScrollView Grid.Column="1" Grid.Row="1">
-                    <StackLayout Spacing="10" VerticalOptions="FillAndExpand" Orientation="Vertical">
-                        <Editor Text="{Binding Description}" HeightRequest="150" />
-                    </StackLayout>
-                </ScrollView>
-                <Label Grid.Column="0" Grid.Row="2" Text="Weather:" VerticalOptions="Center" />
-                <Picker Grid.Column="1" Grid.Row="2" BindingContext="{x:Reference This}" x:Name="WeatherPicker"
-                        Title="Select the Weather"
-                        ItemsSource="{Binding WeatherOptions}" SelectedItem="{Binding SelectedWeather}" />
-
-                <Label Grid.Column="0" Grid.Row="3" Text="Temperature:" VerticalOptions="Center" />
-                <StackLayout Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
-                    <Entry Text="{Binding Temperature}" HorizontalOptions="FillAndExpand">
-                        <Entry.Behaviors>
-                            <behaviors:TemperatureBehavior x:Name="TemperatureBehavior" />
-                            <behaviors:MaxLengthBehavior MaxLength="4" />
-                        </Entry.Behaviors>
-                    </Entry>
-                    <Label Text="°C" Margin="-5, 0, 0, 0" VerticalOptions="Center" HorizontalOptions="End" />
-                </StackLayout>
-            </Grid>
+                <Label Text="°C" Margin="-5, 0, 0, 0" VerticalOptions="Center" HorizontalOptions="End" />
+            </StackLayout>
 
             <Button BindingContext="{x:Reference This}" Text="View Catches" Clicked="ViewCatches_OnClicked"
                     IsVisible="{Binding IsEdit}" Style="{StaticResource ButtonStyle}" />
 
             <StackLayout Orientation="Horizontal" VerticalOptions="EndAndExpand">
                 <Button Text="Cancel" Clicked="CancelForm_OnClicked" Style="{StaticResource ButtonStyle}" />
-                <Button HorizontalOptions="EndAndExpand" Text="Save" Clicked="SaveFishingTrip_OnClicked"
-                        IsEnabled="True" Style="{StaticResource ButtonStyle}">
-                    <Button.Triggers>
-                        <MultiTrigger TargetType="Button">
-                            <MultiTrigger.Conditions>
-                                <BindingCondition
-                                    Binding="{Binding Source={x:Reference LocationBehavior}, Path=IsValid}"
-                                    Value="true" />
-                                <BindingCondition
-                                    Binding="{Binding Source={x:Reference TemperatureBehavior}, Path=IsValid}"
-                                    Value="true" />
-                            </MultiTrigger.Conditions>
-                            <Setter Property="IsEnabled" Value="True" />
-                        </MultiTrigger>
-                    </Button.Triggers>
-                </Button>
+                <Button HorizontalOptions="EndAndExpand" Text="Save" Clicked="SaveFishingTrip_OnClicked" IsEnabled="{Binding Source={x:Reference form}, Path=IsValid}" Style="{StaticResource ButtonStyle}" />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

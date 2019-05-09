@@ -119,14 +119,14 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             FishingTrip = fishingTrip;
             BindingContext = fishingTrip;
             SelectedWeather = fishingTrip.PredominantWeather;
-            if (!fishingTrip.Id.Equals("0"))
-            {
-                IsEdit = true;
-            }
-            else
+            if (fishingTrip.Id.Equals("0"))
             {
                 FishingTrip.DateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
                     DateTime.Now.Hour, DateTime.Now.Minute, 0);
+            }
+            else
+            {
+                IsEdit = true;
             }
 
             Date = FishingTrip.DateTime.Date;
