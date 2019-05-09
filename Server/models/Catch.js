@@ -19,6 +19,9 @@ const catchSchema = new mongoose.Schema({
 	}
 })
 
+mongoose.model("Catches", catchSchema)
+mongoose.model("CatchesTest", catchSchema)
+
 const catchAttr = ["_id", "FishType", "DateTime", "Length", "Weight"]
 const catchAttrNoId = ["FishType", "DateTime", "Length", "Weight"]
 
