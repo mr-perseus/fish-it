@@ -17,6 +17,7 @@ namespace Fishit.Presentation.UI.FormValidation.Behaviors
         public string PropertyName { get; set; }
         public ObservableCollection<IValidator> Validators { get; set; } = new ObservableCollection<IValidator>();
         public ValidationGroupBehavior Group { get; set; }
+        public View RowView { get; set; }
 
         public bool Validate()
         {
@@ -39,11 +40,11 @@ namespace Fishit.Presentation.UI.FormValidation.Behaviors
 
             if (!isValid)
             {
-                _style.ShowError(_view, errorMessage);
+                _style.ShowError(RowView, errorMessage);
 
                 return false;
             }
-            _style.RemoveError(_view);
+            _style.RemoveError(RowView);
             return true;
         }
 
@@ -52,6 +53,10 @@ namespace Fishit.Presentation.UI.FormValidation.Behaviors
             base.OnAttachedTo(bindable);
 
             _view = bindable as View;
+            if (RowView == null)
+            {
+                RowView = _view;
+            }
             _view.PropertyChanged += OnPropertyChanged;
             _view.Unfocused += OnUnFocused;
 
