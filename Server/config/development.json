@@ -1,4 +1,4 @@
 {
 	"port": 3802,
-	"EndPointUri": "http://localhost:3802/api/"
+	"TestEndPointUri": "http://localhost:3802/api/test/"
 }

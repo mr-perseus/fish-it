@@ -1,3 +1,4 @@
 {
-	"port": 40007
+	"port": 40007,
+	"TestEndPointUri": "http://sinv-56038.edu.hsr.ch:40007/api/test/"
 }

@@ -1,7 +1,7 @@
 const Request = require("request")
 const config = require("config")
 
-const CatchesUri = config.EndPointUri + "catch"
+const CatchesUri = config.TestEndPointUri + "catch"
 
 describe("Server", () => {
 	var Server

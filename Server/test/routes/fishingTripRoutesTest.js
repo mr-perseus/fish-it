@@ -1,7 +1,7 @@
 const Request = require("request")
 const config = require("config")
 
-const FishingTripsUri = config.EndPointUri + "fishingtrip"
+const FishingTripsUri = config.TestEndPointUri + "fishingtrip"
 
 describe("Server", () => {
 	var Server
