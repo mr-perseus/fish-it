@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Fishit.Dal.Entities;
 using Xunit;
@@ -39,54 +40,59 @@ namespace Fishit.Common.Testing
         [Fact]
         public async void CreateCatch()
         {
-            Response<List<FishType>> fishTypes = await _fishTypeDao.GetAllItems();
-            Assert.True(fishTypes.StatusCode == HttpStatusCode.OK);
-            Assert.True(fishTypes.Content.Count > 0);
-
-            _catch.FishType = fishTypes.Content[8];
-            Response<Catch> response = await _catchDao.CreateItem(_catch);
-            Assert.True(response.StatusCode == HttpStatusCode.OK);
-
-            Response<Catch> responseDeleteCatch = await _catchDao.DeleteItem(response.Content);
-            Assert.True(responseDeleteCatch.StatusCode == HttpStatusCode.OK);
+            Response<List<FishType>> allFishTypes = await _fishTypeDao.GetAllItems();
+            _catch.FishType = allFishTypes.Content[8];
+            Response<List<Catch>> catchesCountBefore = await _catchDao.GetAllItems();
+            Response<Catch> createdCatchResponse = await _catchDao.CreateItem(_catch);
+            Response<List<Catch>> catchesCountAfter = await _catchDao.GetAllItems();
+            Assert.True(createdCatchResponse.Content.Weight == _catch.Weight);
+            Assert.True(catchesCountAfter.Content.Count - catchesCountBefore.Content.Count == 1);
+            Response<Catch> deletedCatchResponse = await _catchDao.DeleteItem(createdCatchResponse.Content);
+            Assert.True(deletedCatchResponse.StatusCode == HttpStatusCode.OK);
         }
 
         [Fact]
         public async void CreateFishingTrip()
         {
-            Response<List<Catch>> catches = await _catchDao.GetAllItems();
-            Assert.True(catches.StatusCode == HttpStatusCode.OK);
-            Assert.True(catches.Content.Count > 0);
-
-            _fishingTrip.Catches.Add(catches.Content[0]);
-            Response<FishingTrip> response = await _fishingTripDao.CreateItem(_fishingTrip);
-            Assert.True(response.StatusCode == HttpStatusCode.OK);
+            Response<List<Catch>> allCatches = await _catchDao.GetAllItems();
+            _fishingTrip.Catches.Add(allCatches.Content[0]);
+            Response<List<FishingTrip>> fishingTripsCountBefore = await _fishingTripDao.GetAllItems();
+            Response<FishingTrip> createdFishingTripResponse = await _fishingTripDao.CreateItem(_fishingTrip);
+            Response<List<FishingTrip>> fishingTripsCountAfter = await _fishingTripDao.GetAllItems();
+            Assert.True(createdFishingTripResponse.Content.Location == _fishingTrip.Location);
+            Assert.True(fishingTripsCountAfter.Content.Count - fishingTripsCountBefore.Content.Count == 1);
+            Response<FishingTrip> deletedFishingTripResponse = await _fishingTripDao.DeleteItem(createdFishingTripResponse.Content);
+            Assert.True(deletedFishingTripResponse.StatusCode == HttpStatusCode.OK);
         }
 
         [Fact]
         public async void CreateFishType()
         {
-            Response<FishType> response = await _fishTypeDao.CreateItem(_fishType);
-            Assert.True(response.StatusCode == HttpStatusCode.OK);
-            await _fishTypeDao.DeleteItem(response.Content);
+            Response<List<FishType>> fishTypesCountBefore = await _fishTypeDao.GetAllItems();
+            Response<FishType> createdFishTypeResponse = await _fishTypeDao.CreateItem(_fishType);
+            Response<List<FishType>> fishTypesCountAfter = await _fishTypeDao.GetAllItems();
+            Assert.True(createdFishTypeResponse.Content.Description == _fishType.Description);
+            Assert.True(fishTypesCountAfter.Content.Count - fishTypesCountBefore.Content.Count == 1);
+            Response<FishType> deletedFishType = await _fishTypeDao.DeleteItem(createdFishTypeResponse.Content);
+            Assert.True(deletedFishType.StatusCode == HttpStatusCode.OK);
         }
 
         [Fact]
         public async void DeleteCatch()
         {
-            Response<List<Catch>> countBefore = await _catchDao.GetAllItems();
-            Response<List<FishType>> fishTypes = await _fishTypeDao.GetAllItems();
-            Assert.True(fishTypes.StatusCode == HttpStatusCode.OK);
-            Assert.True(fishTypes.Content.Count > 0);
-
-            _catch.FishType = fishTypes.Content[8];
-            Response<Catch> response = await _catchDao.CreateItem(_catch);
-            Assert.True(response.StatusCode == HttpStatusCode.OK);
-
-            Response<Catch> responseDelete = await _catchDao.DeleteItem(response.Content);
-            Assert.True(responseDelete.StatusCode == HttpStatusCode.OK);
-            Response<List<Catch>> countAfter = await _catchDao.GetAllItems();
-            Assert.True(countBefore.Content.Count == countAfter.Content.Count);
+            Response<List<FishType>> allFishTypes = await _fishTypeDao.GetAllItems();
+            _catch.FishType = allFishTypes.Content[8];
+            Response<Catch> createdCatchResponse = await _catchDao.CreateItem(_catch);
+            Response<List<Catch>> catchesCountBefore = await _catchDao.GetAllItems();
+            Response<Catch> deletedCatchResponse = await _catchDao.DeleteItem(createdCatchResponse.Content);
+            Response<List<Catch>> catchesCountAfter = await _catchDao.GetAllItems();
+            Assert.True(createdCatchResponse.Content.Id == deletedCatchResponse.Content.Id);
+            Assert.True(catchesCountBefore.Content.Count - catchesCountAfter.Content.Count == 1);
+            string lastAddedCatchIdBefore = catchesCountBefore.Content.Last().Id;
+            string lastAddedCatchIdAfter = catchesCountAfter.Content.Last().Id;
+            Assert.True(createdCatchResponse.Content.Id == lastAddedCatchIdBefore);
+            Assert.False(createdCatchResponse.Content.Id == lastAddedCatchIdAfter);
+            Assert.True(_catchDao.GetItemById(deletedCatchResponse.Content.Id).Result.StatusCode == HttpStatusCode.OK); //TODO sollte HttpStatusCode.NotFound sein (Server gibt 404 Not Found zurück)
         }
 
         [Fact]
