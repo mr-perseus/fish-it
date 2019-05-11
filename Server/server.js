@@ -29,7 +29,7 @@ server.use(logger)
 const routes = require("./routes/routes")
 server.use(["/api/test", "/api"], routes)
 
-const port = config.port
+const port = 3802
 server.listen(port, (error) => {
 	if (error) throw error
 	console.info(`ready at port ${port}`)
