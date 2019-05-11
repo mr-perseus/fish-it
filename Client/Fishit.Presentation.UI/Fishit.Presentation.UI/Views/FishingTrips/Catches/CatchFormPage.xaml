@@ -10,7 +10,7 @@
 
     <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Padding="20">
         <StackLayout.Behaviors>
-            <validators:ValidationGroupBehavior x:Name="form" />
+            <validators:ValidationGroupBehavior x:Name="Form" />
         </StackLayout.Behaviors>
         <TimePicker BindingContext="{x:Reference This}" x:Name="FishingTripTimePicker"
                     HorizontalOptions="EndAndExpand"
@@ -25,7 +25,7 @@
                                   SuggestionChosen="FishTypeAutoComplete_OnSuggestionChosen"
                                   HorizontalOptions="FillAndExpand">
                 <forms:AutoSuggestBox.Behaviors>
-                    <behaviors:ValidationBehavior Group="{x:Reference form}" PropertyName="Text"
+                    <behaviors:ValidationBehavior Group="{x:Reference Form}" PropertyName="Text"
                                                   RowView="{x:Reference RowFishType}">
                         <behaviors:ValidationBehavior.Validators>
                             <validators:RequiredValidator />
@@ -46,7 +46,7 @@
             <Entry BindingContext="{x:Reference This}" Text="{Binding Length}" Placeholder="Length"
                    HorizontalOptions="FillAndExpand">
                 <Entry.Behaviors>
-                    <behaviors:ValidationBehavior Group="{x:Reference form}" PropertyName="Text"
+                    <behaviors:ValidationBehavior Group="{x:Reference Form}" PropertyName="Text"
                                                   RowView="{x:Reference RowLength}">
                         <behaviors:ValidationBehavior.Validators>
                             <validators:PositiveDoubleValidator
@@ -63,7 +63,7 @@
             <Entry BindingContext="{x:Reference This}" Text="{Binding Weight}" Placeholder="Weight"
                    HorizontalOptions="FillAndExpand">
                 <Entry.Behaviors>
-                    <behaviors:ValidationBehavior Group="{x:Reference form}" PropertyName="Text"
+                    <behaviors:ValidationBehavior Group="{x:Reference Form}" PropertyName="Text"
                                                   RowView="{x:Reference RowWeight}">
                         <behaviors:ValidationBehavior.Validators>
                             <validators:PositiveDoubleValidator
@@ -79,7 +79,7 @@
         <StackLayout Orientation="Horizontal">
             <Button Text="Cancel" Clicked="BtnCancel_OnClicked" Style="{StaticResource ButtonStyle}" />
             <Button Text="Save" Clicked="SaveCatch_OnClicked"
-                    IsEnabled="{Binding Source={x:Reference form}, Path=IsValid}" Style="{StaticResource ButtonStyle}"
+                    IsEnabled="{Binding Source={x:Reference Form}, Path=IsValid}" Style="{StaticResource ButtonStyle}"
                     HorizontalOptions="EndAndExpand" />
         </StackLayout>
     </StackLayout>

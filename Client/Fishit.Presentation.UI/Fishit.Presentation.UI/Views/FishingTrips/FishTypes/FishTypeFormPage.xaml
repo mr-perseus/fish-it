@@ -8,11 +8,11 @@
              Title="FishType">
     <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Padding="20">
         <StackLayout.Behaviors>
-            <validators:ValidationGroupBehavior x:Name="form" />
+            <validators:ValidationGroupBehavior x:Name="Form" />
         </StackLayout.Behaviors>
         <Entry Text="{Binding Name}" Placeholder="Name">
             <Entry.Behaviors>
-                <behaviors:ValidationBehavior Group="{x:Reference form}" PropertyName="Text">
+                <behaviors:ValidationBehavior Group="{x:Reference Form}" PropertyName="Text">
                     <behaviors:ValidationBehavior.Validators>
                         <validators:RequiredValidator />
                         <validators:FormatValidator
@@ -27,7 +27,7 @@
         <StackLayout Orientation="Horizontal">
             <Button Text="Cancel" Clicked="BtnCancel_OnClicked" Style="{StaticResource ButtonStyle}" />
             <Button Text="Save" Clicked="BtnSaveFishType_OnClicked" Style="{StaticResource ButtonStyle}"
-                    IsEnabled="{Binding Source={x:Reference form}, Path=IsValid}" HorizontalOptions="EndAndExpand" />
+                    IsEnabled="{Binding Source={x:Reference Form}, Path=IsValid}" HorizontalOptions="EndAndExpand" />
         </StackLayout>
     </StackLayout>
 </ContentPage>
