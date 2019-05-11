@@ -1,7 +1,9 @@
 const Joi = require("joi")
 const mongoose = require("mongoose")
 
-const fishingTripSchema = new mongoose.Schema({
+const FishingTrip = {}
+
+FishingTrip.Schema = {
 	PredominantWeather: {
 		type: Number,
 		required: true
@@ -28,12 +30,23 @@ const fishingTripSchema = new mongoose.Schema({
 			ref: "Catches"
 		}
 	]
-})
+}
 
-mongoose.model("FishingTrips", fishingTripSchema)
-mongoose.model("FishingTripsTests", fishingTripSchema)
+FishingTrip.Model = mongoose.model("FishingTrips", new mongoose.Schema(FishingTrip.Schema))
+FishingTrip.ModelTest = mongoose.model(
+	"FishingTripsTests",
+	new mongoose.Schema({
+		...FishingTrip.Schema,
+		Catches: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: "CatchesTests"
+			}
+		]
+	})
+)
 
-const fishingTripAttr = [
+FishingTrip.attr = [
 	"_id",
 	"PredominantWeather",
 	"Location",
@@ -43,7 +56,7 @@ const fishingTripAttr = [
 	"Catches"
 ]
 
-const fishingTripAttrNoId = [
+FishingTrip.attrNoId = [
 	"PredominantWeather",
 	"Location",
 	"DateTime",
@@ -52,7 +65,7 @@ const fishingTripAttrNoId = [
 	"Catches"
 ]
 
-const fishingTripJoi = {
+FishingTrip.Joi = {
 	PredominantWeather: Joi.number().required(),
 	Location: Joi.string()
 		.max(64)
@@ -65,11 +78,6 @@ const fishingTripJoi = {
 	Catches: Joi.array()
 }
 
-const validateFishingTrip = (fT) => Joi.validate(fT, fishingTripJoi)
+FishingTrip.validate = (fT) => Joi.validate(fT, FishingTrip.Joi)
 
-module.exports = {
-	fishingTripSchema,
-	fishingTripAttr,
-	fishingTripAttrNoId,
-	validateFishingTrip
-}
+module.exports = FishingTrip

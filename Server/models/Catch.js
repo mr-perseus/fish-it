@@ -37,7 +37,7 @@ Catch.attr = ["_id", "FishType", "DateTime", "Length", "Weight"]
 Catch.attrNoId = ["FishType", "DateTime", "Length", "Weight"]
 
 Catch.Joi = {
-	FishType: Joi.string(),
+	FishType: Joi.object(),
 	DateTime: Joi.string(),
 	Length: Joi.number(),
 	Weight: Joi.number()
