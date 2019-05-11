@@ -4,13 +4,12 @@ using System.Threading.Tasks;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Fishit.Presentation.UI.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class AuthPage : ContentPage, IPageBase
+    public partial class AuthPage : IPageBase
     {
         private List<FishingTrip> _fishingTrips;
 

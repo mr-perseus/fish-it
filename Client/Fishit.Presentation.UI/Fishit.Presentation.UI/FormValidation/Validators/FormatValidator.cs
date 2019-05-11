@@ -13,7 +13,7 @@ namespace Fishit.Presentation.UI.FormValidation.Validators
             {
                 return false;
             }
-            
+
             return new Regex(Format).IsMatch(value);
         }
     }

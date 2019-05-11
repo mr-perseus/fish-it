@@ -25,7 +25,7 @@ namespace Fishit.Presentation.UI.FormValidation.Behaviors
                 bool result = validator.Check(_view.GetType()
                     .GetProperty(PropertyName)
                     ?.GetValue(_view) as string);
-                
+
                 if (!result)
                 {
                     isValid = false;

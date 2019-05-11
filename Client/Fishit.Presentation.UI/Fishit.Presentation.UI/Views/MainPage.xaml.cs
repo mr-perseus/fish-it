@@ -6,12 +6,11 @@ using Fishit.Presentation.UI.Views.Map;
 using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 using Xamarin.Forms.Xaml;
-using TabbedPage = Xamarin.Forms.TabbedPage;
 
 namespace Fishit.Presentation.UI.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MainPage : TabbedPage
+    public partial class MainPage
     {
         public MainPage(List<FishingTrip> fishingTrips)
         {

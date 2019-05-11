@@ -14,7 +14,7 @@ namespace Fishit.Presentation.UI.FormValidation.Errors
                 {
                     View sibling = layout.Children[viewIndex + 1];
                     string siblingStyleId = view.Id.ToString();
-                    
+
                     if (sibling.StyleId == siblingStyleId)
                     {
                         if (sibling is Label errorLabel)

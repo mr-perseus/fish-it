@@ -1,11 +1,10 @@
 ﻿using System;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Fishit.Presentation.UI.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SplashScreenPage : ContentPage
+    public partial class SplashScreenPage
     {
         public SplashScreenPage()
         {
