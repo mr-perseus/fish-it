@@ -1,23 +1,19 @@
 const _ = require("lodash")
-const {
-	fishingTripSchema,
-	fishingTripAttr,
-	fishingTripAttrNoId,
-	validateFishingTrip
-} = require("../models/FishingTrip")
-const { getModel } = require("./services")
+const FishingTrip = require("../models/FishingTrip")
+const { isTest } = require("./services")
 const getLogger = require("log4js").getLogger
 
 module.exports.getFishingTrips = async (req, res) => {
-	const FishingTrip = getModel(req.originalUrl, "FishingTrips", fishingTripSchema)
-	await FishingTrip.find()
+	const Model = isTest(req) ? FishingTrip.ModelTest : FishingTrip.Model
+
+	await Model.find()
 		.populate({ path: "Catches", populate: { path: "FishType" } })
 		.then((fishingTrips) => {
 			getLogger().info(
 				`fishingTripService; getFishingTrips; End; fishingTrips;`,
 				fishingTrips
 			)
-			res.send(fishingTrips)
+			res.send(fishingTrips.map((fishingTrip) => _.pick(fishingTrip, FishingTrip.attr)))
 		})
 		.catch((error) => {
 			getLogger().error(`fishingTripService; getFishingTrips; Error; error;`, error)
@@ -26,10 +22,10 @@ module.exports.getFishingTrips = async (req, res) => {
 }
 
 module.exports.getFishingTrip = async (req, res) => {
-	const FishingTrip = getModel(req.originalUrl, "FishingTrips", fishingTripSchema)
+	const Model = isTest(req) ? FishingTrip.ModelTest : FishingTrip.Model
 	const _id = req.params.id
 
-	await FishingTrip.findOne({ _id })
+	await Model.findOne({ _id })
 		.populate({ path: "Catches", populate: { path: "FishType" } })
 		.then((fishingTrip) => {
 			getLogger().info(
@@ -38,7 +34,7 @@ module.exports.getFishingTrip = async (req, res) => {
 				"; fishingTrip; ",
 				fishingTrip
 			)
-			res.send(fishingTrip)
+			res.send(_.pick(fishingTrip, FishingTrip.attr))
 		})
 		.catch((error) => {
 			getLogger().error(
@@ -52,9 +48,10 @@ module.exports.getFishingTrip = async (req, res) => {
 }
 
 module.exports.createFishingTrip = async (req, res) => {
-	const FishingTrip = getModel(req.originalUrl, "FishingTrips", fishingTripSchema)
-	const fishingTrip = _.pick(req.body, fishingTripAttrNoId)
-	const { error } = validateFishingTrip(fishingTrip)
+	const Model = isTest(req) ? FishingTrip.ModelTest : FishingTrip.Model
+	const fishingTrip = _.pick(req.body, FishingTrip.attrNoId)
+
+	const { error } = FishingTrip.validate(fishingTrip)
 	getLogger().info(
 		`fishingTripService; createFishingTrip; Start; fishingTrip;`,
 		fishingTrip,
@@ -63,14 +60,20 @@ module.exports.createFishingTrip = async (req, res) => {
 	)
 	if (error) return res.status(400).send(error.details[0].message)
 
-	await new FishingTrip(fishingTrip)
+	await new Model(fishingTrip)
 		.save()
 		.then((fishingTrip) => {
-			getLogger().info(
-				`fishingTripService; createFishingTrip; End; fishingTrip; `,
-				fishingTrip
+			Model.populate(
+				fishingTrip,
+				{ path: "Catches", populate: { path: "FishType" } },
+				(err, fT) => {
+					getLogger().info(
+						`fishingTripService; createFishingTrip; End; fishingTrip; `,
+						fT
+					)
+					res.send(_.pick(fT, FishingTrip.attr))
+				}
 			)
-			res.send({ ..._.pick(fishingTrip, fishingTripAttr), Catches: req.body.Catches })
 		})
 		.catch((error) => {
 			getLogger().error(
@@ -84,11 +87,11 @@ module.exports.createFishingTrip = async (req, res) => {
 }
 
 module.exports.updateFishingTrip = async (req, res) => {
-	const FishingTrip = getModel(req.originalUrl, "FishingTrips", fishingTripSchema)
+	const Model = isTest(req) ? FishingTrip.ModelTest : FishingTrip.Model
+	const fishingTrip = _.pick(req.body, FishingTrip.attrNoId)
 	const _id = req.params.id
-	const fishingTrip = _.pick(req.body, fishingTripAttrNoId)
 
-	const { error } = validateFishingTrip(fishingTrip)
+	const { error } = FishingTrip.validate(fishingTrip)
 	getLogger().info(
 		`fishingTripService; updateFishingTrip; Start; fishingTrip; `,
 		fishingTrip,
@@ -98,7 +101,7 @@ module.exports.updateFishingTrip = async (req, res) => {
 	)
 	if (error) return res.status(400).send(error.details[0].message)
 
-	await FishingTrip.findOneAndUpdate({ _id }, fishingTrip)
+	await Model.findOneAndUpdate({ _id }, fishingTrip, { new: true })
 		.populate({ path: "Catches", populate: { path: "FishType" } })
 		.then((fishingTrip) => {
 			getLogger().info(
@@ -106,11 +109,7 @@ module.exports.updateFishingTrip = async (req, res) => {
 				fishingTrip,
 				"; _id; " + _id
 			)
-			res.send({
-				..._.pick(req.body, fishingTripAttr),
-				Catches: fishingTrip.Catches,
-				_id: _id
-			})
+			res.send(_.pick(fishingTrip, FishingTrip.attr))
 		})
 		.catch((error) => {
 			getLogger().error(
@@ -125,10 +124,10 @@ module.exports.updateFishingTrip = async (req, res) => {
 }
 
 module.exports.deleteFishingTrip = async (req, res) => {
-	const FishingTrip = getModel(req.originalUrl, "FishingTrips", fishingTripSchema)
+	const Model = isTest(req) ? FishingTrip.ModelTest : FishingTrip.Model
 	const _id = req.params.id
 
-	await FishingTrip.findOneAndDelete({ _id })
+	await Model.findOneAndDelete({ _id })
 		.populate({ path: "Catches", populate: { path: "FishType" } })
 		.then((fishingTrip) => {
 			getLogger().info(
@@ -136,7 +135,7 @@ module.exports.deleteFishingTrip = async (req, res) => {
 				fishingTrip,
 				"; _id; " + _id
 			)
-			res.send(_.pick(fishingTrip, fishingTripAttr))
+			res.send(_.pick(fishingTrip, FishingTrip.attr))
 		})
 		.catch((error) => {
 			getLogger().error(

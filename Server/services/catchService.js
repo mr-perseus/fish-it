@@ -10,7 +10,7 @@ module.exports.getCatches = async (req, res) => {
 		.populate("FishType")
 		.then((catches) => {
 			getLogger().info(`catchService; getCatches; End; catch;`, catches)
-			res.send(catches)
+			res.send(catches.map((aCatch) => _.pick(aCatch, Catch.attr)))
 		})
 		.catch((error) => {
 			getLogger().error(`catchService; getCatches; Error; error;`, error)
@@ -36,9 +36,7 @@ module.exports.getCatch = async (req, res) => {
 
 module.exports.createCatch = async (req, res) => {
 	const Model = isTest(req) ? Catch.ModelTest : Catch.Model
-
 	const aCatch = _.pick(req.body, Catch.attrNoId)
-	aCatch.FishType = aCatch.FishType._id
 
 	const { error } = Catch.validate(aCatch)
 	getLogger().info(`catchService; createCatch; Start; catch;`, aCatch, "; error; ", error)
@@ -47,8 +45,10 @@ module.exports.createCatch = async (req, res) => {
 	await new Model(aCatch)
 		.save()
 		.then((aCatch) => {
-			getLogger().info(`catchService; createcatch; End; catch; `, aCatch)
-			res.send(_.pick(aCatch, Catch.attr))
+			Model.populate(aCatch, "FishType", (err, bCatch) => {
+				getLogger().info(`catchService; createcatch; End; catch; `, bCatch)
+				res.send(_.pick(bCatch, Catch.attr))
+			})
 		})
 		.catch((error) => {
 			getLogger().error(
@@ -63,10 +63,8 @@ module.exports.createCatch = async (req, res) => {
 
 module.exports.updateCatch = async (req, res) => {
 	const Model = isTest(req) ? Catch.ModelTest : Catch.Model
-	const _id = req.params.id
-
 	const aCatch = _.pick(req.body, Catch.attrNoId)
-	aCatch.FishType = aCatch.FishType._id
+	const _id = req.params.id
 
 	const { error } = Catch.validate(aCatch)
 	getLogger().info(
