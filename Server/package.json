@@ -34,6 +34,6 @@
 		"start": "node server.js",
 		"build": "node handleWindowsService.js install",
 		"clean": "node handleWindowsService.js remove",
-		"test": "NODE_ENV=\"development\" jasmine JASMINE_CONFIG_PATH=test/jasmine.json"
+		"test": "set NODE_ENV=development && jasmine JASMINE_CONFIG_PATH=test/jasmine.json"
 	}
 }
