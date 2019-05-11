@@ -52,6 +52,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 
         private async Task<CatchFormPage> InitializeAsync()
         {
+            FishTypesAsStrings = new List<string>();
             await SetFishTypes();
             return this;
         }
@@ -82,31 +83,43 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 
         private async void SaveCatch_OnClicked(object sender, EventArgs e)
         {
-            WriteValuesToObject();
-            await SaveCatch();
-            await Navigation.PopAsync();
+            if (WriteValuesToObject())
+            {
+                await SaveCatch();
+                await Navigation.PopAsync();
+            }
         }
 
-        private void WriteValuesToObject()
+        private bool WriteValuesToObject()
         {
-            Catch.FishType = GetFishType();
-            double.TryParse(Length, out double length);
-            double.TryParse(Weight, out double weight);
-            Catch.Length = length;
-            Catch.Weight = weight;
+            FishType fishType = GetFishType();
+
+            if (fishType != null)
+            {
+                Catch.FishType = fishType;
+                double.TryParse(Length, out double length);
+                double.TryParse(Weight, out double weight);
+                Catch.Length = length;
+                Catch.Weight = weight;
+                return true;
+            }
+
+            return false;
         }
 
         private FishType GetFishType()
         {
-            foreach (FishType fishType in FishTypes)
+            string fishType = FishTypeAutoComplete.Text;
+            foreach (FishType type in FishTypes)
             {
-                if (fishType.Name.Equals(FishType))
+                if (type.Name.Equals(fishType))
                 {
-                    return fishType;
+                    return type;
                 }
             }
 
-            return new FishType();
+            DisplayAlertMessage("Unknown Fish Type", "This Fish Type does not exist yet, please create it first.");
+            return null;
         }
 
         private void SetBindingContext(FishingTrip fishingTrip, Catch _catch)
@@ -161,7 +174,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 
             FishTypes = new ObservableCollection<FishType>(response.Content);
 
-            FishTypesAsStrings = new List<string>();
             SetFishTypesAsStrings();
         }
 
