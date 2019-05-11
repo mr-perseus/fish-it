@@ -11,14 +11,15 @@ using Xamarin.Forms.Xaml;
 namespace Fishit.Presentation.UI.Views.FishingTrips
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class FishingTripsPage : ContentPage, IPageBase
+    public partial class FishingTripsPage : IPageBase
     {
         private ObservableCollection<FishingTrip> _fishingTrips;
 
         public FishingTripsPage(List<FishingTrip> fishingTrips)
         {
-            _fishingTrips = new ObservableCollection<FishingTrip>(fishingTrips);
             InitializeComponent();
+
+            _fishingTrips = new ObservableCollection<FishingTrip>(fishingTrips);
             FishingTripsListView.ItemsSource = _fishingTrips;
         }
 
@@ -30,17 +31,17 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         public async Task ReloadFishingTrips()
         {
             Response<List<FishingTrip>> response = await new FishingTripManager().GetAllFishingTrips();
-            _fishingTrips = new ObservableCollection<FishingTrip>(response.Content);
+            if ((int) response.StatusCode < 400)
+            {
+                _fishingTrips = new ObservableCollection<FishingTrip>(response.Content);
+            }
 
             InformUserHelper<List<FishingTrip>> informer =
                 new InformUserHelper<List<FishingTrip>>(response, this);
 
             informer.InformUserOfResponse();
 
-            if (FishingTripsListView != null)
-            {
-                FishingTripsListView.ItemsSource = _fishingTrips;
-            }
+            FishingTripsListView.ItemsSource = _fishingTrips;
         }
 
         private async void TripsListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -63,7 +64,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         private async void Edit_Clicked(object sender, EventArgs e)
         {
             FishingTrip fishingTrip = (sender as MenuItem)?.CommandParameter as FishingTrip;
-            Console.Write(fishingTrip);
             await Navigation.PushAsync(new FishingTripsFormPage(this, fishingTrip));
         }
 

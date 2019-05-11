@@ -1,11 +1,10 @@
 ﻿using System.Collections.ObjectModel;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Fishit.Presentation.UI.Views.Map
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MapPage : ContentPage
+    public partial class MapPage
     {
         private ObservableCollection<string> _locations;
 

@@ -11,7 +11,7 @@ using Xamarin.Forms.Xaml;
 namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CatchesListPage : ContentPage, IPageBase
+    public partial class CatchesListPage : IPageBase
     {
         private ObservableCollection<Catch> _catches;
 
@@ -37,7 +37,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             }
 
             Catch _catch = e.SelectedItem as Catch;
-            Console.WriteLine(_catch);
             CatchFormPage catchFormPage = await CatchFormPage.CreateAsync(this, FishingTrip, _catch);
             await Navigation.PushAsync(catchFormPage);
             CatchesListView.SelectedItem = null;
@@ -46,7 +45,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         private async void Edit_Clicked(object sender, EventArgs e)
         {
             Catch _catch = (sender as MenuItem)?.CommandParameter as Catch;
-            Console.Write(_catch);
             CatchFormPage catchFormPage = await CatchFormPage.CreateAsync(this, FishingTrip, _catch);
             await Navigation.PushAsync(catchFormPage);
         }

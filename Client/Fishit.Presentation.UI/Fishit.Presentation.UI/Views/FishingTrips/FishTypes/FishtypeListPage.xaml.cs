@@ -11,9 +11,9 @@ using Xamarin.Forms.Xaml;
 namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class FishTypeListPage : ContentPage, IPageBase
+    public partial class FishTypeListPage : IPageBase
     {
-        private ObservableCollection<FishType> _fishtypes;
+        private ObservableCollection<FishType> _fishTypes;
 
         public FishTypeListPage()
         {
@@ -40,16 +40,16 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
         public async Task ReloadFishTypes()
         {
             Response<List<FishType>> response = await new FishingTripManager().GetAllFishTypes();
-            _fishtypes = new ObservableCollection<FishType>(response.Content);
+            _fishTypes = new ObservableCollection<FishType>(response.Content);
 
             InformUserHelper<List<FishType>> informer =
                 new InformUserHelper<List<FishType>>(response, this);
             informer.InformUserOfResponse();
 
-            FishtypeListView.ItemsSource = _fishtypes;
+            FishtypeListView.ItemsSource = _fishTypes;
         }
 
-        private async void FishtypeListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private async void FishTypeListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem == null)
             {

@@ -7,7 +7,7 @@
     <StackLayout>
         <ListView x:Name="FishtypeListView"
                   HasUnevenRows="True"
-                  ItemSelected="FishtypeListView_OnItemSelected"
+                  ItemSelected="FishTypeListView_OnItemSelected"
                   IsPullToRefreshEnabled="True"
                   Refreshing="Handle_Refreshing">
             <ListView.ItemTemplate>

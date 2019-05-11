@@ -50,7 +50,7 @@
                                                   RowView="{x:Reference RowLength}">
                         <behaviors:ValidationBehavior.Validators>
                             <validators:PositiveDoubleValidator
-                                MaxValue="50000"
+                                MaxValue="3000"
                                 MaxValueMessage="That number seems a little fishy..." />
                         </behaviors:ValidationBehavior.Validators>
                     </behaviors:ValidationBehavior>
@@ -68,7 +68,7 @@
                         <behaviors:ValidationBehavior.Validators>
                             <validators:PositiveDoubleValidator
                                 MaxValue="200000"
-                                MaxValueMessage="I think your scale is broken..." />
+                                MaxValueMessage="I think your scale is fishy..." />
                         </behaviors:ValidationBehavior.Validators>
                     </behaviors:ValidationBehavior>
                 </Entry.Behaviors>

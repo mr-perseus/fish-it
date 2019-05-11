@@ -3,9 +3,8 @@
 <ContentPage Title="Fishing Trips"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Fishit.Presentation.UI.Views.FishingTrips.FishingTripsPage"
-             x:Name="This">
-    <StackLayout x:Name="Root">
+             x:Class="Fishit.Presentation.UI.Views.FishingTrips.FishingTripsPage">
+    <StackLayout>
         <ListView x:Name="FishingTripsListView"
                   HasUnevenRows="True"
                   ItemSelected="TripsListView_ItemSelected"

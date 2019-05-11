@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Fishit.Presentation.UI.Views.FishingTrips.Catches.CatchesListPage"
              Title="Catches">
-    <StackLayout x:Name="Root">
+    <StackLayout>
         <ListView x:Name="CatchesListView"
                   HasUnevenRows="True"
                   ItemSelected="CatchesListView_OnItemSelected"

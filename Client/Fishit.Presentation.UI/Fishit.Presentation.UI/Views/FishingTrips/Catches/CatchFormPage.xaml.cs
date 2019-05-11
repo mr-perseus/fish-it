@@ -8,13 +8,12 @@ using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
 using Fishit.Presentation.UI.Views.FishingTrips.FishTypes;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CatchFormPage : ContentPage, IPageBase
+    public partial class CatchFormPage : IPageBase
     {
         public CatchFormPage(CatchesListPage caller, FishingTrip fishingTrip, Catch _catch)
         {

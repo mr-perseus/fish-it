@@ -4,16 +4,15 @@ using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
 using Fishit.Presentation.UI.Views.FishingTrips.Catches;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class FishTypeFormPage : ContentPage, IPageBase
+    public partial class FishTypeFormPage : IPageBase
     {
         private FishType _fishType;
-        private bool _isEdit;
+        private bool _isEdit = true;
 
         public FishTypeFormPage(object caller) : this(caller, new FishType())
         {
@@ -54,9 +53,9 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
         {
             _fishType = fishType;
             BindingContext = _fishType;
-            if (!_fishType.Id.Equals("0"))
+            if (_fishType.Id.Equals("0"))
             {
-                _isEdit = true;
+                _isEdit = false;
             }
         }
 

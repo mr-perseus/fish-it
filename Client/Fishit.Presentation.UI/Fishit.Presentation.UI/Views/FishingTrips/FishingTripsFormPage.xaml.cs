@@ -6,13 +6,12 @@ using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
 using Fishit.Presentation.UI.Views.FishingTrips.Catches;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Fishit.Presentation.UI.Views.FishingTrips
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class FishingTripsFormPage : ContentPage, IPageBase
+    public partial class FishingTripsFormPage : IPageBase
     {
         public FishingTripsFormPage(FishingTripsPage caller) : this(caller, new FishingTrip())
         {
@@ -94,7 +93,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         private async void SaveFishingTrip_OnClicked(object sender, EventArgs e)
         {
             await SaveFishingTrip();
-            await Navigation.PopAsync();
             await Navigation.PopAsync();
         }
 

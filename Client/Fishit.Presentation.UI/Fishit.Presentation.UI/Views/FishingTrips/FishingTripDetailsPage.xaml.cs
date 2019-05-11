@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
 using Fishit.Presentation.UI.Views.FishingTrips.Catches;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Fishit.Presentation.UI.Views.FishingTrips
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class FishingTripDetailsPage : ContentPage, IPageBase
+    public partial class FishingTripDetailsPage : IPageBase
     {
         public FishingTripDetailsPage(FishingTripsPage caller, FishingTrip fishingTrip)
         {
@@ -41,8 +38,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
         {
             FishingTrip = fishingTrip;
             BindingContext = fishingTrip;
-            List<Catch> catchArrayToList = fishingTrip.Catches.ToList();
-            NumberOfCatches = catchArrayToList.Count;
+            NumberOfCatches = fishingTrip.Catches.Count;
         }
 
         public async Task RefreshData(FishingTrip fishingTrip)
