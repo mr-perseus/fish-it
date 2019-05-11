@@ -23,12 +23,12 @@
 		"log4js": "^4.1.0",
 		"mongoose": "^5.5.2",
 		"node-windows": "^0.1.14",
+		"request": "^2.88.0",
 		"path": "^0.12.7"
 	},
 	"devDependencies": {
 		"jasmine": "3.4.0",
-		"jasmine-reporters": "2.3.2",
-		"request": "^2.88.0"
+		"jasmine-reporters": "2.3.2"
 	},
 	"scripts": {
 		"start": "node server.js",
