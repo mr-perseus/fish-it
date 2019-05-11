@@ -1,6 +1,4 @@
-﻿using System;
-using Xamarin.UITest;
-using Xamarin.UITest.Queries;
+﻿using Xamarin.UITest;
 
 namespace Fishit.Presentation.UI.Testing
 {
@@ -11,10 +9,11 @@ namespace Fishit.Presentation.UI.Testing
             if (platform == Platform.Android)
             {
                 //return ConfigureApp.Android.StartApp();
-                return ConfigureApp.Android.ApkFile("../../../Fishit.Presentation.UI/Fishit.Presentation.UI.Android/bin/Release/ch.fishit.apk").StartApp();
-
+                return ConfigureApp.Android
+                    .ApkFile("../../../Fishit.Presentation.UI/Fishit.Presentation.UI.Android/bin/Release/ch.fishit.apk")
+                    .StartApp();
             }
-            
+
             return ConfigureApp.iOS.StartApp();
         }
     }

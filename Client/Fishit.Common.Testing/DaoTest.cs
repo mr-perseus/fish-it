@@ -222,7 +222,6 @@ namespace Fishit.Common.Testing
             Assert.True(deletedFishingtrip.StatusCode == HttpStatusCode.OK);
         }
 
-
         [Fact]
         public async void UpdateFishType()
         {

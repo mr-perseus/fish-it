@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using NUnit.Framework;
 using Xamarin.UITest;
 using Xamarin.UITest.Queries;
@@ -10,18 +8,18 @@ namespace Fishit.Presentation.UI.Testing
     [TestFixture(Platform.Android)]
     public class Tests
     {
+        [SetUp]
+        public void BeforeEachTest()
+        {
+            _app = AppInitializer.StartApp(_platform);
+        }
+
         private IApp _app;
         private readonly Platform _platform;
 
         public Tests(Platform platform)
         {
             _platform = platform;
-        }
-
-        [SetUp]
-        public void BeforeEachTest()
-        {
-            _app = AppInitializer.StartApp(_platform);
         }
 
         [Test]
