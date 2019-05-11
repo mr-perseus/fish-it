@@ -71,7 +71,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 
             InformUserHelper<FishingTrip> informer =
                 new InformUserHelper<FishingTrip>(response, this);
-            informer.InformUserOfResponse("Catch has been saved successfully!");
+            informer.InformUserOfResponse();
             Caller.RefreshList(response.Content);
         }
 

@@ -74,7 +74,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
 
             InformUserHelper<FishType> informer =
                 new InformUserHelper<FishType>(response, this);
-            informer.InformUserOfResponse("FishType has been saved successfully!");
+            informer.InformUserOfResponse();
 
             if (CallerCatchFormPage != null)
             {

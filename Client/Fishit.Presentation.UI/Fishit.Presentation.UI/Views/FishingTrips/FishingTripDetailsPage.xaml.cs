@@ -58,7 +58,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
 
             InformUserHelper<FishingTrip> informer =
                 new InformUserHelper<FishingTrip>(response, this);
-            informer.InformUserOfResponse("Fishing trip has been deleted successfully!");
+            informer.InformUserOfResponse();
 
             await Caller.ReloadFishingTrips();
             await Navigation.PopAsync();
