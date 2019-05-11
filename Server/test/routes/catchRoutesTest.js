@@ -173,6 +173,23 @@ describe("Server", () => {
 				expect(dFishData.body.Name).toEqual(bFish.Name)
 				expect(dFishData.body.Description).toEqual(bFish.Description)
 			})
+
+			describe("- removing", () => {
+				let remData = {}
+
+				beforeAll((done) => {
+					Request.delete(CatchUriId, (err, res, body) => {
+						remData.status = res.statusCode
+						remData.body = JSON.parse(body)
+						done()
+					})
+				})
+
+				it(" - a catch", () => {
+					expect(remData.status).toBe(200)
+					expect(remData.body).toEqual(dData.body)
+				})
+			})
 		})
 	})
 })
