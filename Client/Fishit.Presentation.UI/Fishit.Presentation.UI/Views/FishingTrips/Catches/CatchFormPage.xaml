@@ -14,7 +14,8 @@
         </StackLayout.Behaviors>
         <TimePicker BindingContext="{x:Reference This}" x:Name="FishingTripTimePicker"
                     HorizontalOptions="EndAndExpand"
-                    PropertyChanged="Refresh_DateTime" Time="{Binding Time}" />
+                    PropertyChanged="Refresh_DateTime" Time="{Binding Time}"
+                    Unfocused="RefreshValidation"/>
 
         <StackLayout Orientation="Horizontal" x:Name="RowFishType">
             <forms:AutoSuggestBox BindingContext="{x:Reference This}"
@@ -22,7 +23,6 @@
                                   PlaceholderText="Fish Type"
                                   x:Name="FishTypeAutoComplete"
                                   TextChanged="FishTypeAutoComplete_OnTextChanged"
-                                  SuggestionChosen="FishTypeAutoComplete_OnSuggestionChosen"
                                   HorizontalOptions="FillAndExpand">
                 <forms:AutoSuggestBox.Behaviors>
                     <behaviors:ValidationBehavior Group="{x:Reference Form}" PropertyName="Text"

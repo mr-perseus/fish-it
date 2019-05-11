@@ -22,7 +22,7 @@
                 </behaviors:ValidationBehavior>
             </Entry.Behaviors>
         </Entry>
-        <Entry Text="{Binding Description}" Placeholder="Description" />
+        <Entry Text="{Binding Description}" Placeholder="Description" Unfocused="RefreshValidation" />
 
         <StackLayout Orientation="Horizontal">
             <Button Text="Cancel" Clicked="BtnCancel_OnClicked" Style="{StaticResource ButtonStyle}" />

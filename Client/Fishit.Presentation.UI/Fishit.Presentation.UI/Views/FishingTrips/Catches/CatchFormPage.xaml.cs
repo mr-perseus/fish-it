@@ -29,7 +29,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         public bool IsEdit { get; set; }
         public ObservableCollection<FishType> FishTypes { get; set; }
         public List<string> FishTypesAsStrings { get; set; }
-        public string FishType { get; set; }
         public CatchesListPage Caller { get; set; }
         public string Length { get; set; }
         public string Weight { get; set; }
@@ -131,12 +130,10 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             {
                 Catch.DateTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day,
                     DateTime.Now.Hour, DateTime.Now.Minute, 0);
-                FishType = "";
             }
             else
             {
                 IsEdit = true;
-                FishType = Catch.FishType.Name;
             }
 
             if (Catch.Length > 0)
@@ -193,16 +190,17 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
                     FishTypesAsStrings.Where(x => x.ToLower().StartsWith(FishTypeAutoComplete.Text.ToLower())).ToList();
                 FishTypeAutoComplete.ItemsSource = filteredList;
             }
-        }
-
-        private void FishTypeAutoComplete_OnSuggestionChosen(object sender, AutoSuggestBoxSuggestionChosenEventArgs e)
-        {
-            FishType = (string) e.SelectedItem;
+            RefreshValidation(sender, e);
         }
 
         private async void AddFishType_OnClicked(object sender, EventArgs e)
         {
             await Navigation.PushAsync(new FishTypeFormPage(this, FishTypeAutoComplete.Text));
+        }
+
+        public void RefreshValidation(object sender, EventArgs e)
+        {
+            Form?.Update();
         }
     }
 }

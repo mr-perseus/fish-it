@@ -130,5 +130,10 @@ namespace Fishit.Presentation.UI.Views.FishingTrips
             Date = FishingTrip.DateTime.Date;
             Time = FishingTrip.DateTime.TimeOfDay;
         }
+
+        private void RefreshValidation(object sender, EventArgs e)
+        {
+            Form?.Update();
+        }
     }
 }

@@ -27,10 +27,15 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
             SetCaller(caller);
             SetBindingContext(fishType);
             InitializeComponent();
+            if (_isNamePrefilled)
+            {
+                RefreshValidation(this, EventArgs.Empty);
+            }
         }
 
         public FishTypeListPage CallerFishTypeListPage { get; set; }
         public CatchFormPage CallerCatchFormPage { get; set; }
+        private bool _isNamePrefilled;
 
         public void DisplayAlertMessage(string title, string message)
         {
@@ -56,6 +61,11 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
             if (_fishType.Id.Equals("0"))
             {
                 _isEdit = false;
+
+                if (!string.IsNullOrEmpty(_fishType.Name))
+                {
+                    _isNamePrefilled = true;
+                }
             }
         }
 
@@ -79,6 +89,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
             if (CallerCatchFormPage != null)
             {
                 await CallerCatchFormPage.SetFishTypes();
+                CallerCatchFormPage.RefreshValidation(this, EventArgs.Empty);
             }
 
             if (CallerFishTypeListPage != null)
@@ -96,6 +107,11 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
         {
             await SaveFishType();
             await Navigation.PopAsync();
+        }
+
+        private void RefreshValidation(object sender, EventArgs e)
+        {
+            Form?.Update();
         }
     }
 }
