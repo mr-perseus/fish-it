@@ -26,7 +26,7 @@ namespace Fishit.Common
         public async Task<Response<List<T>>> GetAllItems()
         {
             _logger.Info(nameof(GetAllItems) + "; Start; ");
-            
+
             return await HandleRequest<List<T>>(() => new HttpClient().GetAsync(_endPointUri));
         }
 
@@ -42,7 +42,7 @@ namespace Fishit.Common
         public async Task<Response<T>> GetItemById(string id)
         {
             _logger.Info(nameof(GetItem) + "; Start; " + "id; " + id);
-            
+
             return await HandleRequest<T>(() =>
                 new HttpClient().GetAsync(_endPointUri + Path.DirectorySeparatorChar + id));
         }
@@ -51,7 +51,7 @@ namespace Fishit.Common
         {
             _logger.Info(nameof(CreateItem) + "; Start; " + "item; " + item);
             StringContent body = new StringContent(Stringify(item), Encoding.UTF8, "application/json");
-            
+
             return await HandleRequest<T>(() =>
                 new HttpClient().PostAsync(_endPointUri + Resources.CreateNew, body));
         }
@@ -61,7 +61,7 @@ namespace Fishit.Common
             _logger.Info(nameof(UpdateItem) + "; Start; " + "itemBefore; " + item);
             string id = typeof(T).GetProperty("Id")?.GetValue(item).ToString();
             StringContent body = new StringContent(Stringify(item), Encoding.UTF8, "application/json");
-            
+
             return await HandleRequest<T>(() =>
                 new HttpClient().PutAsync(_endPointUri + Path.DirectorySeparatorChar + id, body));
         }
@@ -70,7 +70,7 @@ namespace Fishit.Common
         {
             string id = typeof(T).GetProperty("Id")?.GetValue(item).ToString();
             _logger.Info(nameof(DeleteItem) + "; Start; " + "id; " + id);
-            
+
             return await HandleRequest<T>(() =>
                 new HttpClient().DeleteAsync(_endPointUri + Path.DirectorySeparatorChar + id));
         }
@@ -107,7 +107,7 @@ namespace Fishit.Common
                             Content = new T1()
                         };
                     }
-                    
+
                     _logger.Info(nameof(HandleRequest) + "; End; response; " + response + "; itemContent; " +
                                  itemContent);
 

@@ -61,7 +61,8 @@ namespace Fishit.Common.Testing
             Response<List<FishingTrip>> fishingTripsCountAfter = await _fishingTripDao.GetAllItems();
             Assert.True(createdFishingTripResponse.Content.Location == _fishingTrip.Location);
             Assert.True(fishingTripsCountAfter.Content.Count - fishingTripsCountBefore.Content.Count == 1);
-            Response<FishingTrip> deletedFishingTripResponse = await _fishingTripDao.DeleteItem(createdFishingTripResponse.Content);
+            Response<FishingTrip> deletedFishingTripResponse =
+                await _fishingTripDao.DeleteItem(createdFishingTripResponse.Content);
             Assert.True(deletedFishingTripResponse.StatusCode == HttpStatusCode.OK);
         }
 
@@ -92,7 +93,9 @@ namespace Fishit.Common.Testing
             string lastAddedCatchIdAfter = catchesCountAfter.Content.Last().Id;
             Assert.True(createdCatchResponse.Content.Id == lastAddedCatchIdBefore);
             Assert.False(createdCatchResponse.Content.Id == lastAddedCatchIdAfter);
-            Assert.True(_catchDao.GetItemById(deletedCatchResponse.Content.Id).Result.StatusCode == HttpStatusCode.OK); //TODO sollte HttpStatusCode.NotFound sein (Server gibt 404 Not Found zurück)
+            Assert.True(_catchDao.GetItemById(deletedCatchResponse.Content.Id).Result.StatusCode ==
+                        HttpStatusCode
+                            .OK); //TODO sollte HttpStatusCode.NotFound sein (Server gibt 404 Not Found zurück)
         }
 
         [Fact]
@@ -168,6 +171,33 @@ namespace Fishit.Common.Testing
         }
 
         [Fact]
+        private async void UpdateCatch()
+        {
+            Response<List<FishType>> fishTypes = await _fishTypeDao.GetAllItems();
+            Assert.True(fishTypes.StatusCode == HttpStatusCode.OK);
+            Assert.True(fishTypes.Content.Count > 0);
+            _catch.FishType = fishTypes.Content[8];
+
+            Response<Catch> createdCatchIdResponse = await _catchDao.CreateItem(_catch);
+            Assert.True(createdCatchIdResponse.StatusCode == HttpStatusCode.OK);
+            Response<Catch> requestedCatchBeforeUpdateResponse =
+                await _catchDao.GetItemById(createdCatchIdResponse.Content.Id);
+            Assert.True(requestedCatchBeforeUpdateResponse.Content.Length != 200);
+            requestedCatchBeforeUpdateResponse.Content.Length = 200;
+
+            Response<Catch> refreshedCatchResponse =
+                await _catchDao.UpdateItem(requestedCatchBeforeUpdateResponse.Content);
+            Assert.True(refreshedCatchResponse.StatusCode == HttpStatusCode.OK);
+
+            Response<Catch> requestedCatchAfterUpdateResponse =
+                await _catchDao.GetItemById(refreshedCatchResponse.Content.Id);
+            Assert.True(requestedCatchAfterUpdateResponse.Content.Length == 200);
+
+            Response<Catch> responseDeleteCatch = await _catchDao.DeleteItem(requestedCatchAfterUpdateResponse.Content);
+            Assert.True(responseDeleteCatch.StatusCode == HttpStatusCode.OK);
+        }
+
+        [Fact]
         public async void UpdateFishingTrip()
         {
             Response<List<Catch>> catches = await _catchDao.GetAllItems();
@@ -179,12 +209,13 @@ namespace Fishit.Common.Testing
             Assert.True(createdFishingTripResponse.StatusCode == HttpStatusCode.OK);
             Response<FishingTrip> fishingTripBeforeUpdate =
                 await _fishingTripDao.GetItemById(createdFishingTripResponse.Content.Id);
-            Assert.True((fishingTripBeforeUpdate.Content.Description != "Schwimmer 5m Tiefe"));
+            Assert.True(fishingTripBeforeUpdate.Content.Description != "Schwimmer 5m Tiefe");
             fishingTripBeforeUpdate.Content.Description = "Schwimmer 5m Tiefe";
             fishingTripBeforeUpdate.Content.Location = "Silsersee";
             Response<FishingTrip> updatedFishingTrip =
                 await _fishingTripDao.UpdateItem(fishingTripBeforeUpdate.Content);
-            Response<FishingTrip> fishingTripAfterUpdate = await _fishingTripDao.GetItemById(updatedFishingTrip.Content.Id);
+            Response<FishingTrip> fishingTripAfterUpdate =
+                await _fishingTripDao.GetItemById(updatedFishingTrip.Content.Id);
             Assert.True(fishingTripAfterUpdate.Content.Description == "Schwimmer 5m Tiefe");
             Assert.True(fishingTripAfterUpdate.Content.Location == "Silsersee");
             Response<FishingTrip> deletedFishingtrip = await _fishingTripDao.DeleteItem(fishingTripAfterUpdate.Content);
@@ -192,45 +223,24 @@ namespace Fishit.Common.Testing
         }
 
 
-
         [Fact]
         public async void UpdateFishType()
         {
             Response<FishType> createdFishtypeResponse = await _fishTypeDao.CreateItem(_fishType);
-            Response<FishType> createdFishtypeByIdResponse = await _fishTypeDao.GetItemById(createdFishtypeResponse.Content.Id);
+            Response<FishType> createdFishtypeByIdResponse =
+                await _fishTypeDao.GetItemById(createdFishtypeResponse.Content.Id);
             Assert.True(createdFishtypeByIdResponse.Content.Name != "Rainbowtrout");
             createdFishtypeByIdResponse.Content.Name = "Rainbowtrout";
             createdFishtypeByIdResponse.Content.Description = "Salmon with rainbow colors";
-            Response<FishType> updatedFishtypeResponse = await _fishTypeDao.UpdateItem(createdFishtypeByIdResponse.Content);
+            Response<FishType> updatedFishtypeResponse =
+                await _fishTypeDao.UpdateItem(createdFishtypeByIdResponse.Content);
             Assert.True(updatedFishtypeResponse.StatusCode == HttpStatusCode.OK);
-            Response<FishType> refreshedFishtypeResponse = await _fishTypeDao.GetItemById(updatedFishtypeResponse.Content.Id);
+            Response<FishType> refreshedFishtypeResponse =
+                await _fishTypeDao.GetItemById(updatedFishtypeResponse.Content.Id);
             Assert.True(refreshedFishtypeResponse.Content.Name == "Rainbowtrout");
-            Response<FishType> deletedFishtypeResponse = await _fishTypeDao.DeleteItem(refreshedFishtypeResponse.Content);
+            Response<FishType> deletedFishtypeResponse =
+                await _fishTypeDao.DeleteItem(refreshedFishtypeResponse.Content);
             Assert.True(deletedFishtypeResponse.StatusCode == HttpStatusCode.OK);
-        }
-
-        [Fact]
-        async void UpdateCatch()
-        {
-            Response<List<FishType>> fishTypes = await _fishTypeDao.GetAllItems();
-            Assert.True(fishTypes.StatusCode == HttpStatusCode.OK);
-            Assert.True(fishTypes.Content.Count > 0);
-            _catch.FishType = fishTypes.Content[8];
-
-            Response<Catch> createdCatchIdResponse = await _catchDao.CreateItem(_catch);
-            Assert.True(createdCatchIdResponse.StatusCode == HttpStatusCode.OK);
-            Response<Catch> requestedCatchBeforeUpdateResponse = await _catchDao.GetItemById(createdCatchIdResponse.Content.Id);
-            Assert.True(requestedCatchBeforeUpdateResponse.Content.Length != 200);
-            requestedCatchBeforeUpdateResponse.Content.Length = 200;
-
-            Response<Catch> refreshedCatchResponse = await _catchDao.UpdateItem(requestedCatchBeforeUpdateResponse.Content);
-            Assert.True(refreshedCatchResponse.StatusCode == HttpStatusCode.OK);
-
-            Response<Catch> requestedCatchAfterUpdateResponse = await _catchDao.GetItemById(refreshedCatchResponse.Content.Id);
-            Assert.True(requestedCatchAfterUpdateResponse.Content.Length == 200);
-
-            Response<Catch> responseDeleteCatch = await _catchDao.DeleteItem(requestedCatchAfterUpdateResponse.Content);
-            Assert.True(responseDeleteCatch.StatusCode == HttpStatusCode.OK);
         }
     }
 }
