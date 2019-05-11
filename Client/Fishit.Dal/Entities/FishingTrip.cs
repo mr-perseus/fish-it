@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Newtonsoft.Json;
 
 namespace Fishit.Dal.Entities
 {
@@ -15,7 +16,7 @@ namespace Fishit.Dal.Entities
             Hailing
         }
 
-        public string Id { get; set; } = "0";
+        [JsonProperty("_id")] public string Id { get; set; } = "0";
         public string Location { get; set; }
         public DateTime DateTime { get; set; }
         public string Description { get; set; } = "";
