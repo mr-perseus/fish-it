@@ -1,7 +1,9 @@
 const Joi = require("joi")
 const mongoose = require("mongoose")
 
-const catchSchema = new mongoose.Schema({
+const Catch = {}
+
+Catch.Schema = {
 	FishType: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "FishTypes"
@@ -17,26 +19,30 @@ const catchSchema = new mongoose.Schema({
 	Weight: {
 		type: Number
 	}
-})
+}
 
-mongoose.model("Catches", catchSchema)
-mongoose.model("CatchesTests", catchSchema)
+Catch.Model = mongoose.model("Catches", new mongoose.Schema(Catch.Schema))
+Catch.ModelTest = mongoose.model(
+	"CatchesTests",
+	new mongoose.Schema({
+		...Catch.Schema,
+		FishType: {
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "FishTypesTests"
+		}
+	})
+)
 
-const catchAttr = ["_id", "FishType", "DateTime", "Length", "Weight"]
-const catchAttrNoId = ["FishType", "DateTime", "Length", "Weight"]
+Catch.attr = ["_id", "FishType", "DateTime", "Length", "Weight"]
+Catch.attrNoId = ["FishType", "DateTime", "Length", "Weight"]
 
-const catchJoi = {
+Catch.Joi = {
 	FishType: Joi.string(),
 	DateTime: Joi.string(),
 	Length: Joi.number(),
 	Weight: Joi.number()
 }
 
-const validateCatch = (c) => Joi.validate(c, catchJoi)
+Catch.validate = (c) => Joi.validate(c, Catch.Joi)
 
-module.exports = {
-	catchSchema,
-	catchAttr,
-	catchAttrNoId,
-	validateCatch
-}
+module.exports = Catch

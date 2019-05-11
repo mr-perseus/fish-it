@@ -3,6 +3,10 @@ const { fishTypeSchema } = require("../models/FishType")
 const { catchSchema } = require("../models/Catch")
 const { fishingTripSchema } = require("../models/FishingTrip")
 
+module.exports.isTest = (req) => {
+	return req.originalUrl.indexOf("test") > -1
+}
+
 module.exports.getModel = (path, model, schema) => {
 	const collection = path.indexOf("test") > -1 ? model + "Tests" : model
 	return mongoose.model(collection, schema)

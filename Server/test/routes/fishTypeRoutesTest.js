@@ -95,11 +95,10 @@ describe("Server", () => {
 				)
 			})
 
-			it("Updating bad Request", (done) => {
+			it("validation check", () => {
 				expect(emptyData.status).toBe(400)
 				expect(longData.status).toBe(400)
 				expect(aData.body.Name).toBe("Salmono")
-				done()
 			})
 		})
 
@@ -114,10 +113,9 @@ describe("Server", () => {
 				})
 			})
 
-			it("a Fishtype", (done) => {
+			it("a Fishtype", () => {
 				expect(remData.status).toBe(200)
 				expect(remData.body).toEqual(aData.body)
-				done()
 			})
 		})
 	})
