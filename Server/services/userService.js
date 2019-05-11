@@ -92,7 +92,6 @@ module.exports.updateUser = async (req, res) => {
 }
 
 module.exports.updateUserById = async (_id, obj) => {
-	console.log(obj)
 	return await User.findOneAndUpdate({ _id }, obj)
 		.then((user) => {
 			return _.pick(user, userDataAttr)

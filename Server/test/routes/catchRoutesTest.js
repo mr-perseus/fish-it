@@ -152,7 +152,7 @@ describe("Server", () => {
 								Request.get(CatchUriId, (err, res, body) => {
 									dFishData.status = res.statusCode
 									dFishData.body = JSON.parse(body).FishType
-									console.log(body)
+
 									cb()
 								})
 							}
