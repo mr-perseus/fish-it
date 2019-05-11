@@ -100,11 +100,11 @@ describe("Server", () => {
 			)
 		})
 
-		// afterAll((done) => {
-		// 	Request.delete(config.TestEndPointUri, () => {
-		// 		done()
-		// 	})
-		// })
+		afterAll((done) => {
+			Request.delete(config.TestEndPointUri, () => {
+				done()
+			})
+		})
 
 		it("- Creation Successfull", () => {
 			expect(catchData.status).toBe(200)
@@ -164,13 +164,14 @@ describe("Server", () => {
 
 			it("- validation check", () => {
 				expect(cData.status).toBe(400)
-				expect(catchData.body.Length).toBe("88")
-				expect(catchData.body.Weight).toBe("88")
+				expect(catchData.body.Length).toBe(88)
+				expect(catchData.body.Weight).toBe(88)
 			})
 
 			it("- try changing FishType", () => {
 				expect(dData.status).toBe(200)
-				expect(dFishData.body).toEqual(bFish)
+				expect(dFishData.body.Name).toEqual(bFish.Name)
+				expect(dFishData.body.Description).toEqual(bFish.Description)
 			})
 		})
 	})
