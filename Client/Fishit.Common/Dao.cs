@@ -26,37 +26,8 @@ namespace Fishit.Common
         public async Task<Response<List<T>>> GetAllItems()
         {
             _logger.Info(nameof(GetAllItems) + "; Start; ");
-            using (HttpClient client = new HttpClient())
-            {
-                using (HttpResponseMessage response = await client.GetAsync(_endPointUri))
-                {
-                    if (response.StatusCode != HttpStatusCode.OK)
-                    {
-                        _logger.Error(nameof(GetAllItems) + "; Error; response; " + response);
-
-                        return new Response<List<T>>
-                        {
-                            StatusCode = response.StatusCode,
-                            Message = "Unsuccessful Get All " + typeof(T),
-                            Content = new List<T>()
-                        };
-                    }
-
-                    using (HttpContent content = response.Content)
-                    {
-                        string itemContent = await content.ReadAsStringAsync();
-                        _logger.Info(nameof(GetAllItems) + "; End; response; " + response + "; itemContent; " +
-                                     itemContent);
-
-                        return new Response<List<T>>
-                        {
-                            StatusCode = response.StatusCode,
-                            Message = "Successful Get All " + typeof(T),
-                            Content = ParseList(itemContent)
-                        };
-                    }
-                }
-            }
+            
+            return await HandleRequest<List<T>>(() => new HttpClient().GetAsync(_endPointUri));
         }
 
         public async Task<Response<T>> GetItem(T item)
@@ -64,32 +35,25 @@ namespace Fishit.Common
             string id = typeof(T).GetProperty("Id")?.GetValue(item).ToString();
             _logger.Info(nameof(GetItem) + "; Start; " + "id; " + id);
 
-            using (HttpClient client = new HttpClient())
-            {
-                return await HandleRequest(() => client.GetAsync(_endPointUri + Path.DirectorySeparatorChar + id));
-            }
+            return await HandleRequest<T>(() =>
+                new HttpClient().GetAsync(_endPointUri + Path.DirectorySeparatorChar + id));
         }
 
         public async Task<Response<T>> GetItemById(string id)
         {
             _logger.Info(nameof(GetItem) + "; Start; " + "id; " + id);
-
-            using (HttpClient client = new HttpClient())
-            {
-                return await HandleRequest(() => client.GetAsync(_endPointUri + Path.DirectorySeparatorChar + id));
-            }
+            
+            return await HandleRequest<T>(() =>
+                new HttpClient().GetAsync(_endPointUri + Path.DirectorySeparatorChar + id));
         }
 
         public async Task<Response<T>> CreateItem(T item)
         {
             _logger.Info(nameof(CreateItem) + "; Start; " + "item; " + item);
             StringContent body = new StringContent(Stringify(item), Encoding.UTF8, "application/json");
-
-            using (HttpClient client = new HttpClient())
-            {
-                return await HandleRequest(() =>
-                    client.PostAsync(_endPointUri + Resources.CreateNew, body));
-            }
+            
+            return await HandleRequest<T>(() =>
+                new HttpClient().PostAsync(_endPointUri + Resources.CreateNew, body));
         }
 
         public async Task<Response<T>> UpdateItem(T item)
@@ -97,37 +61,25 @@ namespace Fishit.Common
             _logger.Info(nameof(UpdateItem) + "; Start; " + "itemBefore; " + item);
             string id = typeof(T).GetProperty("Id")?.GetValue(item).ToString();
             StringContent body = new StringContent(Stringify(item), Encoding.UTF8, "application/json");
-
-            using (HttpClient client = new HttpClient())
-            {
-                return await HandleRequest(() =>
-                    client.PutAsync(_endPointUri + Path.DirectorySeparatorChar + id, body));
-            }
+            
+            return await HandleRequest<T>(() =>
+                new HttpClient().PutAsync(_endPointUri + Path.DirectorySeparatorChar + id, body));
         }
 
         public async Task<Response<T>> DeleteItem(T item)
         {
             string id = typeof(T).GetProperty("Id")?.GetValue(item).ToString();
             _logger.Info(nameof(DeleteItem) + "; Start; " + "id; " + id);
-
-            using (HttpClient client = new HttpClient())
-            {
-                return await HandleRequest(() => client.DeleteAsync(_endPointUri + Path.DirectorySeparatorChar + id));
-            }
+            
+            return await HandleRequest<T>(() =>
+                new HttpClient().DeleteAsync(_endPointUri + Path.DirectorySeparatorChar + id));
         }
 
-        public List<T> ParseList(string items)
+        public T1 Parse<T1>(string item)
         {
             JsonSerializerSettings settings = new JsonSerializerSettings
                 {ContractResolver = new CustomContractResolver()};
-            return JsonConvert.DeserializeObject<List<T>>(items, settings);
-        }
-
-        public T Parse(string item)
-        {
-            JsonSerializerSettings settings = new JsonSerializerSettings
-                {ContractResolver = new CustomContractResolver()};
-            return JsonConvert.DeserializeObject<T>(item, settings);
+            return JsonConvert.DeserializeObject<T1>(item, settings);
         }
 
         public string Stringify(T item)
@@ -135,33 +87,35 @@ namespace Fishit.Common
             return JsonConvert.SerializeObject(item);
         }
 
-        private async Task<Response<T>> HandleRequest(Func<Task<HttpResponseMessage>> httpFunction)
+        private async Task<Response<T1>> HandleRequest<T1>(Func<Task<HttpResponseMessage>> httpFunction)
+            where T1 : new()
         {
             using (HttpResponseMessage response = await httpFunction())
             {
-                if (response.StatusCode != HttpStatusCode.OK)
+                using (HttpContent content = response.Content)
                 {
-                    _logger.Error(nameof(HandleRequest) + "; Error; response; " + response);
+                    string itemContent = await content.ReadAsStringAsync();
 
-                    return new Response<T>
+                    if (response.StatusCode != HttpStatusCode.OK)
                     {
-                        StatusCode = response.StatusCode,
-                        Message = "Unsuccessful",
-                        Content = new T()
-                    };
-                }
+                        _logger.Error(nameof(HandleRequest) + "; Error; response; " + response);
 
-                using (HttpContent responseContent = response.Content)
-                {
-                    string itemContent = await responseContent.ReadAsStringAsync();
+                        return new Response<T1>
+                        {
+                            StatusCode = response.StatusCode,
+                            Message = itemContent,
+                            Content = new T1()
+                        };
+                    }
+                    
                     _logger.Info(nameof(HandleRequest) + "; End; response; " + response + "; itemContent; " +
                                  itemContent);
 
-                    return new Response<T>
+                    return new Response<T1>
                     {
                         StatusCode = response.StatusCode,
-                        Message = "Successful",
-                        Content = Parse(itemContent)
+                        Message = "Successful" + typeof(T),
+                        Content = Parse<T1>(itemContent)
                     };
                 }
             }
