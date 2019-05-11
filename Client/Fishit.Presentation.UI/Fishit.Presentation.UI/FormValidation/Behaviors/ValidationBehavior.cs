@@ -24,20 +24,18 @@ namespace Fishit.Presentation.UI.FormValidation.Behaviors
             {
                 bool result = validator.Check(_view.GetType()
                     .GetProperty(PropertyName)
-                    .GetValue(_view) as string);
-                isValid = isValid && result;
-
+                    ?.GetValue(_view) as string);
+                
                 if (!result)
                 {
+                    isValid = false;
                     errorMessage = validator.Message;
-                    break;
                 }
             }
 
             if (!isValid)
             {
                 _style.ShowError(RowView, errorMessage);
-
                 return false;
             }
 
@@ -55,13 +53,13 @@ namespace Fishit.Presentation.UI.FormValidation.Behaviors
                 RowView = _view;
             }
 
-            _view.PropertyChanged += OnPropertyChanged;
-            _view.Unfocused += OnUnFocused;
-
-            if (Group != null)
+            if (_view != null)
             {
-                Group.Add(this);
+                _view.PropertyChanged += OnPropertyChanged;
+                _view.Unfocused += OnUnFocused;
             }
+
+            Group?.Add(this);
         }
 
         protected override void OnDetachingFrom(BindableObject bindable)
@@ -71,20 +69,14 @@ namespace Fishit.Presentation.UI.FormValidation.Behaviors
             _view.PropertyChanged -= OnPropertyChanged;
             _view.Unfocused -= OnUnFocused;
 
-            if (Group != null)
-            {
-                Group.Remove(this);
-            }
+            Group?.Remove(this);
         }
 
         private void OnUnFocused(object sender, FocusEventArgs e)
         {
             Validate();
 
-            if (Group != null)
-            {
-                Group.Update();
-            }
+            Group?.Update();
         }
 
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)

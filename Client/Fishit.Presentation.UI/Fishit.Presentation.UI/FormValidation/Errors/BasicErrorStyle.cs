@@ -6,47 +6,52 @@ namespace Fishit.Presentation.UI.FormValidation.Errors
     {
         public void ShowError(View view, string message)
         {
-            StackLayout layout = view.Parent as StackLayout;
-            int viewIndex = layout.Children.IndexOf(view);
-
-            if (viewIndex + 1 < layout.Children.Count)
+            if (view.Parent is StackLayout layout)
             {
-                View sibling = layout.Children[viewIndex + 1];
-                string siblingStyleId = view.Id.ToString();
-                // Reuse the existing label
-                if (sibling.StyleId == siblingStyleId)
+                int viewIndex = layout.Children.IndexOf(view);
+
+                if (viewIndex + 1 < layout.Children.Count)
                 {
-                    Label errorLabel = sibling as Label;
-                    errorLabel.Text = message;
-                    errorLabel.IsVisible = true;
+                    View sibling = layout.Children[viewIndex + 1];
+                    string siblingStyleId = view.Id.ToString();
+                    
+                    if (sibling.StyleId == siblingStyleId)
+                    {
+                        if (sibling is Label errorLabel)
+                        {
+                            errorLabel.Text = message;
+                            errorLabel.IsVisible = true;
+                        }
 
-                    return;
+                        return;
+                    }
                 }
-            }
 
-            // Add new label if none exists
-            layout.Children.Insert(viewIndex + 1, new Label
-            {
-                Text = message,
-                FontSize = 10,
-                StyleId = view.Id.ToString(),
-                TextColor = Color.Red
-            });
+                layout.Children.Insert(viewIndex + 1, new Label
+                {
+                    Text = message,
+                    FontSize = 12,
+                    StyleId = view.Id.ToString(),
+                    TextColor = Color.Red
+                });
+            }
         }
 
         public void RemoveError(View view)
         {
-            StackLayout layout = view.Parent as StackLayout;
-            int viewIndex = layout.Children.IndexOf(view);
-
-            if (viewIndex + 1 < layout.Children.Count)
+            if (view.Parent is StackLayout layout)
             {
-                View sibling = layout.Children[viewIndex + 1];
-                string siblingStyleId = view.Id.ToString();
+                int viewIndex = layout.Children.IndexOf(view);
 
-                if (sibling.StyleId == siblingStyleId)
+                if (viewIndex + 1 < layout.Children.Count)
                 {
-                    sibling.IsVisible = false;
+                    View sibling = layout.Children[viewIndex + 1];
+                    string siblingStyleId = view.Id.ToString();
+
+                    if (sibling.StyleId == siblingStyleId)
+                    {
+                        sibling.IsVisible = false;
+                    }
                 }
             }
         }

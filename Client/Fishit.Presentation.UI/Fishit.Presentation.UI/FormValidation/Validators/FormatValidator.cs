@@ -9,14 +9,12 @@ namespace Fishit.Presentation.UI.FormValidation.Validators
 
         public bool Check(string value)
         {
-            if (!string.IsNullOrEmpty(value))
+            if (string.IsNullOrEmpty(value))
             {
-                Regex format = new Regex(Format);
-
-                return format.IsMatch(value);
+                return false;
             }
-
-            return false;
+            
+            return new Regex(Format).IsMatch(value);
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Fishit.Presentation.UI.FormValidation.Validators
 
             foreach (ValidationBehavior validationItem in _validationBehaviors)
             {
-                isValid = isValid && validationItem.Validate();
+                isValid &= validationItem.Validate();
             }
 
             IsValid = isValid;
