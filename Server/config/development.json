@@ -1,5 +1,0 @@
-{
-	"port": 3802,
-	"db": "mongodb://localhost:27017/fishitTest",
-	"EndPointUri": "http://localhost:3802/api/"
-}

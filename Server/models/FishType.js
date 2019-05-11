@@ -1,7 +1,9 @@
 const Joi = require("joi")
 const mongoose = require("mongoose")
 
-const fishTypeSchema = new mongoose.Schema({
+const FishType = {}
+
+FishType.Schema = {
 	Name: {
 		type: String,
 		required: true,
@@ -11,15 +13,15 @@ const fishTypeSchema = new mongoose.Schema({
 		type: String,
 		maxlength: 1024
 	}
-})
+}
 
-mongoose.model("FishTypes", fishTypeSchema)
-mongoose.model("FishTypesTest", fishTypeSchema)
+FishType.Model = mongoose.model("FishTypes", new mongoose.Schema(FishType.Schema))
+FishType.ModelTest = mongoose.model("FishTypesTests", new mongoose.Schema(FishType.Schema))
 
-const fishTypeAttr = ["_id", "Name", "Description"]
-const fishTypeAttrNoId = ["Name", "Description"]
+FishType.attr = ["_id", "Name", "Description"]
+FishType.attrNoId = ["Name", "Description"]
 
-const fishTypeJoi = {
+FishType.Joi = {
 	Name: Joi.string()
 		.max(64)
 		.required(),
@@ -28,11 +30,6 @@ const fishTypeJoi = {
 		.max(1024)
 }
 
-const validateFishType = (f) => Joi.validate(f, fishTypeJoi)
+FishType.validate = (f) => Joi.validate(f, FishType.Joi)
 
-module.exports = {
-	fishTypeSchema,
-	fishTypeAttr,
-	fishTypeAttrNoId,
-	validateFishType
-}
+module.exports = FishType
