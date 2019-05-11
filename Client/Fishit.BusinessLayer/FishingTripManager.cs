@@ -68,13 +68,7 @@ namespace Fishit.BusinessLayer
             }
 
             fishingTrip.Catches.Add(catchResponse.Content);
-            await UpdateFishingTrip(fishingTrip);
-            return new Response<FishingTrip>
-            {
-                StatusCode = catchResponse.StatusCode,
-                Message = "Successful addCatch",
-                Content = fishingTrip
-            };
+            return await UpdateFishingTrip(fishingTrip);
         }
 
         public async Task<Response<FishingTrip>> UpdateCatch(FishingTrip fishingTrip, Catch aCatch)
@@ -92,13 +86,7 @@ namespace Fishit.BusinessLayer
 
             int index = fishingTrip.Catches.IndexOf(aCatch);
             fishingTrip.Catches[index] = catchResponse.Content;
-            await UpdateFishingTrip(fishingTrip);
-            return new Response<FishingTrip>
-            {
-                StatusCode = catchResponse.StatusCode,
-                Message = "Successful update Catch",
-                Content = fishingTrip
-            };
+            return await UpdateFishingTrip(fishingTrip);
         }
 
         public async Task<Response<FishingTrip>> DeleteCatch(FishingTrip fishingTrip, Catch aCatch)
@@ -116,13 +104,7 @@ namespace Fishit.BusinessLayer
 
             int index = fishingTrip.Catches.IndexOf(aCatch);
             fishingTrip.Catches.RemoveAt(index);
-            await UpdateFishingTrip(fishingTrip);
-            return new Response<FishingTrip>
-            {
-                StatusCode = catchResponse.StatusCode,
-                Message = "Successful delete Catch",
-                Content = fishingTrip
-            };
+            return await UpdateFishingTrip(fishingTrip);
         }
 
         public async Task<Response<List<FishType>>> GetAllFishTypes()
