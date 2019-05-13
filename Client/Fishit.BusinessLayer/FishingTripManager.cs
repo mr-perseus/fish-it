@@ -24,11 +24,6 @@ namespace Fishit.BusinessLayer
             return await _fishingTripDao.GetAllItems();
         }
 
-        public async Task<Response<FishingTrip>> GetFishingTripById(string id)
-        {
-            return await _fishingTripDao.GetItemById(id);
-        }
-
         public async Task<Response<FishingTrip>> GetFishingTrip(FishingTrip fishingTrip)
         {
             return await _fishingTripDao.GetItem(fishingTrip);
@@ -49,9 +44,13 @@ namespace Fishit.BusinessLayer
             return await _fishingTripDao.DeleteItem(fishingTrip);
         }
 
-        public async Task<Response<List<Catch>>> GetAllCatches(FishingTrip fishingTrip)
+        public async Task<Response<List<Catch>>> GetAllCatches()
         {
             return await _catchDao.GetAllItems();
+        }
+        public async Task<Response<Catch>> CreateCatch(Catch catchToAdd)
+        {
+            return await _catchDao.CreateItem(catchToAdd);
         }
 
         public async Task<Response<FishingTrip>> AddCatch(FishingTrip fishingTrip, Catch aCatch)
