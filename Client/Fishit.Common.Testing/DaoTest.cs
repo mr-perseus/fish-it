@@ -122,16 +122,16 @@ namespace Fishit.Common.Testing
         [Fact]
         public async void DeleteFishType()
         {
-            Response<FishType> createdCatchResponse = await _fishTypeDao.CreateItem(_fishType);
-            Response<List<FishType>> catchListBefore = await _fishTypeDao.GetAllItems();
-            Response<FishType> deletedCatchResponse = await _fishTypeDao.DeleteItem(createdCatchResponse.Content);
-            Response<List<FishType>> catchListAfter = await _fishTypeDao.GetAllItems();
-            Assert.True(createdCatchResponse.Content.Id == deletedCatchResponse.Content.Id);
-            Assert.True(catchListBefore.Content.Count - catchListAfter.Content.Count == 1);
-            string lastAddedFishingTripIdBefore = catchListBefore.Content.Last().Id;
-            string lastAddedFishingTripIdAfter = catchListAfter.Content.Last().Id;
-            Assert.True(createdCatchResponse.Content.Id == lastAddedFishingTripIdBefore);
-            Assert.False(createdCatchResponse.Content.Id == lastAddedFishingTripIdAfter);
+            Response<FishType> createdFishTypeResponse = await _fishTypeDao.CreateItem(_fishType);
+            Response<List<FishType>> fishTypeListBefore = await _fishTypeDao.GetAllItems();
+            Response<FishType> deletedFishTypeResponse = await _fishTypeDao.DeleteItem(createdFishTypeResponse.Content);
+            Response<List<FishType>> fishTypeListAfter = await _fishTypeDao.GetAllItems();
+            Assert.True(createdFishTypeResponse.Content.Id == deletedFishTypeResponse.Content.Id);
+            Assert.True(fishTypeListBefore.Content.Count - fishTypeListAfter.Content.Count == 1);
+            string lastAddedFishingTripIdBefore = fishTypeListBefore.Content.Last().Id;
+            string lastAddedFishingTripIdAfter = fishTypeListAfter.Content.Last().Id;
+            Assert.True(createdFishTypeResponse.Content.Id == lastAddedFishingTripIdBefore);
+            Assert.False(createdFishTypeResponse.Content.Id == lastAddedFishingTripIdAfter);
         }
 
         [Fact]

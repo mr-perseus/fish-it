@@ -91,7 +91,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         private async Task ReloadFishingTrip()
         {
             FishingTripManager manager = new FishingTripManager();
-            Response<FishingTrip> response = await manager.GetFishingTripById(FishingTrip.Id);
+            Response<FishingTrip> response = await manager.GetFishingTrip(FishingTrip);
 
             InformUserHelper<FishingTrip> informer =
                 new InformUserHelper<FishingTrip>(response, this);
