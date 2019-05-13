@@ -27,7 +27,7 @@ namespace Fishit.Presentation.UI.Testing
 
 
         [Test]
-        public void CreateAndDeleteFishingTrip()
+        public void Test01CreateFishingTrip()
         {
             _app.Tap(c => c.Marked("Add Fishing Trip"));
 
@@ -45,16 +45,23 @@ namespace Fishit.Presentation.UI.Testing
             }
 
             _app.Tap(c => c.Marked("Save"));
-
-            _app.ScrollDown(strategy: ScrollStrategy.Programmatically);
-            _app.Tap(c => c.Marked("UITest"));
-            _app.Tap(c => c.Marked("Delete"));
         }
 
         [Test]
-        public void CreateCatch()
+        public void Test02CreateCatch()
         {
-            _app.Tap(c => c.Marked("Obersee"));
+            _app.ScrollDown(strategy: ScrollStrategy.Programmatically);
+            _app.Tap(c => c.Marked("UITest"));
+            _app.Tap(c => c.Marked("View Catches"));
+            _app.Tap(c => c.Marked("Add Catch"));
+        }
+
+        [Test]
+        public void Test03DeleteFishingTrip()
+        {
+            _app.ScrollDown(strategy: ScrollStrategy.Programmatically);
+            _app.Tap(c => c.Marked("UITest"));
+            _app.Tap(c => c.Marked("Delete"));
         }
     }
 }
