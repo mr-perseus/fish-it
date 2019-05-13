@@ -12,6 +12,9 @@ namespace Fishit.Presentation.UI.Testing
         public void BeforeEachTest()
         {
             _app = AppInitializer.StartApp(_platform);
+            _app.Tap(c => c.Marked("Come and get me!"));
+            _app.Tap(c => c.Marked("Login"));
+            _app.Tap(c => c.Marked("Fishing Trips"));
         }
 
         private IApp _app;
@@ -22,15 +25,13 @@ namespace Fishit.Presentation.UI.Testing
             _platform = platform;
         }
 
+
         [Test]
-        public void CreateFishingTrip()
+        public void CreateAndDeleteFishingTrip()
         {
-            _app.Tap(c => c.Marked("Come and get me!"));
-            _app.Tap(c => c.Marked("Login"));
-            _app.Tap(c => c.Marked("Fishing Trips"));
             _app.Tap(c => c.Marked("Add Fishing Trip"));
 
-            _app.EnterText(c => c.Marked("Location"), "Zurich");
+            _app.EnterText(c => c.Marked("Location"), "UITest");
             _app.EnterText(c => c.Marked("Description"), "Test Description");
             _app.Tap(c => c.Marked("Weather"));
             _app.Tap(c => c.Marked("Sunny"));
@@ -44,6 +45,16 @@ namespace Fishit.Presentation.UI.Testing
             }
 
             _app.Tap(c => c.Marked("Save"));
+
+            _app.ScrollDown(strategy: ScrollStrategy.Programmatically);
+            _app.Tap(c => c.Marked("UITest"));
+            _app.Tap(c => c.Marked("Delete"));
+        }
+
+        [Test]
+        public void CreateCatch()
+        {
+            _app.Tap(c => c.Marked("Obersee"));
         }
     }
 }
