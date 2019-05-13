@@ -23,12 +23,27 @@ namespace Fishit.Presentation.UI.Testing
         }
 
         [Test]
-        public void WelcomeTextIsDisplayed()
+        public void CreateFishingTrip()
         {
-            AppResult[] results = _app.WaitForElement(c => c.Marked("Welcome to Xamarin.Forms!"));
-            _app.Screenshot("Welcome screen.");
+            _app.Tap(c => c.Marked("Come and get me!"));
+            _app.Tap(c => c.Marked("Login"));
+            _app.Tap(c => c.Marked("Fishing Trips"));
+            _app.Tap(c => c.Marked("Add Fishing Trip"));
 
-            Assert.IsTrue(results.Any());
+            _app.EnterText(c => c.Marked("Location"), "Zurich");
+            _app.EnterText(c => c.Marked("Description"), "Test Description");
+            _app.Tap(c => c.Marked("Weather"));
+            _app.Tap(c => c.Marked("Sunny"));
+
+
+            AppResult saveButton = _app.Query(c => c.Marked("Save")).FirstOrDefault();
+            Assert.NotNull(saveButton);
+            if (saveButton != null)
+            {
+                Assert.True(saveButton.Enabled);
+            }
+
+            _app.Tap(c => c.Marked("Save"));
         }
     }
 }
