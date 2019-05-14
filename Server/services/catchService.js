@@ -1,13 +1,16 @@
 const _ = require("lodash")
-const { Catch, catchAttr, catchAttrNoId, validateCatch } = require("../models/Catch")
+const Catch = require("../models/Catch")
+const { isTest } = require("./services")
 const getLogger = require("log4js").getLogger
 
 module.exports.getCatches = async (req, res) => {
-	await Catch.find()
+	const Model = isTest(req) ? Catch.ModelTest : Catch.Model
+
+	await Model.find()
 		.populate("FishType")
 		.then((catches) => {
 			getLogger().info(`catchService; getCatches; End; catch;`, catches)
-			res.send(catches)
+			res.send(catches.map((aCatch) => _.pick(aCatch, Catch.attr)))
 		})
 		.catch((error) => {
 			getLogger().error(`catchService; getCatches; Error; error;`, error)
@@ -16,13 +19,14 @@ module.exports.getCatches = async (req, res) => {
 }
 
 module.exports.getCatch = async (req, res) => {
+	const Model = isTest(req) ? Catch.ModelTest : Catch.Model
 	const _id = req.params.id
 
-	await Catch.findOne({ _id })
+	await Model.findOne({ _id })
 		.populate("FishType")
 		.then((aCatch) => {
 			getLogger().info(`catchService; getCatch; End; _id;`, _id, "; catch; ", aCatch)
-			res.send(_.pick(aCatch, catchAttr))
+			res.send(_.pick(aCatch, Catch.attr))
 		})
 		.catch((error) => {
 			getLogger().error(`catchService; getCatch; Error; _id;`, _id, "; error; ", error)
@@ -31,17 +35,20 @@ module.exports.getCatch = async (req, res) => {
 }
 
 module.exports.createCatch = async (req, res) => {
-	const aCatch = _.pick(req.body, catchAttrNoId)
-	aCatch.FishType = aCatch.FishType._id
-	const { error } = validateCatch(aCatch)
+	const Model = isTest(req) ? Catch.ModelTest : Catch.Model
+	const aCatch = _.pick(req.body, Catch.attrNoId)
+
+	const { error } = Catch.validate(aCatch)
 	getLogger().info(`catchService; createCatch; Start; catch;`, aCatch, "; error; ", error)
 	if (error) return res.status(400).send(error.details[0].message)
 
-	await new Catch(aCatch)
+	await new Model(aCatch)
 		.save()
 		.then((aCatch) => {
-			getLogger().info(`catchService; createcatch; End; catch; `, aCatch)
-			res.send(_.pick(aCatch, "_id"))
+			Model.populate(aCatch, "FishType", (err, bCatch) => {
+				getLogger().info(`catchService; createcatch; End; catch; `, bCatch)
+				res.send(_.pick(bCatch, Catch.attr))
+			})
 		})
 		.catch((error) => {
 			getLogger().error(
@@ -55,11 +62,11 @@ module.exports.createCatch = async (req, res) => {
 }
 
 module.exports.updateCatch = async (req, res) => {
+	const Model = isTest(req) ? Catch.ModelTest : Catch.Model
+	const aCatch = _.pick(req.body, Catch.attrNoId)
 	const _id = req.params.id
-	const aCatch = _.pick(req.body, catchAttrNoId)
-	aCatch.FishType = aCatch.FishType._id
 
-	const { error } = validateCatch(aCatch)
+	const { error } = Catch.validate(aCatch)
 	getLogger().info(
 		`catchService; updateCatch; Start; catch; `,
 		aCatch,
@@ -69,15 +76,16 @@ module.exports.updateCatch = async (req, res) => {
 	)
 	if (error) return res.status(400).send(error.details[0].message)
 
-	await Catch.findOneAndUpdate({ _id }, aCatch)
+	await Model.findOneAndUpdate({ _id }, aCatch, { new: true })
+		.populate("FishType")
 		.then((aCatch) => {
 			getLogger().info(`catchService; updateCatch; End; catch; `, aCatch, "; _id; " + _id)
-			res.send(_.pick(aCatch, "_id"))
+			res.send(_.pick(aCatch, Catch.attr))
 		})
 		.catch((error) => {
 			getLogger().error(
 				`catchService; updateCatch; Error; catch;`,
-				vatch,
+				aCatch,
 				"; _id; " + _id,
 				"; error; ",
 				error
@@ -87,12 +95,14 @@ module.exports.updateCatch = async (req, res) => {
 }
 
 module.exports.deleteCatch = async (req, res) => {
+	const Model = isTest(req) ? Catch.ModelTest : Catch.Model
 	const _id = req.params.id
 
-	await Catch.findOneAndDelete({ _id })
+	await Model.findOneAndDelete({ _id })
+		.populate("FishType")
 		.then((aCatch) => {
 			getLogger().info(`catchService; deleteCatch; End; catch; `, aCatch, "; _id; " + _id)
-			res.send(_.pick(aCatch, "_id"))
+			res.send(_.pick(aCatch, Catch.attr))
 		})
 		.catch((error) => {
 			getLogger().error(`catchService; deleteCatch; Error; _id;`, _id, "; error; ", error)

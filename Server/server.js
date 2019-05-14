@@ -4,13 +4,6 @@ const server = express()
 const config = require("config")
 const mongoose = require("mongoose")
 
-const auth = require("./routes/authRoutes")
-const catches = require("./routes/catchRoutes")
-const users = require("./routes/userRoutes")
-const friends = require("./routes/friendRoutes")
-const fishTypes = require("./routes/fishTypeRoutes")
-const fishingTrips = require("./routes/fishingTripRoutes")
-
 // IMPORTANT: set your json web token private key as an environmental variable.
 if (!config.get("jwtPrivateKey")) {
 	console.error("FATAL ERROR: jwtPrivateKey is not defined.")
@@ -33,14 +26,10 @@ server.use(bodyParser.urlencoded({ extended: true }))
 const logger = require("./utils/log")
 server.use(logger)
 
-server.use("/api/auth", auth)
-server.use("/api/catches", catches)
-server.use("/api/users", users)
-server.use("/api/friends", friends)
-server.use("/api/fishtypes", fishTypes)
-server.use("/api/fishingtrips", fishingTrips)
+const routes = require("./routes/routes")
+server.use(["/api/test", "/api"], routes)
 
-const port = process.env.PORT || config.port
+const port = config.port
 server.listen(port, (error) => {
 	if (error) throw error
 	console.info(`ready at port ${port}`)

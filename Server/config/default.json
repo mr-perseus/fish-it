@@ -1,5 +1,8 @@
 {
 	"jwtPrivateKey": "",
 	"adminPw": "",
-	"userPw": ""
+	"userPw": "",
+	"db": "mongodb://localhost:27017/fishit",
+	"port": 3802,
+	"TestEndPointUri": "http://localhost:3802/api/test/"
 }
