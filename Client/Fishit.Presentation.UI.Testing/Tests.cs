@@ -45,6 +45,9 @@ namespace Fishit.Presentation.UI.Testing
             }
 
             _app.Tap(c => c.Marked("Save"));
+
+            AppResult[] results = _app.WaitForElement(c => c.Marked("UITest"));
+            Assert.IsTrue(results.Any());
         }
 
         [Test]
@@ -54,6 +57,14 @@ namespace Fishit.Presentation.UI.Testing
             _app.Tap(c => c.Marked("UITest"));
             _app.Tap(c => c.Marked("View Catches"));
             _app.Tap(c => c.Marked("Add Catch"));
+            _app.EnterText(c => c.Marked("Fish Type"), "Spike");
+            _app.Tap(c => c.Marked("Spike"));
+            _app.EnterText(c => c.Marked("Length"), "50");
+            _app.EnterText(c => c.Marked("Weight"), "6");
+            _app.Tap(c => c.Marked("Save"));
+
+            AppResult[] results = _app.WaitForElement(c => c.Marked("Spike"));
+            Assert.IsTrue(results.Any());
         }
 
         [Test]
