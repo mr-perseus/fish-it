@@ -1,6 +1,8 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Plugin.CurrentActivity;
+using Xamarin;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -17,7 +19,10 @@ namespace Fishit.Presentation.UI.Droid
 
             base.OnCreate(savedInstanceState);
             Forms.Init(this, savedInstanceState);
+            FormsMaps.Init(this, savedInstanceState);
             LoadApplication(new App());
+
+            CrossCurrentActivity.Current.Init(this, savedInstanceState);
         }
     }
 }

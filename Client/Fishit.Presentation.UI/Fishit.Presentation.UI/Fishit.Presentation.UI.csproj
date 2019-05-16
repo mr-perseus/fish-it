@@ -33,8 +33,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="dotMorten.Xamarin.Forms.AutoSuggestBox" Version="0.6.0" />
+    <PackageReference Include="dotMorten.Xamarin.Forms.AutoSuggestBox" Version="0.7.0" />
+    <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.0.6" />
     <PackageReference Include="Xamarin.Forms" Version="3.6.0.344457" />
+    <PackageReference Include="Xamarin.Forms.Maps" Version="3.6.0.344457" />
   </ItemGroup>
 
   <ItemGroup>
