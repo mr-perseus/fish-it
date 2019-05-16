@@ -26,6 +26,7 @@ namespace Fishit.Presentation.UI.Views
 
         private async void Login_OnClicked(object sender, EventArgs e)
         {
+            LoadingIndicator.IsRunning = true;
             await LoadFishingTrips();
             await Navigation.PushAsync(new MainPage(_fishingTrips));
         }
