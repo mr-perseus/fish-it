@@ -12,7 +12,6 @@ namespace Fishit.Presentation.UI.Testing
         public void BeforeEachTest()
         {
             _app = AppInitializer.StartApp(_platform);
-            _app.Tap(c => c.Marked("Come and get me!"));
             _app.Tap(c => c.Marked("Login"));
             _app.Tap(c => c.Marked("Fishing Trips"));
         }
