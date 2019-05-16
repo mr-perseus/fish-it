@@ -22,6 +22,7 @@ namespace Fishit.Presentation.UI.Views.Map
                 IsShowingUser = true,
                 HeightRequest = 100,
                 WidthRequest = 960,
+                MapType = MapType.Satellite,
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
             MapStackLayout.Children.Add(map);
