@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
+using Plugin.Geolocator;
 using Xamarin.Forms.Maps;
 using Xamarin.Forms.Xaml;
 
@@ -51,7 +52,7 @@ namespace Fishit.Presentation.UI.Views
 
         private async Task<Position> GetCurrentLocation()
         {
-            var position = await Plugin.Geolocator.CrossGeolocator.Current.GetPositionAsync();
+            Plugin.Geolocator.Abstractions.Position position = await CrossGeolocator.Current.GetPositionAsync();
             return new Position(position.Latitude, position.Longitude);
         }
     }

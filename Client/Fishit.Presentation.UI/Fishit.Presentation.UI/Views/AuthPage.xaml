@@ -9,7 +9,7 @@
         <StackLayout>
             <Image VerticalOptions="CenterAndExpand"
                    Source="{local:EmbeddedImage Fishit.Presentation.UI.Images.logo.png}" />
-            <ActivityIndicator x:Name="LoadingIndicator" Color="{StaticResource PrimaryColor}" IsRunning="False"></ActivityIndicator>
+            <ActivityIndicator x:Name="LoadingIndicator" Color="{StaticResource PrimaryColor}" IsRunning="False" />
             <Button VerticalOptions="EndAndExpand"
                     Text="Login"
                     Clicked="Login_OnClicked"

@@ -35,12 +35,14 @@
 
             <ScrollView>
                 <StackLayout Spacing="10" VerticalOptions="FillAndExpand" Orientation="Vertical">
-                    <Editor Text="{Binding Description}" Placeholder="Description" HeightRequest="150" Unfocused="RefreshValidation" />
+                    <Editor Text="{Binding Description}" Placeholder="Description" HeightRequest="150"
+                            Unfocused="RefreshValidation" />
                 </StackLayout>
             </ScrollView>
 
             <Picker BindingContext="{x:Reference This}" x:Name="WeatherPicker" Title="Weather"
-                    ItemsSource="{Binding WeatherOptions}" SelectedItem="{Binding SelectedWeather}" Unfocused="RefreshValidation" />
+                    ItemsSource="{Binding WeatherOptions}" SelectedItem="{Binding SelectedWeather}"
+                    Unfocused="RefreshValidation" />
 
             <StackLayout Orientation="Horizontal" x:Name="RowTemperature">
                 <Entry Text="{Binding Temperature}" HorizontalOptions="FillAndExpand">
