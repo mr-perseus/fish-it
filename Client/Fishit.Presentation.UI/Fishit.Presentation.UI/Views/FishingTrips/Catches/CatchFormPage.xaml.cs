@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using dotMorten.Xamarin.Forms;
@@ -8,7 +9,11 @@ using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
 using Fishit.Presentation.UI.Views.FishingTrips.FishTypes;
+using Plugin.Media.Abstractions;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 using Xamarin.Forms.Xaml;
+using Xamarin.Forms;
 
 namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 {
@@ -20,6 +25,8 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             Caller = caller;
             SetBindingContext(fishingTrip, _catch);
             InitializeComponent();
+
+            CameraButton.Clicked += CameraButton_Clicked;
         }
 
         private FishingTrip FishingTrip { get; set; }
@@ -190,6 +197,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
                     FishTypesAsStrings.Where(x => x.ToLower().StartsWith(FishTypeAutoComplete.Text.ToLower())).ToList();
                 FishTypeAutoComplete.ItemsSource = filteredList;
             }
+
             RefreshValidation(sender, e);
         }
 
@@ -201,6 +209,44 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         public void RefreshValidation(object sender, EventArgs e)
         {
             Form?.Update();
+        }
+
+        private async void CameraButton_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                
+                var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
+                if (status != PermissionStatus.Granted)
+                {
+                    if(await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Camera))
+                    {
+                        await DisplayAlert("Need Camera", "Gunna need that Camera", "OK");
+                    }
+
+                    var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera);
+                    status = results[Permission.Camera];
+                }
+
+                if (status == PermissionStatus.Granted)
+                {
+                    MediaFile photo =
+                        await Plugin.Media.CrossMedia.Current.TakePhotoAsync(
+                            new StoreCameraMediaOptions());
+
+                    if (photo != null)
+                        PhotoImage.Source = ImageSource.FromStream(() => photo.GetStream());
+                }
+                else if(status != PermissionStatus.Unknown)
+                {
+                    await DisplayAlert("Camera Denied", "Can not continue, try again.", "OK");
+                }
+
+            }
+            catch (MediaPermissionException exception)
+            {
+                Debug.Write(exception.GetType());
+            }
         }
     }
 }
