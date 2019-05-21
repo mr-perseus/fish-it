@@ -215,17 +215,20 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         {
             try
             {
-                
                 var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
+                await DisplayAlert("Results", status.ToString(), "OK");
                 if (status != PermissionStatus.Granted)
                 {
-                    if(await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Camera))
+                    /*if(await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Camera))
                     {
                         await DisplayAlert("Need Camera", "Gunna need that Camera", "OK");
                     }
 
                     var results = await CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera);
-                    status = results[Permission.Camera];
+                    status = results[Permission.Camera];*/
+                    status =
+                        (await CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera))[Permission.Camera];
+                    await DisplayAlert("Results", status.ToString(), "OK");
                 }
 
                 if (status == PermissionStatus.Granted)
@@ -237,11 +240,10 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
                     if (photo != null)
                         PhotoImage.Source = ImageSource.FromStream(() => photo.GetStream());
                 }
-                else if(status != PermissionStatus.Unknown)
+                else if (status != PermissionStatus.Unknown)
                 {
                     await DisplayAlert("Camera Denied", "Can not continue, try again.", "OK");
                 }
-
             }
             catch (MediaPermissionException exception)
             {
