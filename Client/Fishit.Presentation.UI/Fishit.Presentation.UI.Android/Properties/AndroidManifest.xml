@@ -6,5 +6,5 @@
     <application android:label="Fishit.Presentation.UI.Android"
                  android:theme="@style/MainTheme">
     </application>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
 </manifest>
