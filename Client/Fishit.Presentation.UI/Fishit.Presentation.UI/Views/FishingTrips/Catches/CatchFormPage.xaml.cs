@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using dotMorten.Xamarin.Forms;
@@ -9,11 +8,7 @@ using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
 using Fishit.Presentation.UI.Views.FishingTrips.FishTypes;
-using Plugin.Media.Abstractions;
-using Plugin.Permissions;
-using Plugin.Permissions.Abstractions;
 using Xamarin.Forms.Xaml;
-using Xamarin.Forms;
 
 namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 {
@@ -213,6 +208,9 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 
         private async void CameraButton_Clicked(object sender, EventArgs e)
         {
+            await Navigation.PushAsync(new MediaPage());
+            
+            /*
             PermissionStatus cameraPermission = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
             if (cameraPermission != PermissionStatus.Granted)
             {
@@ -230,16 +228,32 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 
             if (cameraPermission == PermissionStatus.Granted && permissionStorage == PermissionStatus.Granted)
             {
-                MediaFile photo =
-                    await Plugin.Media.CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions());
+                files.Clear();
+                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+                {
+                    await DisplayAlert("No Camera", ":( No camera avaialble.", "OK");
+                    return;
+                }
 
-                if (photo != null)
-                    PhotoImage.Source = ImageSource.FromStream(() => photo.GetStream());
+                MediaFile file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+                {
+                    PhotoSize = PhotoSize.Medium,
+                    Directory = "Sample",
+                    Name = "test.jpg"
+                });
+
+                if (file == null)
+                    return;
+
+                await DisplayAlert("File Location", file.Path, "OK");
+
+                files.Add(file);
             }
             else
             {
                 await DisplayAlert("Camera or Storage Denied", "Can not continue, try again.", "OK");
             }
+            */
         }
     }
 }

@@ -9,23 +9,15 @@
              Title="Catch">
 
     <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Padding="20">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+        <Button x:Name="CameraButton" Text="Take Photo" />
 
-            <Image x:Name="PhotoImage" />
-            <Button x:Name="CameraButton" Text="Take Photo" Grid.Row="1" />
-        </Grid>
-        
         <StackLayout.Behaviors>
             <validators:ValidationGroupBehavior x:Name="Form" />
         </StackLayout.Behaviors>
         <TimePicker BindingContext="{x:Reference This}" x:Name="FishingTripTimePicker"
                     HorizontalOptions="EndAndExpand"
                     PropertyChanged="Refresh_DateTime" Time="{Binding Time}"
-                    Unfocused="RefreshValidation"/>
+                    Unfocused="RefreshValidation" />
 
         <StackLayout Orientation="Horizontal" x:Name="RowFishType">
             <forms:AutoSuggestBox BindingContext="{x:Reference This}"
