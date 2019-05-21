@@ -18,6 +18,15 @@ Catch.Schema = {
 	},
 	Weight: {
 		type: Number
+	},
+	Image: {
+		Data: {
+			binData: Buffer,
+			type: String
+		},
+		ContentType: {
+			type: String
+		}
 	}
 }
 
@@ -33,14 +42,20 @@ Catch.ModelTest = mongoose.model(
 	})
 )
 
-Catch.attr = ["_id", "FishType", "DateTime", "Length", "Weight"]
-Catch.attrNoId = ["FishType", "DateTime", "Length", "Weight"]
+Catch.attr = ["_id", "FishType", "DateTime", "Length", "Weight", "Image"]
+Catch.attrNoId = ["FishType", "DateTime", "Length", "Weight", "Image"]
+
+ImageJoi = {
+	Data: Joi.string().base64(),
+	ContentType: Joi.string()
+}
 
 Catch.Joi = {
 	FishType: Joi.object(),
 	DateTime: Joi.string(),
 	Length: Joi.number(),
-	Weight: Joi.number()
+	Weight: Joi.number(),
+	Image: Joi.object().keys(ImageJoi)
 }
 
 Catch.validate = (c) => Joi.validate(c, Catch.Joi)
