@@ -1,12 +1,10 @@
 ﻿using System.Collections.ObjectModel;
-using Fishit.Presentation.UI.Views.FishingTrips;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Fishit.Presentation.UI.Views.Map
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MapPage : ContentPage
+    public partial class MapPage
     {
         private ObservableCollection<string> _locations;
 
@@ -21,16 +19,6 @@ namespace Fishit.Presentation.UI.Views.Map
         public void InitializeData()
         {
             _locations = new ObservableCollection<string> {"Zurichsee", "Bodensee", "Genfersee"};
-        }
-
-        private async void MapListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            if (e.SelectedItem == null)
-                return;
-
-            string location = (string) e.SelectedItem;
-            if (location != null) await Navigation.PushAsync(new FishingTripsPage(location));
-            MapListView.SelectedItem = null;
         }
     }
 }

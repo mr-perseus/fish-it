@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Fishit.Presentation.UI.Views.FishingTrips.Catches.CatchesListPage"
              Title="Catches">
-    <StackLayout x:Name="Root">
+    <StackLayout>
         <ListView x:Name="CatchesListView"
                   HasUnevenRows="True"
                   ItemSelected="CatchesListView_OnItemSelected"
@@ -24,7 +24,7 @@
                                     <Label Text="{Binding Weight}" />
                                     <Label Text="kg" />
                                     <Label Text="{Binding Length}" HorizontalOptions="EndAndExpand" />
-                                    <Label Text="m" />
+                                    <Label Text="cm" />
                                 </StackLayout>
                             </StackLayout>
                         </StackLayout>
@@ -38,6 +38,8 @@
             </ListView.ItemTemplate>
         </ListView>
 
+        <Button Text="Manage Fish Types" Clicked="BtnManageFishTypes_OnClicked" Margin="20,20"
+                Style="{StaticResource ButtonStyle}" />
         <Button Text="Add Catch" Clicked="BtnAddCatch_OnClicked" Margin="20,20" Style="{StaticResource ButtonStyle}" />
     </StackLayout>
 </ContentPage>

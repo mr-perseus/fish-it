@@ -6,8 +6,7 @@
              x:Class="Fishit.Presentation.UI.Views.Map.MapPage">
     <StackLayout>
         <ListView x:Name="MapListView"
-                  HasUnevenRows="True"
-                  ItemSelected="MapListView_ItemSelected">
+                  HasUnevenRows="True">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>

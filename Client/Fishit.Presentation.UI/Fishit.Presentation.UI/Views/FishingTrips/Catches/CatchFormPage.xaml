@@ -1,40 +1,85 @@
 ﻿<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:dotMorten.Xamarin.Forms;assembly=dotMorten.Xamarin.Forms.AutoSuggestBox"
+             xmlns:local="clr-namespace:Fishit.Presentation.UI.MarkupExtensions"
              x:Class="Fishit.Presentation.UI.Views.FishingTrips.Catches.CatchFormPage"
+             xmlns:validators="clr-namespace:Fishit.Presentation.UI.FormValidation.Validators"
+             xmlns:behaviors="clr-namespace:Fishit.Presentation.UI.FormValidation.Behaviors"
              x:Name="This"
              Title="Catch">
 
     <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Padding="20">
-        <StackLayout Orientation="Horizontal">
-            <TimePicker BindingContext="{x:Reference This}" x:Name="FishingTripTimePicker"
-                        HorizontalOptions="EndAndExpand"
-                        PropertyChanged="Refresh_DateTime" Time="{Binding Time}" />
+        <StackLayout.Behaviors>
+            <validators:ValidationGroupBehavior x:Name="Form" />
+        </StackLayout.Behaviors>
+        <TimePicker BindingContext="{x:Reference This}" x:Name="FishingTripTimePicker"
+                    HorizontalOptions="EndAndExpand"
+                    PropertyChanged="Refresh_DateTime" Time="{Binding Time}"
+                    Unfocused="RefreshValidation"/>
+
+        <StackLayout Orientation="Horizontal" x:Name="RowFishType">
+            <forms:AutoSuggestBox BindingContext="{x:Reference This}"
+                                  Text="{Binding FishType}"
+                                  PlaceholderText="Fish Type"
+                                  x:Name="FishTypeAutoComplete"
+                                  TextChanged="FishTypeAutoComplete_OnTextChanged"
+                                  HorizontalOptions="FillAndExpand">
+                <forms:AutoSuggestBox.Behaviors>
+                    <behaviors:ValidationBehavior Group="{x:Reference Form}" PropertyName="Text"
+                                                  RowView="{x:Reference RowFishType}">
+                        <behaviors:ValidationBehavior.Validators>
+                            <validators:RequiredValidator />
+                        </behaviors:ValidationBehavior.Validators>
+                    </behaviors:ValidationBehavior>
+                </forms:AutoSuggestBox.Behaviors>
+            </forms:AutoSuggestBox>
+
+            <Image Source="{local:EmbeddedImage Fishit.Presentation.UI.Images.add.png}" HeightRequest="50"
+                   WidthRequest="50">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="AddFishType_OnClicked" />
+                </Image.GestureRecognizers>
+            </Image>
         </StackLayout>
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+        <StackLayout Orientation="Horizontal" x:Name="RowLength">
+            <Entry BindingContext="{x:Reference This}" Text="{Binding Length}" Placeholder="Length"
+                   HorizontalOptions="FillAndExpand">
+                <Entry.Behaviors>
+                    <behaviors:ValidationBehavior Group="{x:Reference Form}" PropertyName="Text"
+                                                  RowView="{x:Reference RowLength}">
+                        <behaviors:ValidationBehavior.Validators>
+                            <validators:PositiveDoubleValidator
+                                MaxValue="3000"
+                                MaxValueMessage="That number seems a little fishy..." />
+                        </behaviors:ValidationBehavior.Validators>
+                    </behaviors:ValidationBehavior>
+                </Entry.Behaviors>
+            </Entry>
+            <Label Text="cm" Margin="-5, 0, 0, 0" VerticalOptions="Center" HorizontalOptions="End" />
+        </StackLayout>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-
-            </Grid.ColumnDefinitions>
-
-            <Label Text="FishType:" Grid.Row="0" Grid.Column="0" />
-            <Entry Grid.Row="0" Grid.Column="1" BindingContext="{Binding FishType}" Text="{Binding Name}" />
-            <Label Text="Length:" Grid.Row="1" Grid.Column="0" />
-            <Entry Grid.Row="1" Grid.Column="1" Text="{Binding Length}" />
-            <Label Text="Weight" Grid.Row="2" Grid.Column="0" />
-            <Entry Grid.Row="2" Grid.Column="1" Text="{Binding Weight}" />
-        </Grid>
+        <StackLayout Orientation="Horizontal" x:Name="RowWeight">
+            <Entry BindingContext="{x:Reference This}" Text="{Binding Weight}" Placeholder="Weight"
+                   HorizontalOptions="FillAndExpand">
+                <Entry.Behaviors>
+                    <behaviors:ValidationBehavior Group="{x:Reference Form}" PropertyName="Text"
+                                                  RowView="{x:Reference RowWeight}">
+                        <behaviors:ValidationBehavior.Validators>
+                            <validators:PositiveDoubleValidator
+                                MaxValue="200000"
+                                MaxValueMessage="I think your scale is fishy..." />
+                        </behaviors:ValidationBehavior.Validators>
+                    </behaviors:ValidationBehavior>
+                </Entry.Behaviors>
+            </Entry>
+            <Label Text="kg" Margin="-5, 0, 0, 0" VerticalOptions="Center" HorizontalOptions="End" />
+        </StackLayout>
 
         <StackLayout Orientation="Horizontal">
             <Button Text="Cancel" Clicked="BtnCancel_OnClicked" Style="{StaticResource ButtonStyle}" />
-            <Button Text="Save" Clicked="SaveCatch_OnClicked" Style="{StaticResource ButtonStyle}"
+            <Button Text="Save" Clicked="SaveCatch_OnClicked"
+                    IsEnabled="{Binding Source={x:Reference Form}, Path=IsValid}" Style="{StaticResource ButtonStyle}"
                     HorizontalOptions="EndAndExpand" />
         </StackLayout>
     </StackLayout>

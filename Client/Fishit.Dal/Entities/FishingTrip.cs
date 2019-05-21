@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using Newtonsoft.Json;
 
 namespace Fishit.Dal.Entities
 {
@@ -15,14 +16,13 @@ namespace Fishit.Dal.Entities
             Hailing
         }
 
-        public string Id { get; set; } = "0";
+        [JsonProperty("_id")] public string Id { get; set; } = "0";
         public string Location { get; set; }
         public DateTime DateTime { get; set; }
-        public string Description { get; set; }
+        public string Description { get; set; } = "";
         public Weather PredominantWeather { get; set; }
         public double Temperature { get; set; }
-        public List<Catch> Catches { get; set; } = new List<Catch>();
-
+        public IList<Catch> Catches { get; set; } = new List<Catch>();
 
         public override string ToString()
         {
@@ -31,8 +31,8 @@ namespace Fishit.Dal.Entities
                    nameof(Location) + "; " + Location + "; " +
                    nameof(DateTime) + "; " + DateTime.ToString(CultureInfo.CurrentCulture) + "; " +
                    nameof(PredominantWeather) + "; " + PredominantWeather + "; " +
-                   nameof(Temperature) + "; " + Temperature + "; "; // + statt ;
-            // nameof(Catches) + "; " + (Catches != null ? Catches.Count.ToString() : "null");
+                   nameof(Temperature) + "; " + Temperature + "; " +
+                   nameof(Catches) + "; " + (Catches != null ? Catches.Count.ToString() : "null");
         }
     }
 }

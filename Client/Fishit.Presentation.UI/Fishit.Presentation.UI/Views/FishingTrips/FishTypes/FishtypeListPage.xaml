@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Fishit.Presentation.UI.Views.FishingTrips.FishTypes.FishTypeListPage"
+             Title="Fishtypes">
+    <StackLayout>
+        <ListView x:Name="FishtypeListView"
+                  HasUnevenRows="True"
+                  ItemSelected="FishTypeListView_OnItemSelected"
+                  IsPullToRefreshEnabled="True"
+                  Refreshing="Handle_Refreshing">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Padding="20">
+                            <StackLayout Orientation="Vertical">
+                                <Label Text="{Binding Name}" />
+                                <Label Text="{Binding Description}" HorizontalOptions="EndAndExpand" />
+                            </StackLayout>
+                        </StackLayout>
+                        <ViewCell.ContextActions>
+                            <MenuItem Text="Edit" Clicked="Edit_Clicked" CommandParameter="{Binding .}" />
+                            <MenuItem Text="Delete" Clicked="Delete_Clicked" CommandParameter="{Binding .}"
+                                      IsDestructive="True" />
+                        </ViewCell.ContextActions>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Button Text="Add Fish Type" Clicked="BtnAddFishType_OnClicked" Margin="20,20"
+                Style="{StaticResource ButtonStyle}" />
+    </StackLayout>
+</ContentPage>
