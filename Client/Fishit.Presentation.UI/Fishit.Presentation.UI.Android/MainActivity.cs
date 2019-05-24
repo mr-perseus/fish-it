@@ -6,7 +6,8 @@ using Plugin.Permissions;
 
 namespace Fishit.Presentation.UI.Droid
 {
-    [Activity(Label = "Fishit.Presentation.UI", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Fishit.Presentation.UI", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true,
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
@@ -15,17 +16,16 @@ namespace Fishit.Presentation.UI.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
-			CrossCurrentActivity.Current.Init(this, bundle);
-			global::Xamarin.Forms.Forms.Init(this, bundle);
-			Android.Glide.Forms.Init();
-			LoadApplication(new App());
+            CrossCurrentActivity.Current.Init(this, bundle);
+            global::Xamarin.Forms.Forms.Init(this, bundle);
+            Android.Glide.Forms.Init();
+            LoadApplication(new App());
         }
 
-		public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
-		{
-			PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-		}
-
-	}
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions,
+            Permission[] grantResults)
+        {
+            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
 }
-
