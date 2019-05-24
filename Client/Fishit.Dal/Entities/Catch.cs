@@ -21,7 +21,7 @@ namespace Fishit.Dal.Entities
                    nameof(DateTime) + "; " + DateTime.ToString(CultureInfo.CurrentCulture) + "; " +
                    nameof(Length) + "; " + Length + "; " +
                    nameof(Weight) + "; " + Weight + "; " +
-                   nameof(Image.Length) + "; " + Image.Length + "; ";
+                   nameof(Image) + "; " + (Image != null ? Image.Length.ToString() : "null") + "; ";
         }
     }
 }

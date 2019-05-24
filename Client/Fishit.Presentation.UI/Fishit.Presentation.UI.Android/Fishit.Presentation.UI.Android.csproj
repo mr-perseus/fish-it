@@ -49,7 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="glidex.forms" Version="1.0.4" />
     <PackageReference Include="Plugin.Permissions">
       <Version>4.0.4-beta</Version>
     </PackageReference>
