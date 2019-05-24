@@ -9,8 +9,6 @@
              Title="Catch">
 
     <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Padding="20">
-        <Button x:Name="CameraButton" Text="Take Photo" />
-
         <StackLayout.Behaviors>
             <validators:ValidationGroupBehavior x:Name="Form" />
         </StackLayout.Behaviors>
@@ -84,5 +82,9 @@
                     IsEnabled="{Binding Source={x:Reference Form}, Path=IsValid}" Style="{StaticResource ButtonStyle}"
                     HorizontalOptions="EndAndExpand" />
         </StackLayout>
+
+        <Button x:Name="CameraButton" Text="Take Photo" />
+
+        <StackLayout x:Name="ImageList" />
     </StackLayout>
 </ContentPage>

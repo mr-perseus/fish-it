@@ -9,6 +9,10 @@ using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
 using Fishit.Presentation.UI.Views.FishingTrips.FishTypes;
 using Xamarin.Forms.Xaml;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
+using System.IO;
+using Xamarin.Forms;
 
 namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 {
@@ -208,52 +212,52 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 
         private async void CameraButton_Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new MediaPage());
-            
-            /*
-            PermissionStatus cameraPermission = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Camera);
-            if (cameraPermission != PermissionStatus.Granted)
+            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
-                cameraPermission =
-                    (await CrossPermissions.Current.RequestPermissionsAsync(Permission.Camera))[Permission.Camera];
+                await DisplayAlert("No Camera", ":( No camera avaialble.", "OK");
+                return;
             }
 
-            PermissionStatus permissionStorage =
-                await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
-            if (permissionStorage != PermissionStatus.Granted)
+            MediaFile file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
             {
-                permissionStorage =
-                    (await CrossPermissions.Current.RequestPermissionsAsync(Permission.Storage))[Permission.Storage];
+                PhotoSize = PhotoSize.Medium,
+                Directory = "Sample",
+                Name = "test.jpg"
+            });
+
+            if (file == null)
+                return;
+
+            await DisplayAlert("File Location", file.Path, "OK");
+
+            Image image = new Image
+            {
+                WidthRequest = 300,
+                HeightRequest = 300,
+                Aspect = Aspect.AspectFit,
+                Source = ImageSource.FromStream(() =>
+                {
+                    Stream stream = file.GetStream();
+                    return stream;
+                })
+            };
+
+            if (ImageList.Children.Count > 0)
+            {
+                ImageList.Children.RemoveAt(0);
             }
 
-            if (cameraPermission == PermissionStatus.Granted && permissionStorage == PermissionStatus.Granted)
+            ImageList.Children.Add(image);
+            Catch.Image = Convert.ToBase64String(File.ReadAllBytes(file.Path));
+
+            if (string.IsNullOrEmpty(Catch.Image))
             {
-                files.Clear();
-                if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
-                {
-                    await DisplayAlert("No Camera", ":( No camera avaialble.", "OK");
-                    return;
-                }
-
-                MediaFile file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
-                {
-                    PhotoSize = PhotoSize.Medium,
-                    Directory = "Sample",
-                    Name = "test.jpg"
-                });
-
-                if (file == null)
-                    return;
-
-                await DisplayAlert("File Location", file.Path, "OK");
-
-                files.Add(file);
+                await DisplayAlert("Empty", "Empty", "OK");
             }
             else
             {
-                await DisplayAlert("Camera or Storage Denied", "Can not continue, try again.", "OK");
+                await DisplayAlert("Empty", Catch.Image.Substring(0, Math.Min(Catch.Image.Length, 30)), "OK");
             }
-            */
         }
     }
 }
