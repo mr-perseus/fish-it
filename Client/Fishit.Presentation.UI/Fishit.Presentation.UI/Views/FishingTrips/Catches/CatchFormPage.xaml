@@ -8,86 +8,87 @@
              x:Name="This"
              Title="Catch">
 
-    <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Padding="20">
-        <StackLayout.Behaviors>
-            <validators:ValidationGroupBehavior x:Name="Form" />
-        </StackLayout.Behaviors>
-        <TimePicker BindingContext="{x:Reference This}" x:Name="FishingTripTimePicker"
-                    HorizontalOptions="EndAndExpand"
-                    PropertyChanged="Refresh_DateTime" Time="{Binding Time}"
-                    Unfocused="RefreshValidation" />
+    <ScrollView>
+        <StackLayout HorizontalOptions="Fill" VerticalOptions="Fill" Padding="20">
+            <StackLayout.Behaviors>
+                <validators:ValidationGroupBehavior x:Name="Form" />
+            </StackLayout.Behaviors>
+            <TimePicker BindingContext="{x:Reference This}" x:Name="FishingTripTimePicker"
+                        HorizontalOptions="EndAndExpand"
+                        PropertyChanged="Refresh_DateTime" Time="{Binding Time}"
+                        Unfocused="RefreshValidation" />
 
-        <StackLayout Orientation="Horizontal" x:Name="RowFishType">
-            <forms:AutoSuggestBox BindingContext="{x:Reference This}"
-                                  Text="{Binding FishType}"
-                                  PlaceholderText="Fish Type"
-                                  x:Name="FishTypeAutoComplete"
-                                  TextChanged="FishTypeAutoComplete_OnTextChanged"
-                                  HorizontalOptions="FillAndExpand">
-                <forms:AutoSuggestBox.Behaviors>
-                    <behaviors:ValidationBehavior Group="{x:Reference Form}" PropertyName="Text"
-                                                  RowView="{x:Reference RowFishType}">
-                        <behaviors:ValidationBehavior.Validators>
-                            <validators:RequiredValidator />
-                        </behaviors:ValidationBehavior.Validators>
-                    </behaviors:ValidationBehavior>
-                </forms:AutoSuggestBox.Behaviors>
-            </forms:AutoSuggestBox>
+            <StackLayout Orientation="Horizontal" x:Name="RowFishType">
+                <forms:AutoSuggestBox BindingContext="{x:Reference This}"
+                                      Text="{Binding FishType}"
+                                      PlaceholderText="Fish Type"
+                                      x:Name="FishTypeAutoComplete"
+                                      TextChanged="FishTypeAutoComplete_OnTextChanged"
+                                      HorizontalOptions="FillAndExpand">
+                    <forms:AutoSuggestBox.Behaviors>
+                        <behaviors:ValidationBehavior Group="{x:Reference Form}" PropertyName="Text"
+                                                      RowView="{x:Reference RowFishType}">
+                            <behaviors:ValidationBehavior.Validators>
+                                <validators:RequiredValidator />
+                            </behaviors:ValidationBehavior.Validators>
+                        </behaviors:ValidationBehavior>
+                    </forms:AutoSuggestBox.Behaviors>
+                </forms:AutoSuggestBox>
 
-            <Image Source="{local:EmbeddedImage Fishit.Presentation.UI.Images.add.png}" HeightRequest="50"
-                   WidthRequest="50">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="AddFishType_OnClicked" />
-                </Image.GestureRecognizers>
-            </Image>
+                <Image Source="{local:EmbeddedImage Fishit.Presentation.UI.Images.add.png}" HeightRequest="50"
+                       WidthRequest="50">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="AddFishType_OnClicked" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" x:Name="RowLength">
+                <Entry BindingContext="{x:Reference This}" Text="{Binding Length}" Placeholder="Length"
+                       HorizontalOptions="FillAndExpand">
+                    <Entry.Behaviors>
+                        <behaviors:ValidationBehavior Group="{x:Reference Form}" PropertyName="Text"
+                                                      RowView="{x:Reference RowLength}">
+                            <behaviors:ValidationBehavior.Validators>
+                                <validators:PositiveDoubleValidator
+                                    MaxValue="3000"
+                                    MaxValueMessage="That number seems a little fishy..." />
+                            </behaviors:ValidationBehavior.Validators>
+                        </behaviors:ValidationBehavior>
+                    </Entry.Behaviors>
+                </Entry>
+                <Label Text="cm" Margin="-5, 0, 0, 0" VerticalOptions="Center" HorizontalOptions="End" />
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" x:Name="RowWeight">
+                <Entry BindingContext="{x:Reference This}" Text="{Binding Weight}" Placeholder="Weight"
+                       HorizontalOptions="FillAndExpand">
+                    <Entry.Behaviors>
+                        <behaviors:ValidationBehavior Group="{x:Reference Form}" PropertyName="Text"
+                                                      RowView="{x:Reference RowWeight}">
+                            <behaviors:ValidationBehavior.Validators>
+                                <validators:PositiveDoubleValidator
+                                    MaxValue="200000"
+                                    MaxValueMessage="I think your scale is fishy..." />
+                            </behaviors:ValidationBehavior.Validators>
+                        </behaviors:ValidationBehavior>
+                    </Entry.Behaviors>
+                </Entry>
+                <Label Text="kg" Margin="-5, 0, 0, 0" VerticalOptions="Center" HorizontalOptions="End" />
+            </StackLayout>
+
+            <Button x:Name="CameraButton" Text="Take Photo" />
+            <Button x:Name="LoadImage" Text="Load Image" />
+
+            <StackLayout x:Name="ImageList" />
+
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Cancel" Clicked="BtnCancel_OnClicked" Style="{StaticResource ButtonStyle}" />
+                <Button Text="Save" Clicked="SaveCatch_OnClicked"
+                        IsEnabled="{Binding Source={x:Reference Form}, Path=IsValid}"
+                        Style="{StaticResource ButtonStyle}"
+                        HorizontalOptions="EndAndExpand" />
+            </StackLayout>
         </StackLayout>
-
-        <StackLayout Orientation="Horizontal" x:Name="RowLength">
-            <Entry BindingContext="{x:Reference This}" Text="{Binding Length}" Placeholder="Length"
-                   HorizontalOptions="FillAndExpand">
-                <Entry.Behaviors>
-                    <behaviors:ValidationBehavior Group="{x:Reference Form}" PropertyName="Text"
-                                                  RowView="{x:Reference RowLength}">
-                        <behaviors:ValidationBehavior.Validators>
-                            <validators:PositiveDoubleValidator
-                                MaxValue="3000"
-                                MaxValueMessage="That number seems a little fishy..." />
-                        </behaviors:ValidationBehavior.Validators>
-                    </behaviors:ValidationBehavior>
-                </Entry.Behaviors>
-            </Entry>
-            <Label Text="cm" Margin="-5, 0, 0, 0" VerticalOptions="Center" HorizontalOptions="End" />
-        </StackLayout>
-
-        <StackLayout Orientation="Horizontal" x:Name="RowWeight">
-            <Entry BindingContext="{x:Reference This}" Text="{Binding Weight}" Placeholder="Weight"
-                   HorizontalOptions="FillAndExpand">
-                <Entry.Behaviors>
-                    <behaviors:ValidationBehavior Group="{x:Reference Form}" PropertyName="Text"
-                                                  RowView="{x:Reference RowWeight}">
-                        <behaviors:ValidationBehavior.Validators>
-                            <validators:PositiveDoubleValidator
-                                MaxValue="200000"
-                                MaxValueMessage="I think your scale is fishy..." />
-                        </behaviors:ValidationBehavior.Validators>
-                    </behaviors:ValidationBehavior>
-                </Entry.Behaviors>
-            </Entry>
-            <Label Text="kg" Margin="-5, 0, 0, 0" VerticalOptions="Center" HorizontalOptions="End" />
-        </StackLayout>
-
-        <StackLayout Orientation="Horizontal">
-            <Button Text="Cancel" Clicked="BtnCancel_OnClicked" Style="{StaticResource ButtonStyle}" />
-            <Button Text="Save" Clicked="SaveCatch_OnClicked"
-                    IsEnabled="{Binding Source={x:Reference Form}, Path=IsValid}" Style="{StaticResource ButtonStyle}"
-                    HorizontalOptions="EndAndExpand" />
-        </StackLayout>
-
-        <Button x:Name="CameraButton" Text="Take Photo" />
-        <Button x:Name="LoadImage" Text="Load Image" />
-
-        <StackLayout x:Name="ImageList" />
-        
-        <Image x:Name="CatchImage" VerticalOptions="Center" HorizontalOptions="Center"></Image>
-    </StackLayout>
+    </ScrollView>
 </ContentPage>

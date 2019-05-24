@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using dotMorten.Xamarin.Forms;
@@ -160,18 +159,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             Time = Catch.DateTime.TimeOfDay;
         }
 
-        private static ImageSource FromStream(Func<Stream> stream)
-        {
-            return new StreamImageSource()
-            {
-                Stream = token =>
-                {
-                    Console.Write("");
-                    return Task.Run<Stream>(stream, token);
-                }
-            };
-        }
-
         public void Refresh_DateTime(object sender, EventArgs e)
         {
             FishingTrip.DateTime = new DateTime(
@@ -251,105 +238,29 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
                 WidthRequest = 300,
                 HeightRequest = 300,
                 Aspect = Aspect.AspectFit,
-                Source = ImageSource.FromStream(() =>
-                {
-                    Stream stream = file.GetStream();
-                    return stream;
-                })
+                Source = ImageSource.FromStream(() => file.GetStream())
             };
 
-            // DisplayImage(image);
+            DisplayImage(image);
 
             Catch.Image = Convert.ToBase64String(File.ReadAllBytes(file.Path));
-
-            byte[] bytes = Convert.FromBase64String(Catch.Image);
-            /*System.Drawing.Image image;
-            using (MemoryStream memoryStream = new MemoryStream(bytes))
-            {
-                // CatchImage.Source = ImageSource.FromStream(() => memoryStream);
-                image = System.Drawing.Image.FromStream(memoryStream);
-
-            }
-            
-            image.Save("test.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);*/
-
-            Image image2 = new Image
-            {
-                WidthRequest = 300,
-                HeightRequest = 300,
-                Aspect = Aspect.AspectFit,
-                Source = ImageSource.FromStream(() =>
-                {
-                    //Stream stream = file.GetStream();
-                    //Stream steram = File.OpenRead("test.jpg");
-                    //stream.as
-                    //return steram;
-                    return new MemoryStream(bytes);
-                })
-            };
-
-            DisplayImage(image2);
-
-            if (string.IsNullOrEmpty(Catch.Image))
-            {
-                await DisplayAlert("Empty", "Empty", "OK");
-            }
-            else
-            {
-                await DisplayAlert("Empty", Catch.Image.Substring(0, Math.Min(Catch.Image.Length, 30)), "OK");
-            }
         }
 
-        private async void LoadImage_Do(object sender, EventArgs e)
+        private void LoadImage_Do(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(Catch.Image))
             {
                 byte[] bytes = Convert.FromBase64String(Catch.Image);
-                /*System.Drawing.Image image;
-                using (MemoryStream memoryStream = new MemoryStream(bytes))
-                {
-                    // CatchImage.Source = ImageSource.FromStream(() => memoryStream);
-                    image = System.Drawing.Image.FromStream(memoryStream);
 
-                }
-                
-                image.Save("test.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);*/
-
-                Image image2 = new Image
+                Image image = new Image
                 {
                     WidthRequest = 300,
                     HeightRequest = 300,
                     Aspect = Aspect.AspectFit,
-                    Source = ImageSource.FromStream(() =>
-                    {
-                        //Stream stream = file.GetStream();
-                        //Stream steram = File.OpenRead("test.jpg");
-                        //stream.as
-                        //return steram;
-                        return new MemoryStream(bytes);
-                    })
+                    Source = ImageSource.FromStream(() => new MemoryStream(bytes))
                 };
 
-                DisplayImage(image2);
-
-                try
-                {
-                    /*Func<string> realFunc = token =>
-                    {
-                        Console.Write("");
-                        return Task.Run<Stream>(stream, token);
-                    };*/
-                    /*ImageSource streamImageSource = FromStream(() =>
-                    {
-                        MemoryStream memoryStream = new MemoryStream(bytes);
-                        return memoryStream;
-                    });*/
-                    // CatchImage.Source = streamImageSource;
-                }
-                catch (Exception exception)
-                {
-                    Debug.Write(exception);
-                }
+                DisplayImage(image);
             }
         }
 
