@@ -20,7 +20,8 @@ Catch.Schema = {
 		type: Number
 	},
 	Image: {
-		type: String
+		type: String,
+		required: false
 	}
 }
 
@@ -44,7 +45,7 @@ Catch.Joi = {
 	DateTime: Joi.string(),
 	Length: Joi.number(),
 	Weight: Joi.number(),
-	Image: Joi.string()
+	Image: Joi.string().allow("")
 }
 
 Catch.validate = (c) => Joi.validate(c, Catch.Joi)
