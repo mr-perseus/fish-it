@@ -231,17 +231,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             if (file == null)
                 return;
 
-            await DisplayAlert("File Location", file.Path, "OK");
-
-            Image image = new Image
-            {
-                WidthRequest = 300,
-                HeightRequest = 300,
-                Aspect = Aspect.AspectFit,
-                Source = ImageSource.FromStream(() => file.GetStream())
-            };
-
-            DisplayImage(image);
+            DisplayImage(() => file.GetStream());
 
             Catch.Image = Convert.ToBase64String(File.ReadAllBytes(file.Path));
         }
@@ -251,21 +241,20 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             if (!string.IsNullOrEmpty(Catch.Image))
             {
                 byte[] bytes = Convert.FromBase64String(Catch.Image);
-
-                Image image = new Image
-                {
-                    WidthRequest = 300,
-                    HeightRequest = 300,
-                    Aspect = Aspect.AspectFit,
-                    Source = ImageSource.FromStream(() => new MemoryStream(bytes))
-                };
-
-                DisplayImage(image);
+                DisplayImage(() => new MemoryStream(bytes));
             }
         }
 
-        private void DisplayImage(View image)
+        private void DisplayImage(Func<Stream> stream)
         {
+            Image image = new Image
+            {
+                WidthRequest = 300,
+                HeightRequest = 300,
+                Aspect = Aspect.AspectFit,
+                Source = ImageSource.FromStream(stream)
+            };
+
             if (ImageList.Children.Count > 0)
             {
                 ImageList.Children.RemoveAt(0);
