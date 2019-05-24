@@ -84,7 +84,10 @@
         </StackLayout>
 
         <Button x:Name="CameraButton" Text="Take Photo" />
+        <Button x:Name="LoadImage" Text="Load Image" />
 
         <StackLayout x:Name="ImageList" />
+        
+        <Image x:Name="CatchImage" VerticalOptions="Center" HorizontalOptions="Center"></Image>
     </StackLayout>
 </ContentPage>

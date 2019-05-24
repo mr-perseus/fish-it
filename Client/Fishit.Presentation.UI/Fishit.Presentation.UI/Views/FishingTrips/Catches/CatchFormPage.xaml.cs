@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using dotMorten.Xamarin.Forms;
@@ -25,8 +26,11 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             SetBindingContext(fishingTrip, _catch);
             InitializeComponent();
 
-            CameraButton.Clicked += CameraButton_Clicked;
+            CameraButton.Clicked += CameraButton_Do;
+            LoadImage.Clicked += LoadImage_Do;
         }
+
+        public ImageSource ImageSource;
 
         private FishingTrip FishingTrip { get; set; }
         public DateTime Date { get; set; }
@@ -154,6 +158,20 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 
             Date = Catch.DateTime.Date;
             Time = Catch.DateTime.TimeOfDay;
+
+        
+        }
+
+        private static ImageSource FromStream(Func<Stream> stream)
+        {
+            return new StreamImageSource()
+            {
+                Stream = token =>
+                {
+                    Console.Write("");
+                    return Task.Run<Stream>(stream, token);
+                }
+            };
         }
 
         public void Refresh_DateTime(object sender, EventArgs e)
@@ -210,7 +228,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             Form?.Update();
         }
 
-        private async void CameraButton_Clicked(object sender, EventArgs e)
+        private async void CameraButton_Do(object sender, EventArgs e)
         {
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
@@ -242,12 +260,8 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
                 })
             };
 
-            if (ImageList.Children.Count > 0)
-            {
-                ImageList.Children.RemoveAt(0);
-            }
+            DisplayImage(image);
 
-            ImageList.Children.Add(image);
             Catch.Image = Convert.ToBase64String(File.ReadAllBytes(file.Path));
 
             if (string.IsNullOrEmpty(Catch.Image))
@@ -258,6 +272,68 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             {
                 await DisplayAlert("Empty", Catch.Image.Substring(0, Math.Min(Catch.Image.Length, 30)), "OK");
             }
+        }
+        
+        private async void LoadImage_Do(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(Catch.Image))
+            {
+                byte[] bytes = Convert.FromBase64String(Catch.Image);
+                /*System.Drawing.Image image;
+                using (MemoryStream memoryStream = new MemoryStream(bytes))
+                {
+                    // CatchImage.Source = ImageSource.FromStream(() => memoryStream);
+                    image = System.Drawing.Image.FromStream(memoryStream);
+
+                }
+                
+                image.Save("test.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);*/
+
+                Image image2 = new Image
+                {
+                    WidthRequest = 300,
+                    HeightRequest = 300,
+                    Aspect = Aspect.AspectFit,
+                    Source = ImageSource.FromStream(() =>
+                    {
+                        //Stream stream = file.GetStream();
+                        //Stream steram = File.OpenRead("test.jpg");
+                        //return steram;
+                        return new MemoryStream(bytes);
+                    })
+                };
+                
+                DisplayImage(image2);
+
+                try
+                {
+                    /*Func<string> realFunc = token =>
+                    {
+                        Console.Write("");
+                        return Task.Run<Stream>(stream, token);
+                    };*/
+                    /*ImageSource streamImageSource = FromStream(() =>
+                    {
+                        MemoryStream memoryStream = new MemoryStream(bytes);
+                        return memoryStream;
+                    });*/
+                    // CatchImage.Source = streamImageSource;
+                }
+                catch (Exception exception)
+                {
+                    Debug.Write(exception);
+                }
+            }
+        }
+
+        private void DisplayImage(View image)
+        {
+            if (ImageList.Children.Count > 0)
+            {
+                ImageList.Children.RemoveAt(0);
+            }
+
+            ImageList.Children.Add(image);
         }
     }
 }
