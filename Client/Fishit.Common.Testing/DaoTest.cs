@@ -24,8 +24,7 @@ namespace Fishit.Common.Testing
             DateTime = new DateTime(2019, 05, 01),
             FishType = new FishType(),
             Length = 32,
-            Weight = 300,
-            Image = ""
+            Weight = 300
         };
 
         private readonly FishingTrip _fishingTrip = new FishingTrip

@@ -11,7 +11,7 @@ namespace Fishit.Dal.Entities
         public DateTime DateTime { get; set; }
         public double Length { get; set; }
         public double Weight { get; set; }
-        public string Image { get; set; }
+        public string Image { get; set; } = "";
 
         public override string ToString()
         {
@@ -21,7 +21,7 @@ namespace Fishit.Dal.Entities
                    nameof(DateTime) + "; " + DateTime.ToString(CultureInfo.CurrentCulture) + "; " +
                    nameof(Length) + "; " + Length + "; " +
                    nameof(Weight) + "; " + Weight + "; " +
-                   nameof(Image) + "; " + (Image != null ? Image.Length.ToString() : "null") + "; ";
+                   nameof(Image) + "; " + Image.Length + "; ";
         }
     }
 }
