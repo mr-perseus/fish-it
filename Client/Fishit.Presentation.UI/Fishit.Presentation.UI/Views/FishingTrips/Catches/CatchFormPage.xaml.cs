@@ -158,8 +158,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 
             Date = Catch.DateTime.Date;
             Time = Catch.DateTime.TimeOfDay;
-
-        
         }
 
         private static ImageSource FromStream(Func<Stream> stream)
@@ -260,9 +258,37 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
                 })
             };
 
-            DisplayImage(image);
+            // DisplayImage(image);
 
             Catch.Image = Convert.ToBase64String(File.ReadAllBytes(file.Path));
+
+            byte[] bytes = Convert.FromBase64String(Catch.Image);
+            /*System.Drawing.Image image;
+            using (MemoryStream memoryStream = new MemoryStream(bytes))
+            {
+                // CatchImage.Source = ImageSource.FromStream(() => memoryStream);
+                image = System.Drawing.Image.FromStream(memoryStream);
+
+            }
+            
+            image.Save("test.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);*/
+
+            Image image2 = new Image
+            {
+                WidthRequest = 300,
+                HeightRequest = 300,
+                Aspect = Aspect.AspectFit,
+                Source = ImageSource.FromStream(() =>
+                {
+                    //Stream stream = file.GetStream();
+                    //Stream steram = File.OpenRead("test.jpg");
+                    //stream.as
+                    //return steram;
+                    return new MemoryStream(bytes);
+                })
+            };
+
+            DisplayImage(image2);
 
             if (string.IsNullOrEmpty(Catch.Image))
             {
@@ -273,7 +299,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
                 await DisplayAlert("Empty", Catch.Image.Substring(0, Math.Min(Catch.Image.Length, 30)), "OK");
             }
         }
-        
+
         private async void LoadImage_Do(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(Catch.Image))
@@ -298,11 +324,12 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
                     {
                         //Stream stream = file.GetStream();
                         //Stream steram = File.OpenRead("test.jpg");
+                        //stream.as
                         //return steram;
                         return new MemoryStream(bytes);
                     })
                 };
-                
+
                 DisplayImage(image2);
 
                 try
