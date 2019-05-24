@@ -20,8 +20,8 @@ mongoose
 	.catch((error) => console.error("Could not connect to MongoDB..."))
 
 server.disable("x-powered-by")
-server.use(bodyParser.json())
-server.use(bodyParser.urlencoded({ extended: true }))
+server.use(bodyParser.json({limit: '50mb'}))
+server.use(bodyParser.urlencoded({limit:'50mb', extended: true }))
 
 const logger = require("./utils/log")
 server.use(logger)
