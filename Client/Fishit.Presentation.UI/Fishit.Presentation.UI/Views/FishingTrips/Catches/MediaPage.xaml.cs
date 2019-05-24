@@ -61,7 +61,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 				files.Add(file);
 			};
 
-			pickPhotos.Clicked += async (sender, args) =>
+			/*pickPhotos.Clicked += async (sender, args) =>
 			{
 				files.Clear();
 				if (!CrossMedia.Current.IsPickPhotoSupported)
@@ -77,7 +77,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 				foreach (var file in picked)
 					files.Add(file);
 				
-			};
+			};*/
 
 			takeVideo.Clicked += async (sender, args) =>
 			{

@@ -40,15 +40,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Mono.Android">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\ReferenceAssemblies\Microsoft\Framework\MonoAndroid\v8.1\Mono.Android.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Fishit.BusinessLayer\Fishit.BusinessLayer.csproj" />
     <ProjectReference Include="..\..\Fishit.Dal\Fishit.Dal.csproj" />
-    <ProjectReference Include="..\Fishit.Presentation.UI.Media\Fishit.Presentation.UI.Media.csproj" />
   </ItemGroup>
 
   <ItemGroup>

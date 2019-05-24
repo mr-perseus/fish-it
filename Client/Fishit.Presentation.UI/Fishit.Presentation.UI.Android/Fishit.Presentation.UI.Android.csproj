@@ -52,6 +52,7 @@
     <PackageReference Include="Plugin.Permissions">
       <Version>4.0.4-beta</Version>
     </PackageReference>
+    <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.5" />
     <PackageReference Include="Xamarin.Forms" Version="3.5.0.94564-pre3" />
     <PackageReference Include="Xamarin.Android.Support.Design" Version="27.0.2.1" />
     <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="27.0.2.1" />
@@ -98,10 +99,6 @@
     <AndroidResource Include="Resources\xml\file_paths.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fishit.Presentation.UI.Media\Fishit.Presentation.UI.Media.csproj">
-      <Project>{28988826-6a26-4122-b138-50bcd5e1528f}</Project>
-      <Name>Fishit.Presentation.UI.Media</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fishit.Presentation.UI\Fishit.Presentation.UI.csproj">
       <Project>{46b6c043-489a-48c9-a546-3b77d9b7b5f5}</Project>
       <Name>Fishit.Presentation.UI</Name>
