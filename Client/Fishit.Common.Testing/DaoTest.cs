@@ -25,7 +25,6 @@ namespace Fishit.Common.Testing
             FishType = new FishType(),
             Length = 32,
             Weight = 300
-
         };
 
         private readonly FishingTrip _fishingTrip = new FishingTrip
@@ -52,7 +51,6 @@ namespace Fishit.Common.Testing
             Assert.True(catchListAfter.Content.Count - catchListBefore.Content.Count == 1);
             Response<Catch> deletedCatchResponse = await _catchDao.DeleteItem(createdCatchResponse.Content);
             Assert.True(deletedCatchResponse.StatusCode == HttpStatusCode.OK);
-
         }
 
         [Fact]
@@ -109,7 +107,8 @@ namespace Fishit.Common.Testing
             _fishingTrip.Catches.Add(allCatches.Content[1]);
             Response<FishingTrip> createdFishingTripResponse = await _fishingTripDao.CreateItem(_fishingTrip);
             Response<List<FishingTrip>> fishingTripListBefore = await _fishingTripDao.GetAllItems();
-            Response<FishingTrip> deletedFishingTripResponse = await _fishingTripDao.DeleteItem(createdFishingTripResponse.Content);
+            Response<FishingTrip> deletedFishingTripResponse =
+                await _fishingTripDao.DeleteItem(createdFishingTripResponse.Content);
             Response<List<FishingTrip>> fishingTripListAfter = await _fishingTripDao.GetAllItems();
             Assert.True(createdFishingTripResponse.Content.Id == deletedFishingTripResponse.Content.Id);
             Assert.True(fishingTripListBefore.Content.Count - fishingTripListAfter.Content.Count == 1);
@@ -144,7 +143,8 @@ namespace Fishit.Common.Testing
             Response<List<Catch>> catchListAfterCreate = await _catchDao.GetAllItems();
             Response<Catch> deletedCatchResponse = await _catchDao.DeleteItem(createdCatchResponse.Content);
             Assert.True(catchListAfterCreate.Content.Count - catchListBeforeCreate.Content.Count == 1);
-            Assert.Equal(createdCatchResponse.Content.FishType.ToString(), catchListAfterCreate.Content.Last().FishType.ToString());
+            Assert.Equal(createdCatchResponse.Content.FishType.ToString(),
+                catchListAfterCreate.Content.Last().FishType.ToString());
             Assert.Equal(createdCatchResponse.Content.Length, catchListAfterCreate.Content.Last().Length);
             Assert.True(deletedCatchResponse.StatusCode == HttpStatusCode.OK);
         }
@@ -160,8 +160,10 @@ namespace Fishit.Common.Testing
             Response<FishingTrip> deletedFishingTripResponse =
                 await _fishingTripDao.DeleteItem(createdFishingTripResponse.Content);
             Assert.True(fishingTripListAfterCreate.Content.Count - fishingTripListBeforeCreate.Content.Count == 1);
-            Assert.Equal(createdFishingTripResponse.Content.Catches.ToString(), fishingTripListAfterCreate.Content.Last().Catches.ToString());
-            Assert.Equal(createdFishingTripResponse.Content.Location, fishingTripListAfterCreate.Content.Last().Location);
+            Assert.Equal(createdFishingTripResponse.Content.Catches.ToString(),
+                fishingTripListAfterCreate.Content.Last().Catches.ToString());
+            Assert.Equal(createdFishingTripResponse.Content.Location,
+                fishingTripListAfterCreate.Content.Last().Location);
             Assert.True(deletedFishingTripResponse.StatusCode == HttpStatusCode.OK);
         }
 
@@ -205,12 +207,14 @@ namespace Fishit.Common.Testing
             fishingTripBeforeUpdate.Content.Description = "Schwimmer 5m Tiefe";
             fishingTripBeforeUpdate.Content.Location = "Silsersee";
             fishingTripBeforeUpdate.Content.Catches.Add(allCatches.Content[2]);
-            Response<FishingTrip> fishingTripAfterUpdate = await _fishingTripDao.UpdateItem(fishingTripBeforeUpdate.Content);
+            Response<FishingTrip> fishingTripAfterUpdate =
+                await _fishingTripDao.UpdateItem(fishingTripBeforeUpdate.Content);
             Assert.Equal(fishingTripBeforeUpdate.Content.Id, fishingTripAfterUpdate.Content.Id);
             Assert.True(fishingTripAfterUpdate.Content.Description == "Schwimmer 5m Tiefe");
             Assert.True(fishingTripAfterUpdate.Content.Location == "Silsersee");
             Assert.True(fishingTripAfterUpdate.Content.Catches.Count == 2);
-            Response<FishingTrip> deletedFishingtripResponse = await _fishingTripDao.DeleteItem(fishingTripAfterUpdate.Content);
+            Response<FishingTrip> deletedFishingtripResponse =
+                await _fishingTripDao.DeleteItem(fishingTripAfterUpdate.Content);
             Assert.True(deletedFishingtripResponse.StatusCode == HttpStatusCode.OK);
         }
 

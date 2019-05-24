@@ -25,7 +25,6 @@ namespace Fishit.Presentation.UI.Testing
             _platform = platform;
         }
 
-
         [Test]
         public void Test01CreateFishingTrip()
         {
@@ -35,7 +34,6 @@ namespace Fishit.Presentation.UI.Testing
             _app.EnterText(c => c.Marked("Description"), "Test Description");
             _app.Tap(c => c.Marked("Weather"));
             _app.Tap(c => c.Marked("Sunny"));
-
 
             AppResult saveButton = _app.Query(c => c.Marked("Save")).FirstOrDefault();
             Assert.NotNull(saveButton);

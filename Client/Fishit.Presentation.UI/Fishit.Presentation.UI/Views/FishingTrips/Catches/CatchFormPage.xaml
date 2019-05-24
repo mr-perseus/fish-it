@@ -77,8 +77,8 @@
                 <Label Text="kg" Margin="-5, 0, 0, 0" VerticalOptions="Center" HorizontalOptions="End" />
             </StackLayout>
 
-            <Button x:Name="CameraButton" Text="Take Photo" />
-            <Button x:Name="LoadImage" Text="Load Image" />
+            <Button Clicked="TakePhoto_OnClicked" Text="Take Photo" />
+            <Button Clicked="LoadImage_OnClicked" Text="Load Image" />
 
             <StackLayout x:Name="ImageList" />
 

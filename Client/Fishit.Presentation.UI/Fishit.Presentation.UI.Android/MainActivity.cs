@@ -3,12 +3,14 @@ using Android.Content.PM;
 using Android.OS;
 using Plugin.CurrentActivity;
 using Plugin.Permissions;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
 
 namespace Fishit.Presentation.UI.Droid
 {
     [Activity(Label = "Fishit.Presentation.UI", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    public class MainActivity : FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
         {
@@ -17,7 +19,7 @@ namespace Fishit.Presentation.UI.Droid
 
             base.OnCreate(bundle);
             CrossCurrentActivity.Current.Init(this, bundle);
-            global::Xamarin.Forms.Forms.Init(this, bundle);
+            Forms.Init(this, bundle);
             Android.Glide.Forms.Init();
             LoadApplication(new App());
         }

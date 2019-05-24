@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using dotMorten.Xamarin.Forms;
@@ -8,28 +9,24 @@ using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
 using Fishit.Presentation.UI.Views.FishingTrips.FishTypes;
-using Xamarin.Forms.Xaml;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
-using System.IO;
 using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CatchFormPage : IPageBase
     {
+        public ImageSource ImageSource;
+
         public CatchFormPage(CatchesListPage caller, FishingTrip fishingTrip, Catch _catch)
         {
             Caller = caller;
             SetBindingContext(fishingTrip, _catch);
             InitializeComponent();
-
-            CameraButton.Clicked += CameraButton_Do;
-            LoadImage.Clicked += LoadImage_Do;
         }
-
-        public ImageSource ImageSource;
 
         private FishingTrip FishingTrip { get; set; }
         public DateTime Date { get; set; }
@@ -213,7 +210,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             Form?.Update();
         }
 
-        private async void CameraButton_Do(object sender, EventArgs e)
+        private async void TakePhoto_OnClicked(object sender, EventArgs e)
         {
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
             {
@@ -229,14 +226,16 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             });
 
             if (file == null)
+            {
                 return;
+            }
 
             DisplayImage(() => file.GetStream());
 
             Catch.Image = Convert.ToBase64String(File.ReadAllBytes(file.Path));
         }
 
-        private void LoadImage_Do(object sender, EventArgs e)
+        private void LoadImage_OnClicked(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(Catch.Image))
             {

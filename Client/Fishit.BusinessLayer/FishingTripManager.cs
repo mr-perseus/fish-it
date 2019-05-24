@@ -48,6 +48,7 @@ namespace Fishit.BusinessLayer
         {
             return await _catchDao.GetAllItems();
         }
+
         public async Task<Response<Catch>> CreateCatch(Catch catchToAdd)
         {
             return await _catchDao.CreateItem(catchToAdd);
