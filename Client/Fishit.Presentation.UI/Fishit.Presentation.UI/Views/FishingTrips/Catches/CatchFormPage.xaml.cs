@@ -59,6 +59,12 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         {
             FishTypesAsStrings = new List<string>();
             await SetFishTypes();
+            if (!string.IsNullOrEmpty(Catch.Image))
+            {
+                byte[] bytes = Convert.FromBase64String(Catch.Image);
+                DisplayImage(() => new MemoryStream(bytes));
+            }
+
             return this;
         }
 
@@ -233,15 +239,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             DisplayImage(() => file.GetStream());
 
             Catch.Image = Convert.ToBase64String(File.ReadAllBytes(file.Path));
-        }
-
-        private void LoadImage_OnClicked(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(Catch.Image))
-            {
-                byte[] bytes = Convert.FromBase64String(Catch.Image);
-                DisplayImage(() => new MemoryStream(bytes));
-            }
         }
 
         private void DisplayImage(Func<Stream> stream)

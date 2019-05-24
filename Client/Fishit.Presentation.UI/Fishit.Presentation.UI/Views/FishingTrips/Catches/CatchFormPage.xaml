@@ -78,7 +78,6 @@
             </StackLayout>
 
             <Button Clicked="TakePhoto_OnClicked" Text="Take Photo" />
-            <Button Clicked="LoadImage_OnClicked" Text="Load Image" />
 
             <StackLayout x:Name="ImageList" />
 
