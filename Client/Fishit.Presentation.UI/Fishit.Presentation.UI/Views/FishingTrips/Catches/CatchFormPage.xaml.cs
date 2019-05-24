@@ -19,8 +19,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CatchFormPage : IPageBase
     {
-        public ImageSource ImageSource;
-
         public CatchFormPage(CatchesListPage caller, FishingTrip fishingTrip, Catch _catch)
         {
             Caller = caller;

@@ -51,7 +51,6 @@ namespace Fishit.Common
         {
             _logger.Info(nameof(CreateItem) + "; Start; " + "item; " + item);
             StringContent body = new StringContent(Stringify(item), Encoding.UTF8, "application/json");
-            // StringContent body = new StringContent(JsonConvert.SerializeObject(item), Encoding.UTF8, "application/octet-stream");
 
             return await HandleRequest<T>(() =>
                 new HttpClient().PostAsync(_endPointUri + Resources.CreateNew, body));
