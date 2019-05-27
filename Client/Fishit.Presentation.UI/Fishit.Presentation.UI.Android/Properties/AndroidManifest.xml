@@ -9,5 +9,7 @@
 			<meta-data android:name="android.support.FILE_PROVIDER_PATHS"
 				android:resource="@xml/file_paths"></meta-data>
 		</provider>
-	</application>
+    <meta-data android:name="com.google.android.maps.v2.API_KEY"
+               android:value="AIzaSyDUDQKfmXjvbc9y2O61kSf0tNNR-Kj0wFQ" />
+  </application>
 </manifest>

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using Xamarin.Forms;
+using Xamarin.Forms.Maps;
 using Xamarin.Forms.Xaml;
 
 namespace Fishit.Presentation.UI.Views.Map
@@ -6,19 +7,25 @@ namespace Fishit.Presentation.UI.Views.Map
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MapPage
     {
-        private ObservableCollection<string> _locations;
-
-        public MapPage()
+        public MapPage(Position currentPosition)
         {
-            InitializeData();
             InitializeComponent();
-
-            MapListView.ItemsSource = _locations;
+            InitializeMap(currentPosition);
         }
 
-        public void InitializeData()
+        private void InitializeMap(Position position)
         {
-            _locations = new ObservableCollection<string> {"Zurichsee", "Bodensee", "Genfersee"};
+            Xamarin.Forms.Maps.Map map = new Xamarin.Forms.Maps.Map(
+                MapSpan.FromCenterAndRadius(
+                    position, Distance.FromKilometers(0.3)))
+            {
+                IsShowingUser = true,
+                HeightRequest = 100,
+                WidthRequest = 960,
+                MapType = MapType.Satellite,
+                VerticalOptions = LayoutOptions.FillAndExpand
+            };
+            MapStackLayout.Children.Add(map);
         }
     }
 }

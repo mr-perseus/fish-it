@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <ContentPage NavigationPage.HasBackButton="False"
-             Title="Authentication"
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Fishit.Presentation.UI.MarkupExtensions"
              x:Class="Fishit.Presentation.UI.Views.AuthPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                   VerticalOptions="CenterAndExpand"
-                   HorizontalOptions="CenterAndExpand" />
+            <Image VerticalOptions="CenterAndExpand"
+                   Source="{local:EmbeddedImage Fishit.Presentation.UI.Images.logo.png}" />
+            <ActivityIndicator x:Name="LoadingIndicator" Color="{StaticResource PrimaryColor}" IsRunning="False" />
             <Button VerticalOptions="EndAndExpand"
                     Text="Login"
                     Clicked="Login_OnClicked"
