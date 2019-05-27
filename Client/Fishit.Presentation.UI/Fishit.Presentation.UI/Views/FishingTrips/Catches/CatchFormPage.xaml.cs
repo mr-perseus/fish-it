@@ -190,7 +190,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
                     FishTypesAsStrings.Where(x => x.ToLower().StartsWith(FishTypeAutoComplete.Text.ToLower())).ToList();
                 FishTypeAutoComplete.ItemsSource = filteredList;
             }
-
             RefreshValidation(sender, e);
         }
 

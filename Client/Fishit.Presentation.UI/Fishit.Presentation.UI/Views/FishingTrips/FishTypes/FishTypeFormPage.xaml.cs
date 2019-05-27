@@ -13,7 +13,6 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
     {
         private FishType _fishType;
         private bool _isEdit = true;
-        private bool _isNamePrefilled;
 
         public FishTypeFormPage(object caller) : this(caller, new FishType())
         {
@@ -36,6 +35,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.FishTypes
 
         public FishTypeListPage CallerFishTypeListPage { get; set; }
         public CatchFormPage CallerCatchFormPage { get; set; }
+        private bool _isNamePrefilled;
 
         public void DisplayAlertMessage(string title, string message)
         {

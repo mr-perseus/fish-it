@@ -15,7 +15,7 @@
         <TimePicker BindingContext="{x:Reference This}" x:Name="FishingTripTimePicker"
                     HorizontalOptions="EndAndExpand"
                     PropertyChanged="Refresh_DateTime" Time="{Binding Time}"
-                    Unfocused="RefreshValidation" />
+                    Unfocused="RefreshValidation"/>
 
         <StackLayout Orientation="Horizontal" x:Name="RowFishType">
             <forms:AutoSuggestBox BindingContext="{x:Reference This}"
