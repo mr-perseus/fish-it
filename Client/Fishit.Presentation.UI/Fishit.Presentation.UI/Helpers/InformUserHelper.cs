@@ -13,7 +13,7 @@ namespace Fishit.Presentation.UI.Helpers
 
         public Response<T> Response { get; set; }
         public IPageBase Page { get; set; }
-        
+
         public void InformUserOfResponse()
         {
             int statusCode = (int) Response.StatusCode;
@@ -22,7 +22,8 @@ namespace Fishit.Presentation.UI.Helpers
             if (statusCode >= 400 && statusCode < 500)
             {
                 DisplayErrorMessage("Client", statusCode, statusMessage, Response.Message);
-            } else if (statusCode >= 500)
+            }
+            else if (statusCode >= 500)
             {
                 DisplayErrorMessage("Server", statusCode, statusMessage, Response.Message);
             }

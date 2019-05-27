@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using dotMorten.Xamarin.Forms;
@@ -8,6 +9,9 @@ using Fishit.BusinessLayer;
 using Fishit.Dal.Entities;
 using Fishit.Presentation.UI.Helpers;
 using Fishit.Presentation.UI.Views.FishingTrips.FishTypes;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
@@ -53,6 +57,12 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         {
             FishTypesAsStrings = new List<string>();
             await SetFishTypes();
+            if (!string.IsNullOrEmpty(Catch.Image))
+            {
+                byte[] bytes = Convert.FromBase64String(Catch.Image);
+                DisplayImage(() => new MemoryStream(bytes));
+            }
+
             return this;
         }
 
@@ -190,6 +200,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
                     FishTypesAsStrings.Where(x => x.ToLower().StartsWith(FishTypeAutoComplete.Text.ToLower())).ToList();
                 FishTypeAutoComplete.ItemsSource = filteredList;
             }
+
             RefreshValidation(sender, e);
         }
 
@@ -201,6 +212,49 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         public void RefreshValidation(object sender, EventArgs e)
         {
             Form?.Update();
+        }
+
+        private async void TakePhoto_OnClicked(object sender, EventArgs e)
+        {
+            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+            {
+                await DisplayAlert("No Camera", ":( No camera avaialble.", "OK");
+                return;
+            }
+
+            MediaFile file = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions
+            {
+                PhotoSize = PhotoSize.Medium,
+                Directory = "Sample",
+                Name = "test.jpg"
+            });
+
+            if (file == null)
+            {
+                return;
+            }
+
+            DisplayImage(() => file.GetStream());
+
+            Catch.Image = Convert.ToBase64String(File.ReadAllBytes(file.Path));
+        }
+
+        private void DisplayImage(Func<Stream> stream)
+        {
+            Image image = new Image
+            {
+                WidthRequest = 300,
+                HeightRequest = 300,
+                Aspect = Aspect.AspectFit,
+                Source = ImageSource.FromStream(stream)
+            };
+
+            if (ImageList.Children.Count > 0)
+            {
+                ImageList.Children.RemoveAt(0);
+            }
+
+            ImageList.Children.Add(image);
         }
     }
 }

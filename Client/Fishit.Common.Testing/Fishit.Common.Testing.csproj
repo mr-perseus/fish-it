@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Fishit.Common\Fishit.Common.csproj" />
-    <ProjectReference Include="..\Fishit.TestEnvironment\Fishit.TestEnvironment.csproj" />
   </ItemGroup>
 
 </Project>
