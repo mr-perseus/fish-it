@@ -36,6 +36,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
         public CatchesListPage Caller { get; set; }
         public string Length { get; set; }
         public string Weight { get; set; }
+        public string FishType { get; set; }
 
         public void DisplayAlertMessage(string title, string message)
         {
@@ -144,6 +145,7 @@ namespace Fishit.Presentation.UI.Views.FishingTrips.Catches
             else
             {
                 IsEdit = true;
+                FishType = Catch.FishType.Name;
             }
 
             if (Catch.Length > 0)
