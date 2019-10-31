@@ -21,7 +21,7 @@
 		"jsonwebtoken": "^8.5.0",
 		"lodash": "^4.17.11",
 		"log4js": "^4.1.0",
-		"mongoose": "^5.5.2",
+		"mongoose": "^5.7.5",
 		"node-windows": "^0.1.14",
 		"request": "^2.88.0",
 		"path": "^0.12.7"
