@@ -11,7 +11,7 @@
 		"url": "git://github.com/mr-perseus/fish-it"
 	},
 	"dependencies": {
-		"async": "^2.6.2",
+		"async": "^2.6.4",
 		"bcryptjs": "^2.4.3",
 		"body-parser": "^1.18.3",
 		"config": "^3.1.0",
